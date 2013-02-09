@@ -11,9 +11,15 @@
 @interface GameplayLayer : CCLayer {
     CGRect touchRect;
     NSInteger touchedObjectTag;
-    CCNode* objectsContainer;
+    CCSprite* background;
+    
+    NSInteger _backgroundDepth;
+    NSInteger _itemsDepth;
 
 }
+
+@property NSInteger backgroundDepth;
+@property NSInteger itemsDepth;
 
 -(CGPoint) getSpriteRelativePos: (CCSprite*) object;
 

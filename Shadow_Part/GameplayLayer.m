@@ -11,22 +11,30 @@
 
 @implementation GameplayLayer
 
+@synthesize backgroundDepth = _backgroundDepth;
+@synthesize itemsDepth = _itemsDepth;
+
+
 -(id) init {
     if (self = [super init]) {
-        
-        objectsContainer = [CCNode node];
-
-        
-        CCSprite* droid1 = [CCSprite spriteWithFile:@"Droid1.png"];
-        [droid1 setPosition:ccp(100, 100)];
-        droid1.tag = [GameplayScene TagGenerater];
-
-        
-        [self addChild:droid1];
 
         self.isTouchEnabled = YES;
         touchRect = CGRectMake(0, 0, 700, 300);
         touchedObjectTag = -1;
+        _backgroundDepth = 0;
+        _itemsDepth = 1;
+        
+        background = [CCSprite spriteWithFile:@"play_bg.png"];
+        [background setAnchorPoint:ccp(0, 0)];
+        [background setPosition:ccp(0, 0)];
+        
+        [self addChild:background z:_backgroundDepth tag:[GameplayScene TagGenerater]];
+        
+        CCSprite* droid1 = [CCSprite spriteWithFile:@"Droid1.png"];
+        [droid1 setPosition:ccp(100, 100)];
+        [self addChild:droid1 z:_itemsDepth tag:[GameplayScene TagGenerater]];
+        
+
         
     }
     
@@ -49,8 +57,11 @@
     for (NSInteger i = 0; i < [self.children count]; ++i) {
         CCSprite* cur = [self.children objectAtIndex:i];
         if (CGRectContainsPoint([cur boundingBox], location)) {
+
             touchedObjectTag = [cur tag];
-            break;
+            if (cur.zOrder == _itemsDepth) {
+                break;
+            }
         }
     }
 }
@@ -63,10 +74,26 @@
 
     if (touchedObjectTag != -1) {
         CCSprite* touched = (CCSprite*)[self getChildByTag:touchedObjectTag];
-        location.x = MIN(location.x, touchRect.origin.x + touchRect.size.width);
-        location.x = MAX(location.x, touchRect.origin.x);
-        location.y = MIN(location.y, touchRect.origin.y + touchRect.size.height);
-        location.y = MAX(location.y, touchRect.origin.y);
+        if (touched.zOrder == _backgroundDepth) {
+            CCArray* children = self.children;
+            int diffX = location.x - touched.position.x;
+            int diffY = location.y - touched.position.y;
+            touchRect.origin = location;
+            
+            
+            for (NSUInteger i = 0; i < children.count; ++i) {
+                CCSprite* cur = (CCSprite*)[children objectAtIndex:i];
+                if (cur.zOrder == _itemsDepth) {
+                    cur.position = ccpAdd(cur.position, ccp(diffX, diffY));
+                }
+            }
+        } else {
+            location.x = MIN(location.x, touchRect.origin.x + touchRect.size.width);
+            location.x = MAX(location.x, touchRect.origin.x);
+            location.y = MIN(location.y, touchRect.origin.y + touchRect.size.height);
+            location.y = MAX(location.y, touchRect.origin.y);
+        }
+        
         touched.position = location;
         GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
         [scene updateShadowPos:touched];

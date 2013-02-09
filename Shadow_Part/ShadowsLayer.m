@@ -42,6 +42,11 @@
     CCArray* children = objectsLayer.children;
     for (NSInteger i = 0; i < children.count; ++i) {
         CCSprite* cur = [children objectAtIndex:i];
+        if (cur.zOrder == objectsLayer.backgroundDepth) {
+            continue;
+        }
+        
+        
         CCTexture2D* texture = cur.texture;
         
         CCSprite* shadow = [CCSprite spriteWithTexture:texture];

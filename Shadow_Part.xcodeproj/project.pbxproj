@@ -140,6 +140,7 @@
 		287291E316B9A31600E62F1E /* GameplayLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 287291E216B9A31600E62F1E /* GameplayLayer.m */; };
 		287291F116B9B0D400E62F1E /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 287291F016B9B0D400E62F1E /* BackgroundLayer.m */; };
 		287291F416B9C07300E62F1E /* ShadowsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 287291F316B9C07300E62F1E /* ShadowsLayer.m */; };
+		28D4BE5A16C6D8B2009531A9 /* play_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D4BE5916C6D8B2009531A9 /* play_bg.png */; };
 		28E1041416BC296600097994 /* TouchSection.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E1041316BC296600097994 /* TouchSection.png */; };
 /* End PBXBuildFile section */
 
@@ -415,6 +416,7 @@
 		287291F016B9B0D400E62F1E /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
 		287291F216B9C07300E62F1E /* ShadowsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowsLayer.h; sourceTree = "<group>"; };
 		287291F316B9C07300E62F1E /* ShadowsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowsLayer.m; sourceTree = "<group>"; };
+		28D4BE5916C6D8B2009531A9 /* play_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_bg.png; path = Resources/play_bg.png; sourceTree = "<group>"; };
 		28E1041316BC296600097994 /* TouchSection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TouchSection.png; path = Resources/TouchSection.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -486,6 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				285C83C916BDD5CA0044F27D /* ball.png */,
+				28D4BE5916C6D8B2009531A9 /* play_bg.png */,
 				285C83CA16BDD5CA0044F27D /* ball-hd.png */,
 				28E1041316BC296600097994 /* TouchSection.png */,
 				285F760116BB93B500776E8F /* Background.png */,
@@ -945,6 +948,7 @@
 				28E1041416BC296600097994 /* TouchSection.png in Resources */,
 				285C83CB16BDD5CA0044F27D /* ball.png in Resources */,
 				285C83CC16BDD5CA0044F27D /* ball-hd.png in Resources */,
+				28D4BE5A16C6D8B2009531A9 /* play_bg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
