@@ -13,6 +13,8 @@
     NSInteger touchedObjectTag;
     CCSprite* background;
     
+    CCArray* touchArray;
+    
     NSInteger _backgroundDepth;
     NSInteger _itemsDepth;
 

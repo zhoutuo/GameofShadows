@@ -8,6 +8,7 @@
 
 #import "GameplayLayer.h"
 #import "GameplayScene.h"
+#import "GestureRecognizer.h"
 
 @implementation GameplayLayer
 
@@ -24,7 +25,8 @@
         touchedObjectTag = -1;              //the tag for the sprite being touched right now
         _backgroundDepth = 0;           //background sprite's z-order
         _itemsDepth = 1;            //other sprites' z-order
-        
+        touchArray = [CCArray array];
+        [touchArray retain];
         //by making background sprite center on lower left corner will make it
         //easier to align it with the touch rect
         background = [CCSprite spriteWithFile:@"play_bg.png"];
@@ -39,6 +41,12 @@
 }
     
     return self;
+}
+
+
+-(void) dealloc {
+    [touchArray release];
+    [super dealloc];
 }
 
 -(void) fadeOutTouchRect {
@@ -67,6 +75,7 @@
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
+    [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
     for (CCSprite* cur in self.children) {
         //check whether the touching point falls in some sprite's rect
@@ -90,6 +99,7 @@
     CGPoint location = [touch locationInView:[touch view]];
     
     location = [[CCDirector sharedDirector] convertToGL:location];
+    [touchArray addObject:[NSValue valueWithCGPoint:location]];
 
     if (touchedObjectTag != -1) {
         CCSprite* touched = (CCSprite*)[self getChildByTag:touchedObjectTag];
@@ -135,7 +145,25 @@
 }
 
 -(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    //test gestures the user made
+    Gestures result = [GestureRecognizer recognizeGestures:touchArray];
+    switch (result) {
+        case Press:
+            NSLog(@"tag %d got pressed", touchedObjectTag);
+            break;
+        case Swipe:
+            [self fadeInTouchRect];
+        default:
+            break;
+    }
+    
+    
+    //clear the object tag
     touchedObjectTag = -1;
+
+    //clear the touch array
+    [touchArray removeAllObjects];
 }
 
 @end
