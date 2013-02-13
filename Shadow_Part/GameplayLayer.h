@@ -9,19 +9,18 @@
 #import "cocos2d.h"
 
 @interface GameplayLayer : CCLayer {
-    CGRect touchRect;
     NSInteger touchedObjectTag;
-    CCSprite* background;
-    
+    CCSprite* objectsContainer;
+    CCSprite* droid1;
     CCArray* touchArray;
     
     NSInteger _backgroundDepth;
     NSInteger _itemsDepth;
-
 }
 
-@property NSInteger backgroundDepth;
-@property NSInteger itemsDepth;
+@property (readonly) NSInteger backgroundDepth;
+@property (readonly) NSInteger itemsDepth;
+@property (readonly) CCArray* objects;
 
 -(CGPoint) getSpriteRelativePos: (CCSprite*) object;
 

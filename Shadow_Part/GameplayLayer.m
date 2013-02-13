@@ -14,59 +14,55 @@
 
 @synthesize backgroundDepth = _backgroundDepth;
 @synthesize itemsDepth = _itemsDepth;
-
+#define NOTAG -1
 
 -(id) init {
     if (self = [super init]) {
 
-        self.isTouchEnabled = YES;
-        
-        touchRect = CGRectMake(0, 0, 700, 300);        //size of the touch rect
-        touchedObjectTag = -1;              //the tag for the sprite being touched right now
+        self.isTouchEnabled = YES;      //enable touch
+        touchedObjectTag = NOTAG;              //the tag for the sprite being touched right now
         _backgroundDepth = 0;           //background sprite's z-order
         _itemsDepth = 1;            //other sprites' z-order
-        touchArray = [CCArray array];
-        [touchArray retain];
+        touchArray = [CCArray array];  //this is the array used for recording touches
+        [touchArray retain];  //since this is a autorelease object, retain it
+        
         //by making background sprite center on lower left corner will make it
-        //easier to align it with the touch rect
-        background = [CCSprite spriteWithFile:@"play_bg.png"];
-        [background setAnchorPoint:ccp(0, 0)];
-        [background setPosition:ccp(0, 0)];
+        //easier to contain all the children
+        objectsContainer = [CCSprite spriteWithFile:@"play_bg.png"];
+        [objectsContainer setAnchorPoint:ccp(0, 0)];
+        [objectsContainer setPosition:ccp(100, 100)];  //this is the relative position to the layer
+        [self addChild:objectsContainer z:_backgroundDepth tag:[GameplayScene TagGenerater]];
         
-        [self addChild:background z:_backgroundDepth tag:[GameplayScene TagGenerater]];
-        
-        CCSprite* droid1 = [CCSprite spriteWithFile:@"Droid1.png"];
-        [droid1 setPosition:ccp(100, 100)];
-        [self addChild:droid1 z:_itemsDepth tag:[GameplayScene TagGenerater]];
-}
+        //add a test object for the layer
+        droid1 = [CCSprite spriteWithFile:@"Droid1.png"];
+        [droid1 setPosition:ccp(100, 100)]; //this is the relative position to the objects container after attaching
+        [objectsContainer addChild:droid1 z:_itemsDepth tag:[GameplayScene TagGenerater]];
+    }
     
     return self;
 }
 
 
 -(void) dealloc {
-    [touchArray release];
+    [touchArray release]; //remove array since we retain it in the init function
     [super dealloc];
 }
 
 -(void) fadeOutTouchRect {
-    for (CCSprite* child in self.children) {
-        id action = [CCFadeOut actionWithDuration:2];
-        [child runAction:action];
-    }
+    id action = [CCFadeOut actionWithDuration:2];
+    [objectsContainer runAction:action];
 }
 
 -(void) fadeInTouchRect {
-    for (CCSprite* child in self.children) {
-        id action = [CCFadeIn actionWithDuration:2];
-        [child runAction:action];
-    }
+    id action = [CCFadeIn actionWithDuration:2];
+    [objectsContainer runAction:action];
 }
 
 -(CGPoint) getSpriteRelativePos:(CCSprite *)object {
+    CGRect rect = objectsContainer.boundingBox;
     CGPoint relativePos;
-    relativePos.x = (object.position.x - touchRect.origin.x) / touchRect.size.width;
-    relativePos.y = (object.position.y - touchRect.origin.y) / touchRect.size.height;
+    relativePos.x = object.position.x / rect.size.width;
+    relativePos.y = object.position.y / rect.size.height;
     return relativePos;
 }
 
@@ -77,17 +73,14 @@
     location = [[CCDirector sharedDirector] convertToGL:location];
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
-    for (CCSprite* cur in self.children) {
-        //check whether the touching point falls in some sprite's rect
-        if (CGRectContainsPoint([cur boundingBox], location)) {
-            //keep its tag
-            touchedObjectTag = [cur tag];
-            //if it is a item, and since item sprites should have
-            //physics collisions, they cannot intersect or somehow
-            //so that we can make sure there is only one sprite being touched
-            //if it is a background, we do not return, because background has a lower
-            //priority. otherwise we cannot touch other item sprites anymore
-            if (cur.zOrder == _itemsDepth) {
+    
+    if (CGRectContainsPoint([objectsContainer boundingBox], location)) {
+        touchedObjectTag = objectsContainer.tag;
+        //update the location to relative position for children
+        location = ccpSub(location, objectsContainer.boundingBox.origin);
+        for (CCSprite* child in objectsContainer.children) {
+            if (CGRectContainsPoint([child boundingBox], location)) {
+                touchedObjectTag = child.tag;
                 break;
             }
         }
@@ -97,45 +90,41 @@
 -(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
+
     
     location = [[CCDirector sharedDirector] convertToGL:location];
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
 
-    if (touchedObjectTag != -1) {
-        CCSprite* touched = (CCSprite*)[self getChildByTag:touchedObjectTag];
+    if (touchedObjectTag != NOTAG) {
+        
+        //try to check whether the touched sprite is the objects container or not
+        
+        CCSprite* touched = nil;
+        
+        if (touchedObjectTag == objectsContainer.tag) {
+            touched = objectsContainer;
+        } else {
+            touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+        }
+        CGRect rect = objectsContainer.boundingBox;
         if (touched.zOrder == _backgroundDepth) {
             
             //modifer locaiton to make sure that the location is in the middle
             //of the touchrect, because default anchor point is lower left corner
             //when you try to move the rect, the center pointer is left corner, it's user unfriendly
-            
             //make the location lefter and lower than it is supposed to
-            location.x -= touchRect.size.width / 2;
-            location.y -= touchRect.size.height / 2;
-            
-            
-            //update the origin position of touch rect
-            touchRect.origin = location;
-            
-            //move all the children accordingly
-            int diffX = location.x - touched.position.x;
-            int diffY = location.y - touched.position.y;
-            for (CCSprite* cur in self.children) {
-                if (cur.zOrder == _itemsDepth) {
-                    cur.position = ccpAdd(cur.position, ccp(diffX, diffY));
-                }
-            }
+            location.x -= rect.size.width / 2;
+            location.y -= rect.size.height / 2;
         
         } else {
             //since we did not change the anchor point of the children sprites
             //we do not need to change the position of locaiton
             //but we need to make sure that the location is inside the touch rect
-            
-            
-            location.x = MIN(location.x, touchRect.origin.x + touchRect.size.width);
-            location.x = MAX(location.x, touchRect.origin.x);
-            location.y = MIN(location.y, touchRect.origin.y + touchRect.size.height);
-            location.y = MAX(location.y, touchRect.origin.y);
+            location = ccpSub(location, rect.origin);
+            location.x = MIN(location.x, rect.size.width);
+            location.x = MAX(location.x, 0);
+            location.y = MIN(location.y, rect.size.height);
+            location.y = MAX(location.y, 0);
             
         }
         touched.position = location;
@@ -146,21 +135,8 @@
 
 -(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    //test gestures the user made
-    Gestures result = [GestureRecognizer recognizeGestures:touchArray];
-    switch (result) {
-        case Press:
-            NSLog(@"tag %d got pressed", touchedObjectTag);
-            break;
-        case Swipe:
-            [self fadeInTouchRect];
-        default:
-            break;
-    }
-    
-    
     //clear the object tag
-    touchedObjectTag = -1;
+    touchedObjectTag = NOTAG;
 
     //clear the touch array
     [touchArray removeAllObjects];

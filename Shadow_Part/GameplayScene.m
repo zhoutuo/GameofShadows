@@ -34,7 +34,7 @@ static NSInteger tagSeed = 10000;
 
 -(void) onEnter {
     [super onEnter];
-    [shadowLayer castShadowFrom:gameplayLayer];
+    //[shadowLayer castShadowFrom:gameplayLayer];
 }
 
 -(void) updateShadowPos:(CCSprite *)object {

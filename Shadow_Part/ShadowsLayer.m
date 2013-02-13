@@ -37,33 +37,32 @@
 }
 
 
--(void) castShadowFrom:(GameplayLayer*)objectsLayer {
+-(void) castShadowFrom:(CCArray*)items withRatios:(CCArray *)ratios {
     
-    CCArray* children = objectsLayer.children;
-    for (NSInteger i = 0; i < children.count; ++i) {
-        CCSprite* cur = [children objectAtIndex:i];
-        if (cur.zOrder == objectsLayer.backgroundDepth) {
-            continue;
-        }
-        
-        
-        CCTexture2D* texture = cur.texture;
-        
-        CCSprite* shadow = [CCSprite spriteWithTexture:texture];
-        [shadow setColor:ccc3(0, 0, 0)];
-        [shadow setScaleY:shadowHeightFactor];
-        [shadow setScaleX:shadowWidthFactor];
-        
-        shadow.tag = [GameplayScene TagGenerater];
-        
-        [objShadowTable
-         setObject:[NSNumber numberWithInteger:shadow.tag]
-         forKey:[NSNumber numberWithInteger:cur.tag]];
-        
-        [self addChild:shadow];
-        
-        [self updateShadowPos:cur.tag withRelativePos:[objectsLayer getSpriteRelativePos:cur]];
-    }
+//    for (NSInteger i = 0; i < children.count; ++i) {
+//        CCSprite* cur = [children objectAtIndex:i];
+//        if (cur.zOrder == objectsLayer.backgroundDepth) {
+//            continue;
+//        }
+//        
+//        
+//        CCTexture2D* texture = cur.texture;
+//        
+//        CCSprite* shadow = [CCSprite spriteWithTexture:texture];
+//        [shadow setColor:ccc3(0, 0, 0)];
+//        [shadow setScaleY:shadowHeightFactor];
+//        [shadow setScaleX:shadowWidthFactor];
+//        
+//        shadow.tag = [GameplayScene TagGenerater];
+//        
+//        [objShadowTable
+//         setObject:[NSNumber numberWithInteger:shadow.tag]
+//         forKey:[NSNumber numberWithInteger:cur.tag]];
+//        
+//        [self addChild:shadow];
+//        
+//        [self updateShadowPos:cur.tag withRelativePos:[items getSpriteRelativePos:cur]];
+//    }
 }
 
 -(void) updateShadowPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint)relativePos {
