@@ -15,6 +15,8 @@
     ShadowsLayer* shadowLayer;
     GameplayLayer* gameplayLayer;
 }
+
 +(NSInteger) TagGenerater;
--(void) updateShadowPos:(CCSprite*)object;
+-(void) finishObjectsCreation: (CCArray*) objects withRatios:(CCArray*) ratios;
+-(void) finishMovingOneObject: (NSInteger) objectTag withRatio:(CGPoint) ratio;
 @end

@@ -15,11 +15,10 @@ static NSInteger tagSeed = 10000;
 
 -(id) init {
     if (self = [super init]) {
-        
                 
         backgroundLayer = [BackgroundLayer node];
         [self addChild:backgroundLayer z:0];
-        
+    
         shadowLayer = [ShadowsLayer node];
         [self addChild:shadowLayer z:1];
         
@@ -32,13 +31,14 @@ static NSInteger tagSeed = 10000;
     
 }
 
--(void) onEnter {
-    [super onEnter];
-    //[shadowLayer castShadowFrom:gameplayLayer];
+
+-(void) finishObjectsCreation:(CCArray *)objects withRatios:(CCArray *)ratios {
+    [shadowLayer castShadowFrom:objects withRatios:ratios];
 }
 
--(void) updateShadowPos:(CCSprite *)object {
-    [shadowLayer updateShadowPos:object.tag withRelativePos:[gameplayLayer getSpriteRelativePos:object]];
+
+-(void) finishMovingOneObject:(NSInteger)objectTag withRatio:(CGPoint)ratio {
+    [shadowLayer updateShadowPos:objectTag withRelativePos:ratio];
 }
 
 

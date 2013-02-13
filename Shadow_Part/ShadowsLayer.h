@@ -15,7 +15,7 @@
     NSMutableDictionary* objShadowTable;
     
 }
--(void) castShadowFrom:(CCArray*)items withRatios:(CCArray*)ratios;
+-(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
 
 -(void) updateShadowPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint) relativePos;
 

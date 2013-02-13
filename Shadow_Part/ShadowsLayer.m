@@ -17,8 +17,6 @@
         shadowHeightFactor = 2.0f;
         shadowWidthFactor = 2.0f;
         objShadowTable = [[NSMutableDictionary alloc] init];
-        
-        
     }
     return self;
 }
@@ -37,32 +35,33 @@
 }
 
 
--(void) castShadowFrom:(CCArray*)items withRatios:(CCArray *)ratios {
+-(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray *)ratios {
     
-//    for (NSInteger i = 0; i < children.count; ++i) {
-//        CCSprite* cur = [children objectAtIndex:i];
-//        if (cur.zOrder == objectsLayer.backgroundDepth) {
-//            continue;
-//        }
-//        
-//        
-//        CCTexture2D* texture = cur.texture;
-//        
-//        CCSprite* shadow = [CCSprite spriteWithTexture:texture];
-//        [shadow setColor:ccc3(0, 0, 0)];
-//        [shadow setScaleY:shadowHeightFactor];
-//        [shadow setScaleX:shadowWidthFactor];
-//        
-//        shadow.tag = [GameplayScene TagGenerater];
-//        
-//        [objShadowTable
-//         setObject:[NSNumber numberWithInteger:shadow.tag]
-//         forKey:[NSNumber numberWithInteger:cur.tag]];
-//        
-//        [self addChild:shadow];
-//        
-//        [self updateShadowPos:cur.tag withRelativePos:[items getSpriteRelativePos:cur]];
-//    }
+    if (objects.count != ratios.count) {
+        return;
+    }
+    
+    for (int i = 0; i < objects.count; ++i) {
+        CCSprite* cur = (CCSprite*)[objects objectAtIndex:i];
+        CCTexture2D* texture = cur.texture;
+        
+        CCSprite* shadow = [CCSprite spriteWithTexture:texture];
+        [shadow setColor:ccc3(0, 0, 0)];
+        [shadow setScaleY:shadowHeightFactor];
+        [shadow setScaleX:shadowWidthFactor];
+        
+        shadow.tag = [GameplayScene TagGenerater];
+        
+        [objShadowTable
+         setObject:[NSNumber numberWithInteger:shadow.tag]
+         forKey:[NSNumber numberWithInteger:cur.tag]];
+        
+        [self addChild:shadow];
+        
+        CGPoint ratio = [[ratios objectAtIndex:i] CGPointValue];
+        
+        [self updateShadowPos:cur.tag withRelativePos: ratio];
+    }
 }
 
 -(void) updateShadowPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint)relativePos {

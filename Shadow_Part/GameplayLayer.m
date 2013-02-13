@@ -8,7 +8,6 @@
 
 #import "GameplayLayer.h"
 #import "GameplayScene.h"
-#import "GestureRecognizer.h"
 
 @implementation GameplayLayer
 
@@ -40,6 +39,21 @@
     }
     
     return self;
+}
+
+
+-(void) onEnter {
+    [super onEnter];
+    
+    //tell the scene we are done with rendering all objects
+    GameplayScene* scene = (GameplayScene*)self.parent;
+    CCArray* ratios = [CCArray array];
+    for (CCSprite* sprite in objectsContainer.children) {
+        CGPoint ratio = [self getSpriteRelativePos:sprite];
+        [ratios addObject:[NSValue valueWithCGPoint:ratio]];
+    }
+    
+    [scene finishObjectsCreation:objectsContainer.children withRatios:ratios];
 }
 
 
@@ -128,8 +142,9 @@
             
         }
         touched.position = location;
-        GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
-        [scene updateShadowPos:touched];
+        GameplayScene* scene = (GameplayScene*)self.parent;
+        //tell scene we are done with moving one object
+        [scene finishMovingOneObject:touched.tag withRatio:[self getSpriteRelativePos:touched]];
     }
 }
 
