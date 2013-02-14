@@ -34,6 +34,13 @@
     return ccp(posX, posY);
 }
 
+-(CCSprite*) getShadowSpriteFromTag: (NSInteger) objectSpriteTag {
+    NSNumber* tag = (NSNumber*)[objShadowTable objectForKey:[NSNumber numberWithInteger:objectSpriteTag]];
+    NSInteger tagInteger = [tag unsignedIntegerValue];
+    CCSprite* child = (CCSprite*)[self getChildByTag:tagInteger];
+    return child;
+}
+
 
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray *)ratios {
     
@@ -66,13 +73,16 @@
 
 -(void) updateShadowPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint)relativePos {
 
-    NSNumber* tag = (NSNumber*)[objShadowTable objectForKey:[NSNumber numberWithInteger:objectSpriteTag]];
-    NSInteger tagInteger = [tag unsignedIntegerValue];
-    
-    CCSprite* child = (CCSprite*)[self getChildByTag:tagInteger];
+    CCSprite* child = [self getShadowSpriteFromTag:objectSpriteTag];
     if (child != nil) {
         child.position = [self calculateShadowPos: relativePos];
     }
 }
 
+-(void) updateShadowRot:(NSInteger)objectSpriteTag withAngle:(float)angle {
+    CCSprite* child = [self getShadowSpriteFromTag:objectSpriteTag];
+    if (child != nil) {
+        child.rotation = angle;
+    }
+}
 @end

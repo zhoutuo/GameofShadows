@@ -16,7 +16,8 @@
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
-
 -(void) updateShadowPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint) relativePos;
+-(void) updateShadowRot:(NSInteger) objectSpriteTag withAngle:(float) angle;
+
 
 @end

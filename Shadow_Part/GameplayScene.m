@@ -41,6 +41,10 @@ static NSInteger tagSeed = 10000;
     [shadowLayer updateShadowPos:objectTag withRelativePos:ratio];
 }
 
+-(void) finishRotatingOneObject:(NSInteger)objectTag withAngle:(float)angle {
+    [shadowLayer updateShadowRot:objectTag withAngle:angle];
+}
+
 
 +(NSInteger) TagGenerater {
     return tagSeed++;

@@ -32,6 +32,7 @@
         [objectsContainer setPosition:ccp(100, 100)];  //this is the relative position to the layer
         [self addChild:objectsContainer z:BACKGROUND_DEPTH tag:[GameplayScene TagGenerater]];
         
+        
         //add rotation circle to the layer
         //make it invisible
         rotationCircle = [CCSprite spriteWithFile:@"rotate_circle.png"];
@@ -112,6 +113,14 @@
     return relativePos;
 }
 
+-(CGPoint) fromContainerCoord2Layer: (CGPoint) point {
+    return ccpAdd(point, objectsContainer.boundingBox.origin);
+}
+
+-(CGPoint) fromLayerCoord2Container: (CGPoint) point {
+    return ccpSub(point, objectsContainer.boundingBox.origin);
+}
+
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch* touch = [touches anyObject];
@@ -124,7 +133,7 @@
         if (CGRectContainsPoint([objectsContainer boundingBox], location)) {
             touchedObjectTag = objectsContainer.tag;
             //update the location to relative position for children
-            location = ccpSub(location, objectsContainer.boundingBox.origin);
+            location = [self fromLayerCoord2Container:location];
             for (CCSprite* child in objectsContainer.children) {
                 if (CGRectContainsPoint([child boundingBox], location)) {
                     touchedObjectTag = child.tag;
@@ -134,7 +143,7 @@
         }
     } else {
         assert(touchOperation == ROTATING);
-        location = ccpSub(location, objectsContainer.boundingBox.origin);
+        location = [self fromLayerCoord2Container:location];
         
         //if the first tap for rotating is not inside the circle
         //cancel the rotating
@@ -181,7 +190,7 @@
             //since we did not change the anchor point of the children sprites
             //we do not need to change the position of locaiton
             //but we need to make sure that the location is inside the touch rect
-            location = ccpSub(location, rect.origin);
+            location = [self fromLayerCoord2Container:location];
             location.x = MIN(location.x, rect.size.width);
             location.x = MAX(location.x, 0);
             location.y = MIN(location.y, rect.size.height);
@@ -195,20 +204,20 @@
     } else {
         assert(touchOperation == ROTATING);
         CCSprite* rotated = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-        CGPoint relativeCenter = ccpAdd(rotated.position, objectsContainer.boundingBox.origin);
-        assert(touchArray.count == 1);
-        //there will be only one point in touch array
+        CGPoint relativeCenter = [self fromContainerCoord2Layer:rotated.position];
         CGPoint rotatePoint = ccpAdd(relativeCenter, ccp(0, 100));
         rotatePoint = ccpSub(rotatePoint, relativeCenter);
         location = ccpSub(location, relativeCenter);
-        float angel = ccpAngle(location, rotatePoint);
-        
-        CCLOG(@"%@, %@", NSStringFromCGPoint(rotatePoint), NSStringFromCGPoint(location));
-        
+        float angle = ccpAngle(location, rotatePoint);
+                
         if (location.x < rotatePoint.x) {
-            angel = -angel;
+            angle = -angle;
         }
-        rotated.rotation = CC_RADIANS_TO_DEGREES(angel);
+        angle = CC_RADIANS_TO_DEGREES(angle);
+        rotated.rotation = angle;
+        GameplayScene* scene = (GameplayScene*)self.parent;
+        //tell scene we are done with rotating one object
+        [scene finishRotatingOneObject:touchedObjectTag withAngle:angle];
     }
 }
 
