@@ -8,19 +8,22 @@
 
 #import "cocos2d.h"
 
+typedef enum {
+    ROTATING,
+    MOVING,
+    TAP,
+    NONE
+} Phase;
+
 @interface GameplayLayer : CCLayer {
     NSInteger touchedObjectTag;
     CCSprite* objectsContainer;
+    CCSprite* rotationCircle;
     CCSprite* droid1;
     CCArray* touchArray;
-    
-    NSInteger _backgroundDepth;
-    NSInteger _itemsDepth;
+    Phase touchOperation;
 }
 
-@property (readonly) NSInteger backgroundDepth;
-@property (readonly) NSInteger itemsDepth;
-@property (readonly) CCArray* objects;
 
 -(CGPoint) getSpriteRelativePos: (CCSprite*) object;
 
