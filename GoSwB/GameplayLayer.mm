@@ -336,6 +336,16 @@
             //make the location lefter and lower than it is supposed to
             location.x -= rect.size.width / 2;
             location.y -= rect.size.height / 2;
+            
+            //make sure that the OMS is inside the screen
+            CGSize wins = [[CCDirector sharedDirector] winSize];
+            location.x = MAX(0, location.x);
+            location.x = MIN(wins.width - rect.size.width,  location.x);
+            
+            location.y = MAX(0, location.y);
+            location.y = MIN(wins.height - rect.size.height, location.y);
+            
+            
             touched.position = location;
         } else {
             touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
@@ -343,10 +353,11 @@
             //we do not need to change the position of locaiton
             //but we need to make sure that the location is inside the touch rect
             location = [self fromLayerCoord2Container:location];
-            location.x = MIN(location.x, rect.size.width);
-            location.x = MAX(location.x, 0);
-            location.y = MIN(location.y, rect.size.height);
-            location.y = MAX(location.y, 0);
+            CGSize spriteBox = [touched boundingBox].size;
+            location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
+            location.x = MAX(location.x, spriteBox.width / 2);
+            location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
+            location.y = MAX(location.y, spriteBox.height / 2);
             touched.position = location;
             [self updateSprite:0];
             GameplayScene* scene = (GameplayScene*)self.parent;
