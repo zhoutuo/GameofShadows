@@ -189,6 +189,7 @@
 		28E4794E16CD9C7F007B3A2A /* ball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794616CD9C7F007B3A2A /* ball-hd.png */; };
 		28E4794F16CD9C7F007B3A2A /* play_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794716CD9C7F007B3A2A /* play_bg.png */; };
 		28E4795016CD9C7F007B3A2A /* rotate_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794816CD9C7F007B3A2A /* rotate_circle.png */; };
+		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -561,6 +562,8 @@
 		28E4794616CD9C7F007B3A2A /* ball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ball-hd.png"; path = "Resources/ball-hd.png"; sourceTree = "<group>"; };
 		28E4794716CD9C7F007B3A2A /* play_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_bg.png; path = Resources/play_bg.png; sourceTree = "<group>"; };
 		28E4794816CD9C7F007B3A2A /* rotate_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rotate_circle.png; path = Resources/rotate_circle.png; sourceTree = "<group>"; };
+		C0C1795D16D072580060BAD4 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
+		C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -624,11 +627,13 @@
 				28E4793416CD9C14007B3A2A /* BackgroundLayer.h */,
 				28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */,
 				28E4793616CD9C14007B3A2A /* GameplayLayer.h */,
-				28E4793716CD9C14007B3A2A /* GameplayScene.h */,
-				28E4793816CD9C14007B3A2A /* ShadowsLayer.h */,
-				28E4793916CD9C14007B3A2A /* GameplayScene.mm */,
-				28E4793A16CD9C14007B3A2A /* ShadowsLayer.mm */,
 				28E4793B16CD9C14007B3A2A /* GameplayLayer.mm */,
+				28E4793716CD9C14007B3A2A /* GameplayScene.h */,
+				28E4793916CD9C14007B3A2A /* GameplayScene.mm */,
+				28E4793816CD9C14007B3A2A /* ShadowsLayer.h */,
+				28E4793A16CD9C14007B3A2A /* ShadowsLayer.mm */,
+				C0C1795D16D072580060BAD4 /* PhysicsSprite.h */,
+				C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */,
 				28E4771216CD9BA7007B3A2A /* Resources */,
 				28E4772C16CD9BA7007B3A2A /* libs */,
 				28E4791816CD9BAA007B3A2A /* Supporting Files */,
@@ -1249,6 +1254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */,
 				28E4773016CD9BA7007B3A2A /* CCAction.m in Sources */,
 				28E4773316CD9BA7007B3A2A /* CCActionCamera.m in Sources */,
 				28E4773616CD9BA7007B3A2A /* CCActionCatmullRom.m in Sources */,
@@ -1461,6 +1467,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "Game of Shadows";
+				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "\"GoSwB/libs\"";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1480,6 +1487,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "Game of Shadows";
+				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "\"GoSwB/libs\"";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

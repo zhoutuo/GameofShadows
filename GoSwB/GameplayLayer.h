@@ -7,6 +7,11 @@
 //
 
 #import "cocos2d.h"
+#import "Box2D.h"
+#import "PhysicsSprite.h"
+
+// Physics constants.
+#define PTM_RATIO 32
 
 typedef enum {
     ROTATING,
@@ -21,9 +26,21 @@ typedef enum {
     CGRect* containerBox;
     
     CCSprite* rotationCircle;
-    CCSprite* droid1;
+    PhysicsSprite* droid1;
     CCArray* touchArray;
     Phase touchOperation;
+    
+    // Physics section.
+    b2World* physicsWorld;
+    b2Body* droid1Body;
+    b2Body* physicsGroundBody;
+    b2Fixture* physicsWorldTop;
+    b2Fixture* physicsWorldBottom;
+    b2Fixture* physicsWorldLeft;
+    b2Fixture* physicsWorldRight;
+    
+    NSMutableArray* objectSpriteArray;
+    NSMutableArray* objectBodyArray;
 }
 
 

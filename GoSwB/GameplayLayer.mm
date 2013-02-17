@@ -38,13 +38,164 @@
         rotationCircle = [CCSprite spriteWithFile:@"rotate_circle.png"];
         [rotationCircle retain];
         
-        //add a test object for the layer
-        droid1 = [CCSprite spriteWithFile:@"Droid1.png"];
-        [droid1 setPosition:ccp(100, 100)]; //this is the relative position to the objects container after attaching
-        [objectsContainer addChild:droid1 z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+        // Physics section.
+        [self initPhysics];
+        [self setupObjects];
+        [self scheduleUpdate];
     }
     
     return self;
+}
+
+// Creates an initializes arrays for the game objects and their corresponding physics bodies.
+- (void)setupObjects
+{
+    objectSpriteArray = [[NSMutableArray alloc] init];
+    objectBodyArray = [[NSMutableArray alloc] init];
+    
+    //add a test object for the layer
+    droid1 = [PhysicsSprite spriteWithFile:@"Droid1.png"];
+    [droid1 setPosition:ccp(100, 100)]; //this is the relative position to the objects container after attaching
+    [objectsContainer addChild:droid1 z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+    
+    // Create a body for the droid object.
+    b2BodyDef droid1BodyDef;
+    droid1BodyDef.type = b2_dynamicBody;
+    droid1BodyDef.position = [self toMeters:droid1.position];
+    droid1Body = physicsWorld -> CreateBody(&droid1BodyDef);
+    droid1Body -> SetUserData((void*)droid1);
+    
+    // Define a box shape (for now) for the droid object.
+    b2PolygonShape dynamicBox;
+    dynamicBox.SetAsBox(1.0f, 1.0f);
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &dynamicBox;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    droid1Body -> CreateFixture(&fixtureDef);
+    [droid1 setPhysicsBody:droid1Body];
+    
+    // Add sprite and body to object arrays.
+    [objectSpriteArray addObject:droid1];
+    //[objectBodyArray addObject:(id)droid1Body];
+}
+
+// Physics section
+- (void)initPhysics
+{
+    b2Vec2 physicsGravity;
+    physicsGravity.Set(0.0f, -10.0f);
+    physicsWorld = new b2World(physicsGravity);
+    
+    physicsWorld -> SetAllowSleeping(true);
+    physicsWorld -> SetContinuousPhysics(true);
+    
+    // Define the ground body.
+    b2BodyDef physicsGroundBodyDef;
+    //physicsGroundBodyDef.type = b2_dynamicBody;
+    physicsGroundBody = physicsWorld -> CreateBody(&physicsGroundBodyDef);
+    
+    physicsWorldTop = NULL;
+    physicsWorldBottom = NULL;
+    physicsWorldLeft = NULL;
+    physicsWorldRight = NULL;
+    
+    [self updatePhysicsGroundBody];
+}
+
+// Physics step update function.
+- (void)update:(ccTime)delta
+{
+    int32 velocityIterations = 8;
+    int32 positionIterations = 1;
+    physicsWorld -> Step(delta, velocityIterations, positionIterations);
+}
+
+// Helper methods for pixel-meter conversions for Box2D.
+- (b2Vec2)toMeters:(CGPoint)point
+{
+    return b2Vec2(point.x / PTM_RATIO, point.y / PTM_RATIO);
+}
+
+- (CGPoint)toPixels:(b2Vec2)vector
+{
+    return ccpMult(CGPointMake(vector.x, vector.y), PTM_RATIO);
+}
+
+- (void)updatePhysicsGroundBody
+{
+    // Remove existing fixtures, if any.
+    if (physicsWorldBottom != NULL)
+        physicsGroundBody -> DestroyFixture(physicsWorldBottom);
+    if (physicsWorldTop != NULL)
+        physicsGroundBody -> DestroyFixture(physicsWorldTop);
+    if (physicsWorldLeft != NULL)
+        physicsGroundBody -> DestroyFixture(physicsWorldLeft);
+    if (physicsWorldRight != NULL)
+        physicsGroundBody -> DestroyFixture(physicsWorldRight);
+    
+    // Define the ground box shape.
+    // This should be the OMS.
+    CGSize OMSSize = [objectsContainer boundingBox].size;
+    float physicsGroundBoxWidth = OMSSize.width / PTM_RATIO;
+    float physicsGroundBoxHeight = OMSSize.height / PTM_RATIO;
+    b2EdgeShape physicsGroundBox;
+    int density = 0;
+    
+    float OMSOriginX = 0.0f; //[objectsContainer position].x / PTM_RATIO;
+    float OMSOriginY = 0.0f; //[objectsContainer position].y / PTM_RATIO;
+    
+    
+    CCLOG(@"OMS Origin = %.2f, %.2f", OMSOriginX, OMSOriginY);
+    CCLOG(@"OMS Size = %.2f, %.2f", physicsGroundBoxWidth, physicsGroundBoxHeight);
+    
+    // Ground Box Bottom.
+    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
+    physicsWorldBottom = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+    
+    // Ground Box Top.
+    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight));
+    physicsWorldTop = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+    
+    // Ground Box Left.
+    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight));
+    physicsWorldLeft = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+    
+    // Ground Box Right.
+    physicsGroundBox.Set(b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
+    physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+}
+
+- (void)updateSprite:(int)index
+{
+    //PhysicsSprite* selectedSprite = (PhysicsSprite*)[objectSpriteArray objectAtIndex:index];
+    //b2Body* selectedBody = (b2Body*)[objectBodyArray objectAtIndex:index];
+    //selectedBody -> SetTransform([self toMeters:selectedSprite.position], 0.0);
+    droid1Body -> SetTransform([self toMeters:droid1.position], 0.0);
+}
+
+
+-(void) dealloc {
+    [touchArray release]; //remove array since we retain it in the init function
+    [rotationCircle release];
+    
+    // Physics cleanup section.
+    // Remove existing fixtures, if any.
+    if (physicsWorldBottom != NULL) physicsGroundBody -> DestroyFixture(physicsWorldBottom);
+    if (physicsWorldTop != NULL) physicsGroundBody -> DestroyFixture(physicsWorldTop);
+    if (physicsWorldLeft != NULL) physicsGroundBody -> DestroyFixture(physicsWorldLeft);
+    if (physicsWorldRight != NULL) physicsGroundBody -> DestroyFixture(physicsWorldRight);
+    delete physicsWorld; physicsWorld = NULL;
+    delete physicsWorldTop; physicsWorldTop = NULL;
+    delete physicsWorldBottom; physicsWorldBottom = NULL;
+    delete physicsWorldLeft; physicsWorldLeft = NULL;
+    delete physicsWorldRight; physicsWorldRight = NULL;
+    
+    // Release object arrays.
+    [objectSpriteArray release];
+    [objectBodyArray release];
+    
+    [super dealloc];
 }
 
 
@@ -86,13 +237,6 @@
         }
         [objectsContainer addChild:rotationCircle z:BACKGROUND_DEPTH];
     }
-}
-
-
--(void) dealloc {
-    [touchArray release]; //remove array since we retain it in the init function
-    [rotationCircle release];
-    [super dealloc];
 }
 
 -(void) fadeOutTouchRect {
@@ -153,6 +297,14 @@
         }
     }
     
+    // Physics section. Turn off all physics calculations.
+    droid1Body -> SetAwake(false);
+    /*for (id body in objectBodyArray)
+    {
+        b2Body* objectBody = (b2Body*)body;
+        objectBody -> SetAwake(false);
+    }*/
+    
 }
 
 -(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -196,6 +348,7 @@
             location.y = MIN(location.y, rect.size.height);
             location.y = MAX(location.y, 0);
             touched.position = location;
+            [self updateSprite:0];
             GameplayScene* scene = (GameplayScene*)self.parent;
             //tell scene we are done with moving one object
             [scene finishMovingOneObject:touched.tag withRatio:[self getSpriteRelativePos:touched]];
@@ -233,6 +386,7 @@
                 //if OMS itself got tapped, then cleanning
                 touchOperation = NONE;
                 touchedObjectTag = NOTAG;
+                [self updatePhysicsGroundBody];
             } else {
                 //show circle around tapped object, start to rotate
                 [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
@@ -251,6 +405,14 @@
     
     //clear the touch array
     [touchArray removeAllObjects];
+    
+    // Physics section. Turn on all physics calculations.
+    droid1Body -> SetAwake(true);
+    /*for (id body in objectBodyArray)
+    {
+        b2Body* objectBody = (b2Body*)body;
+        objectBody -> SetAwake(true);
+    }*/
 }
 
 @end
