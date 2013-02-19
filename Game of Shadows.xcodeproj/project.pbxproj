@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28D4F30216D3E9B300F3C326 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D4F2FF16D3E9B300F3C326 /* fps_images-hd.png */; };
+		28D4F30316D3E9B300F3C326 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D4F30016D3E9B300F3C326 /* fps_images-ipadhd.png */; };
+		28D4F30416D3E9B300F3C326 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D4F30116D3E9B300F3C326 /* fps_images.png */; };
 		28E4770016CD9BA7007B3A2A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E476FF16CD9BA7007B3A2A /* QuartzCore.framework */; };
 		28E4770216CD9BA7007B3A2A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E4770116CD9BA7007B3A2A /* OpenGLES.framework */; };
 		28E4770416CD9BA7007B3A2A /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E4770316CD9BA7007B3A2A /* OpenAL.framework */; };
@@ -187,6 +190,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28D4F2FF16D3E9B300F3C326 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-hd.png"; path = "Resources/fps_images-hd.png"; sourceTree = "<group>"; };
+		28D4F30016D3E9B300F3C326 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-ipadhd.png"; path = "Resources/fps_images-ipadhd.png"; sourceTree = "<group>"; };
+		28D4F30116D3E9B300F3C326 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = Resources/fps_images.png; sourceTree = "<group>"; };
 		28E476FC16CD9BA7007B3A2A /* Game of Shadows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game of Shadows.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28E476FF16CD9BA7007B3A2A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		28E4770116CD9BA7007B3A2A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -635,6 +641,9 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				28D4F2FF16D3E9B300F3C326 /* fps_images-hd.png */,
+				28D4F30016D3E9B300F3C326 /* fps_images-ipadhd.png */,
+				28D4F30116D3E9B300F3C326 /* fps_images.png */,
 				28E4794116CD9C7F007B3A2A /* Droid1.png */,
 				28E4794416CD9C7F007B3A2A /* Background.png */,
 				28E4794516CD9C7F007B3A2A /* ball.png */,
@@ -1222,6 +1231,9 @@
 				28E4794E16CD9C7F007B3A2A /* ball-hd.png in Resources */,
 				28E4794F16CD9C7F007B3A2A /* play_bg.png in Resources */,
 				28E4795016CD9C7F007B3A2A /* rotate_circle.png in Resources */,
+				28D4F30216D3E9B300F3C326 /* fps_images-hd.png in Resources */,
+				28D4F30316D3E9B300F3C326 /* fps_images-ipadhd.png in Resources */,
+				28D4F30416D3E9B300F3C326 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
