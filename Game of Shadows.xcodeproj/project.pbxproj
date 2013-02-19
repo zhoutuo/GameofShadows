@@ -10,6 +10,7 @@
 		28D4F30216D3E9B300F3C326 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D4F2FF16D3E9B300F3C326 /* fps_images-hd.png */; };
 		28D4F30316D3E9B300F3C326 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D4F30016D3E9B300F3C326 /* fps_images-ipadhd.png */; };
 		28D4F30416D3E9B300F3C326 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D4F30116D3E9B300F3C326 /* fps_images.png */; };
+		28E079BA16D41B8C007011F2 /* GameplayScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28E079B916D41B8C007011F2 /* GameplayScene.mm */; };
 		28E4770016CD9BA7007B3A2A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E476FF16CD9BA7007B3A2A /* QuartzCore.framework */; };
 		28E4770216CD9BA7007B3A2A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E4770116CD9BA7007B3A2A /* OpenGLES.framework */; };
 		28E4770416CD9BA7007B3A2A /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E4770316CD9BA7007B3A2A /* OpenAL.framework */; };
@@ -177,7 +178,6 @@
 		28E4791B16CD9BAA007B3A2A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E4791A16CD9BAA007B3A2A /* main.m */; };
 		28E4793C16CD9C14007B3A2A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28E4793316CD9C14007B3A2A /* AppDelegate.mm */; };
 		28E4793D16CD9C14007B3A2A /* BackgroundLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */; };
-		28E4793E16CD9C14007B3A2A /* GameplayScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28E4793916CD9C14007B3A2A /* GameplayScene.mm */; };
 		28E4793F16CD9C14007B3A2A /* ShadowsLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28E4793A16CD9C14007B3A2A /* ShadowsLayer.mm */; };
 		28E4794016CD9C14007B3A2A /* GameplayLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28E4793B16CD9C14007B3A2A /* GameplayLayer.mm */; };
 		28E4794916CD9C7F007B3A2A /* Droid1.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794116CD9C7F007B3A2A /* Droid1.png */; };
@@ -193,6 +193,8 @@
 		28D4F2FF16D3E9B300F3C326 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-hd.png"; path = "Resources/fps_images-hd.png"; sourceTree = "<group>"; };
 		28D4F30016D3E9B300F3C326 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-ipadhd.png"; path = "Resources/fps_images-ipadhd.png"; sourceTree = "<group>"; };
 		28D4F30116D3E9B300F3C326 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = Resources/fps_images.png; sourceTree = "<group>"; };
+		28E079B816D41B8C007011F2 /* GameplayScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameplayScene.h; sourceTree = "<group>"; };
+		28E079B916D41B8C007011F2 /* GameplayScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameplayScene.mm; sourceTree = "<group>"; };
 		28E476FC16CD9BA7007B3A2A /* Game of Shadows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game of Shadows.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28E476FF16CD9BA7007B3A2A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		28E4770116CD9BA7007B3A2A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -545,9 +547,7 @@
 		28E4793416CD9C14007B3A2A /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BackgroundLayer.mm; sourceTree = "<group>"; };
 		28E4793616CD9C14007B3A2A /* GameplayLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameplayLayer.h; sourceTree = "<group>"; };
-		28E4793716CD9C14007B3A2A /* GameplayScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameplayScene.h; sourceTree = "<group>"; };
 		28E4793816CD9C14007B3A2A /* ShadowsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowsLayer.h; sourceTree = "<group>"; };
-		28E4793916CD9C14007B3A2A /* GameplayScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameplayScene.mm; sourceTree = "<group>"; };
 		28E4793A16CD9C14007B3A2A /* ShadowsLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShadowsLayer.mm; sourceTree = "<group>"; };
 		28E4793B16CD9C14007B3A2A /* GameplayLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameplayLayer.mm; sourceTree = "<group>"; };
 		28E4794116CD9C7F007B3A2A /* Droid1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Droid1.png; path = Resources/Droid1.png; sourceTree = "<group>"; };
@@ -618,14 +618,12 @@
 			children = (
 				28E4793216CD9C14007B3A2A /* AppDelegate.h */,
 				28E4793316CD9C14007B3A2A /* AppDelegate.mm */,
-				28E4793716CD9C14007B3A2A /* GameplayScene.h */,
-				28E4793916CD9C14007B3A2A /* GameplayScene.mm */,
+				28E079B816D41B8C007011F2 /* GameplayScene.h */,
+				28E079B916D41B8C007011F2 /* GameplayScene.mm */,
 				28E4793416CD9C14007B3A2A /* BackgroundLayer.h */,
 				28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */,
 				28E4793616CD9C14007B3A2A /* GameplayLayer.h */,
 				28E4793B16CD9C14007B3A2A /* GameplayLayer.mm */,
-				28E4793716CD9C14007B3A2A /* GameplayScene.h */,
-				28E4793916CD9C14007B3A2A /* GameplayScene.mm */,
 				28E4793816CD9C14007B3A2A /* ShadowsLayer.h */,
 				28E4793A16CD9C14007B3A2A /* ShadowsLayer.mm */,
 				C0C1795D16D072580060BAD4 /* PhysicsSprite.h */,
@@ -1393,9 +1391,9 @@
 				28E4791B16CD9BAA007B3A2A /* main.m in Sources */,
 				28E4793C16CD9C14007B3A2A /* AppDelegate.mm in Sources */,
 				28E4793D16CD9C14007B3A2A /* BackgroundLayer.mm in Sources */,
-				28E4793E16CD9C14007B3A2A /* GameplayScene.mm in Sources */,
 				28E4793F16CD9C14007B3A2A /* ShadowsLayer.mm in Sources */,
 				28E4794016CD9C14007B3A2A /* GameplayLayer.mm in Sources */,
+				28E079BA16D41B8C007011F2 /* GameplayScene.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,10 +16,6 @@
         background.position = ccp(wins.height / 2, wins.width / 2);
         [self addChild:background];
         
-        CCSprite* touchSection = [CCSprite spriteWithFile:@"TouchSection.png"];
-        [touchSection setPosition:ccp(512, 125)];
-        touchSection.opacity = 50;
-        [self addChild:touchSection];
     }
     return self;
 }
