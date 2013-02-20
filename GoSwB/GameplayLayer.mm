@@ -100,7 +100,7 @@
     physicsWorldLeft = NULL;
     physicsWorldRight = NULL;
     
-    [self updatePhysicsGroundBody];
+    [self initPhysicsGroundBody];
 }
 
 // Physics step update function.
@@ -146,7 +146,7 @@
     return ccpMult(CGPointMake(vector.x, vector.y), PTM_RATIO);
 }
 
-- (void)updatePhysicsGroundBody
+- (void)initPhysicsGroundBody
 {
     // Remove existing fixtures, if any.
     if (physicsWorldBottom != NULL)
@@ -302,9 +302,11 @@
             touchedObjectTag = objectsContainer.tag;
             //update the location to relative position for children
             location = [self fromLayerCoord2Container:location];
-            for (CCSprite* child in objectsContainer.children) {
+            for (PhysicsSprite* child in objectsContainer.children) {
                 if (CGRectContainsPoint([child boundingBox], location)) {
                     touchedObjectTag = child.tag;
+                    b2Body* body = [child getPhysicsBody];
+                    body->SetAwake(false);
                     break;
                 }
             }
@@ -322,7 +324,7 @@
     }
     
     // Physics section. Turn off all physics calculations.
-    droid1Body -> SetAwake(false);
+    //droid1Body -> SetAwake(false);
     /*for (id body in objectBodyArray)
     {
         b2Body* objectBody = (b2Body*)body;
@@ -427,17 +429,28 @@
                 //if OMS itself got tapped, then cleanning
                 touchOperation = NONE;
                 touchedObjectTag = NOTAG;
-                [self updatePhysicsGroundBody];
+                //[self updatePhysicsGroundBody];
             } else {
                 //show circle around tapped object, start to rotate
                 [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
                 touchOperation = ROTATING;
+                
             }
         } else {
             //here its either rotation finished or moving finished
             if (touchOperation == ROTATING) {
                 [self toggleRotationCircle:NO];
             }
+            
+            //when finished with moving or rotating object
+            //wake physical calculation
+            if (touchedObjectTag != objectsContainer.tag) {
+                PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+                [cur getPhysicsBody]->SetAwake(true);
+            }
+            
+
+            
             touchOperation = NONE;
             touchedObjectTag = NOTAG;
 
@@ -448,7 +461,7 @@
     [touchArray removeAllObjects];
     
     // Physics section. Turn on all physics calculations.
-    droid1Body -> SetAwake(true);
+    //droid1Body -> SetAwake(true);
     /*for (id body in objectBodyArray)
     {
         b2Body* objectBody = (b2Body*)body;
