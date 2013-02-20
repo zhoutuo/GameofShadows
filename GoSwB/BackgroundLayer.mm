@@ -13,7 +13,7 @@
     if (self = [super init]) {
         CGSize wins = [[CCDirector sharedDirector] winSize];
         CCSprite* background = [CCSprite spriteWithFile:@"Background.png"];
-        background.position = ccp(wins.height / 2, wins.width / 2);
+        background.position = ccp(wins.width / 2, wins.height / 2);
         [self addChild:background];
         
     }

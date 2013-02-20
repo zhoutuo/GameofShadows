@@ -10,6 +10,8 @@
 
 #import "AppDelegate.h"
 #import "GameplayScene.h"
+#import "CCBReader.h"
+
 @implementation AppController
 
 @synthesize window=window_, navController=navController_, director=director_;
@@ -71,8 +73,15 @@
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
+    //Load the main menu scene from ccbi file
+    CCScene* mainScene = [CCBReader sceneWithNodeGraphFromFile:@"MainMenuScene.ccbi"];
+    
+	// Then add the scene to the stack. The director will run it when it automatically when the view is displayed.
+	[director_ pushScene: mainScene];
+    
+    //TODO: Add to play
 	// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-	[director_ pushScene: [GameplayScene node]];
+	//[director_ pushScene: [GameplayScene node]];
 
 	
 	// Create a Navigation Controller with the Director
