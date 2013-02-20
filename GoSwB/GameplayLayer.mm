@@ -109,6 +109,30 @@
     int32 velocityIterations = 8;
     int32 positionIterations = 1;
     physicsWorld -> Step(delta, velocityIterations, positionIterations);
+    
+    
+    //update the position of sprites accordingly
+    GameplayScene* scene = (GameplayScene*)self.parent;
+    
+    for (b2Body* body = physicsWorld->GetBodyList(); body; body = body->GetNext()) {
+        if (body->GetUserData()) {
+            
+            //translation
+            CCSprite* sprite = (CCSprite*) body->GetUserData();
+            sprite.position = ccp(body->GetPosition().x * PTM_RATIO,
+                                  body->GetPosition().y * PTM_RATIO);
+            
+            //tell scene we are done with moving one object
+            [scene finishMovingOneObject:sprite.tag withRatio:[self getSpriteRelativePos:sprite]];
+            
+            //rotation
+            float angel = CC_RADIANS_TO_DEGREES(body->GetAngle());
+//            CCLOG(@"%f", CC_RADIANS_TO_DEGREES(radians));
+            sprite.rotation = angel;
+            [scene finishRotatingOneObject:sprite.tag withAngle:angel];
+
+        }
+    }
 }
 
 // Helper methods for pixel-meter conversions for Box2D.
@@ -166,13 +190,13 @@
     physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
 }
 
-- (void)updateSprite:(int)index
-{
-    //PhysicsSprite* selectedSprite = (PhysicsSprite*)[objectSpriteArray objectAtIndex:index];
-    //b2Body* selectedBody = (b2Body*)[objectBodyArray objectAtIndex:index];
-    //selectedBody -> SetTransform([self toMeters:selectedSprite.position], 0.0);
-    droid1Body -> SetTransform([self toMeters:droid1.position], 0.0);
-}
+//-(void)updateSprite:(int)index
+//{
+//    //PhysicsSprite* selectedSprite = (PhysicsSprite*)[objectSpriteArray objectAtIndex:index];
+//    //b2Body* selectedBody = (b2Body*)[objectBodyArray objectAtIndex:index];
+//    //selectedBody -> SetTransform([self toMeters:selectedSprite.position], 0.0);
+//    droid1Body -> SetTransform([self toMeters:droid1.position], 0.0);
+//}
 
 
 -(void) dealloc {
@@ -359,15 +383,18 @@
             location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
             location.y = MAX(location.y, spriteBox.height / 2);
             touched.position = location;
-            [self updateSprite:0];
-            GameplayScene* scene = (GameplayScene*)self.parent;
-            //tell scene we are done with moving one object
-            [scene finishMovingOneObject:touched.tag withRatio:[self getSpriteRelativePos:touched]];
+            //moving the physical body as well
+            b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
+            body->SetTransform([self toMeters:location], body->GetAngle());
+            
+//            GameplayScene* scene = (GameplayScene*)self.parent;
+//            //tell scene we are done with moving one object
+//            [scene finishMovingOneObject:touched.tag withRatio:[self getSpriteRelativePos:touched]];
         }
         
     } else {
         assert(touchOperation == ROTATING);
-        CCSprite* rotated = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+        PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
         CGPoint relativeCenter = [self fromContainerCoord2Layer:rotated.position];
         CGPoint rotatePoint = ccpAdd(relativeCenter, ccp(0, 100));
         rotatePoint = ccpSub(rotatePoint, relativeCenter);
@@ -379,9 +406,12 @@
         }
         angle = CC_RADIANS_TO_DEGREES(angle);
         rotated.rotation = angle;
-        GameplayScene* scene = (GameplayScene*)self.parent;
-        //tell scene we are done with rotating one object
-        [scene finishRotatingOneObject:touchedObjectTag withAngle:angle];
+        //rotate the physical body as well
+        b2Body* body = [rotated getPhysicsBody];
+        body->SetTransform(body->GetPosition(), CC_DEGREES_TO_RADIANS(angle));
+//        GameplayScene* scene = (GameplayScene*)self.parent;
+//        //tell scene we are done with rotating one object
+//        [scene finishRotatingOneObject:touchedObjectTag withAngle:angle];
     }
 }
 

@@ -7,7 +7,6 @@
 //
 #import "ShadowsLayer.h"
 #import "GameplayScene.h"
-#define PTM_RATIO 32.0
 
 
 @implementation ShadowsLayer
