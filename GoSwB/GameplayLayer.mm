@@ -13,8 +13,8 @@
 
 
 #define NOTAG -1
-#define BACKGROUND_DEPTH 0
-#define OBJECT_DEPTH 1
+#define BACKGROUND_DEPTH 1
+#define OBJECT_DEPTH -1
 
 -(id) init {
     if (self = [super init]) {
@@ -67,7 +67,7 @@
     
     // Define a box shape (for now) for the droid object.
     b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(1.0f, 1.0f);
+    dynamicBox.SetAsBox(1.3f, 1.3f);
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
