@@ -100,7 +100,7 @@
     physicsWorldLeft = NULL;
     physicsWorldRight = NULL;
     
-    [self updatePhysicsGroundBody];
+    [self initPhysicsGroundBody];
 }
 
 // Physics step update function.
@@ -109,6 +109,30 @@
     int32 velocityIterations = 8;
     int32 positionIterations = 1;
     physicsWorld -> Step(delta, velocityIterations, positionIterations);
+    
+    
+    //update the position of sprites accordingly
+    GameplayScene* scene = (GameplayScene*)self.parent;
+    
+    for (b2Body* body = physicsWorld->GetBodyList(); body; body = body->GetNext()) {
+        if (body->GetUserData()) {
+            
+            //translation
+            CCSprite* sprite = (CCSprite*) body->GetUserData();
+            sprite.position = ccp(body->GetPosition().x * PTM_RATIO,
+                                  body->GetPosition().y * PTM_RATIO);
+            
+            //tell scene we are done with moving one object
+            [scene finishMovingOneObject:sprite.tag withRatio:[self getSpriteRelativePos:sprite]];
+            
+            //rotation
+            float angel = CC_RADIANS_TO_DEGREES(body->GetAngle());
+//            CCLOG(@"%f", CC_RADIANS_TO_DEGREES(radians));
+            sprite.rotation = angel;
+            [scene finishRotatingOneObject:sprite.tag withAngle:angel];
+
+        }
+    }
 }
 
 // Helper methods for pixel-meter conversions for Box2D.
@@ -122,7 +146,7 @@
     return ccpMult(CGPointMake(vector.x, vector.y), PTM_RATIO);
 }
 
-- (void)updatePhysicsGroundBody
+- (void)initPhysicsGroundBody
 {
     // Remove existing fixtures, if any.
     if (physicsWorldBottom != NULL)
@@ -166,13 +190,13 @@
     physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
 }
 
-- (void)updateSprite:(int)index
-{
-    //PhysicsSprite* selectedSprite = (PhysicsSprite*)[objectSpriteArray objectAtIndex:index];
-    //b2Body* selectedBody = (b2Body*)[objectBodyArray objectAtIndex:index];
-    //selectedBody -> SetTransform([self toMeters:selectedSprite.position], 0.0);
-    droid1Body -> SetTransform([self toMeters:droid1.position], 0.0);
-}
+//-(void)updateSprite:(int)index
+//{
+//    //PhysicsSprite* selectedSprite = (PhysicsSprite*)[objectSpriteArray objectAtIndex:index];
+//    //b2Body* selectedBody = (b2Body*)[objectBodyArray objectAtIndex:index];
+//    //selectedBody -> SetTransform([self toMeters:selectedSprite.position], 0.0);
+//    droid1Body -> SetTransform([self toMeters:droid1.position], 0.0);
+//}
 
 
 -(void) dealloc {
@@ -278,9 +302,11 @@
             touchedObjectTag = objectsContainer.tag;
             //update the location to relative position for children
             location = [self fromLayerCoord2Container:location];
-            for (CCSprite* child in objectsContainer.children) {
+            for (PhysicsSprite* child in objectsContainer.children) {
                 if (CGRectContainsPoint([child boundingBox], location)) {
                     touchedObjectTag = child.tag;
+                    b2Body* body = [child getPhysicsBody];
+                    body->SetAwake(false);
                     break;
                 }
             }
@@ -298,7 +324,7 @@
     }
     
     // Physics section. Turn off all physics calculations.
-    droid1Body -> SetAwake(false);
+    //droid1Body -> SetAwake(false);
     /*for (id body in objectBodyArray)
     {
         b2Body* objectBody = (b2Body*)body;
@@ -359,15 +385,18 @@
             location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
             location.y = MAX(location.y, spriteBox.height / 2);
             touched.position = location;
-            [self updateSprite:0];
-            GameplayScene* scene = (GameplayScene*)self.parent;
-            //tell scene we are done with moving one object
-            [scene finishMovingOneObject:touched.tag withRatio:[self getSpriteRelativePos:touched]];
+            //moving the physical body as well
+            b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
+            body->SetTransform([self toMeters:location], body->GetAngle());
+            
+//            GameplayScene* scene = (GameplayScene*)self.parent;
+//            //tell scene we are done with moving one object
+//            [scene finishMovingOneObject:touched.tag withRatio:[self getSpriteRelativePos:touched]];
         }
         
     } else {
         assert(touchOperation == ROTATING);
-        CCSprite* rotated = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+        PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
         CGPoint relativeCenter = [self fromContainerCoord2Layer:rotated.position];
         CGPoint rotatePoint = ccpAdd(relativeCenter, ccp(0, 100));
         rotatePoint = ccpSub(rotatePoint, relativeCenter);
@@ -379,9 +408,12 @@
         }
         angle = CC_RADIANS_TO_DEGREES(angle);
         rotated.rotation = angle;
-        GameplayScene* scene = (GameplayScene*)self.parent;
-        //tell scene we are done with rotating one object
-        [scene finishRotatingOneObject:touchedObjectTag withAngle:angle];
+        //rotate the physical body as well
+        b2Body* body = [rotated getPhysicsBody];
+        body->SetTransform(body->GetPosition(), CC_DEGREES_TO_RADIANS(angle));
+//        GameplayScene* scene = (GameplayScene*)self.parent;
+//        //tell scene we are done with rotating one object
+//        [scene finishRotatingOneObject:touchedObjectTag withAngle:angle];
     }
 }
 
@@ -397,17 +429,28 @@
                 //if OMS itself got tapped, then cleanning
                 touchOperation = NONE;
                 touchedObjectTag = NOTAG;
-                [self updatePhysicsGroundBody];
+                //[self updatePhysicsGroundBody];
             } else {
                 //show circle around tapped object, start to rotate
                 [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
                 touchOperation = ROTATING;
+                
             }
         } else {
             //here its either rotation finished or moving finished
             if (touchOperation == ROTATING) {
                 [self toggleRotationCircle:NO];
             }
+            
+            //when finished with moving or rotating object
+            //wake physical calculation
+            if (touchedObjectTag != objectsContainer.tag) {
+                PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+                [cur getPhysicsBody]->SetAwake(true);
+            }
+            
+
+            
             touchOperation = NONE;
             touchedObjectTag = NOTAG;
 
@@ -418,7 +461,7 @@
     [touchArray removeAllObjects];
     
     // Physics section. Turn on all physics calculations.
-    droid1Body -> SetAwake(true);
+    //droid1Body -> SetAwake(true);
     /*for (id body in objectBodyArray)
     {
         b2Body* objectBody = (b2Body*)body;
