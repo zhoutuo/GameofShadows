@@ -170,15 +170,6 @@
 
 - (void)initPhysicsGroundBody
 {
-    // Remove existing fixtures, if any.
-//    if (physicsWorldBottom != NULL)
-//        physicsGroundBody -> DestroyFixture(physicsWorldBottom);
-//    if (physicsWorldTop != NULL)
-//        physicsGroundBody -> DestroyFixture(physicsWorldTop);
-//    if (physicsWorldLeft != NULL)
-//        physicsGroundBody -> DestroyFixture(physicsWorldLeft);
-//    if (physicsWorldRight != NULL)
-//        physicsGroundBody -> DestroyFixture(physicsWorldRight);
     
     // Define the ground box shape.
     // This should be the OMS.
@@ -188,8 +179,8 @@
     b2EdgeShape physicsGroundBox;
     int density = 0;
     
-    float OMSOriginX = 0.0f; //[objectsContainer position].x / PTM_RATIO;
-    float OMSOriginY = 0.0f; //[objectsContainer position].y / PTM_RATIO;
+    float OMSOriginX = 0.0f;
+    float OMSOriginY = 0.0f;
     
     
     CCLOG(@"OMS Origin = %.2f, %.2f", OMSOriginX, OMSOriginY);
@@ -200,16 +191,16 @@
     physicsWorldBottom = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
     
     // Ground Box Top.
-//    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight));
-//    physicsWorldTop = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
-//    
+    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight));
+    physicsWorldTop = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+    
     // Ground Box Left.
-//    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight));
-//    physicsWorldLeft = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
-//    
-//    // Ground Box Right.
-//    physicsGroundBox.Set(b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
-//    physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight));
+    physicsWorldLeft = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+
+    // Ground Box Right.
+    physicsGroundBox.Set(b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
+    physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
 }
 
 
@@ -319,7 +310,7 @@
                 if (CGRectContainsPoint([child boundingBox], location)) {
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
-                    body->SetAwake(false);
+                    body->SetActive(false);
                     break;
                 }
             }
@@ -333,7 +324,7 @@
         if (!CGRectContainsPoint(rotationCircle.boundingBox, location)) {
             [self toggleRotationCircle:NO];
             PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-            [cur getPhysicsBody]->SetAwake(true);
+            [cur getPhysicsBody]->SetActive(true);
             touchedObjectTag = NOTAG;
         }
     }
@@ -414,7 +405,7 @@
                 //when finished with rotating object
                 //wake physical calculation
                 PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-                [cur getPhysicsBody]->SetAwake(true);
+                [cur getPhysicsBody]->SetActive(true);
                 
                 //clean
                 touchOperation = NONE;
