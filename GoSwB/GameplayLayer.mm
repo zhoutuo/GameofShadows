@@ -149,14 +149,14 @@
 - (void)initPhysicsGroundBody
 {
     // Remove existing fixtures, if any.
-    if (physicsWorldBottom != NULL)
-        physicsGroundBody -> DestroyFixture(physicsWorldBottom);
-    if (physicsWorldTop != NULL)
-        physicsGroundBody -> DestroyFixture(physicsWorldTop);
-    if (physicsWorldLeft != NULL)
-        physicsGroundBody -> DestroyFixture(physicsWorldLeft);
-    if (physicsWorldRight != NULL)
-        physicsGroundBody -> DestroyFixture(physicsWorldRight);
+//    if (physicsWorldBottom != NULL)
+//        physicsGroundBody -> DestroyFixture(physicsWorldBottom);
+//    if (physicsWorldTop != NULL)
+//        physicsGroundBody -> DestroyFixture(physicsWorldTop);
+//    if (physicsWorldLeft != NULL)
+//        physicsGroundBody -> DestroyFixture(physicsWorldLeft);
+//    if (physicsWorldRight != NULL)
+//        physicsGroundBody -> DestroyFixture(physicsWorldRight);
     
     // Define the ground box shape.
     // This should be the OMS.
@@ -178,25 +178,17 @@
     physicsWorldBottom = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
     
     // Ground Box Top.
-    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight));
-    physicsWorldTop = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
-    
+//    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight));
+//    physicsWorldTop = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+//    
     // Ground Box Left.
-    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight));
-    physicsWorldLeft = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
-    
-    // Ground Box Right.
-    physicsGroundBox.Set(b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
-    physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+//    physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX, OMSOriginY + physicsGroundBoxHeight));
+//    physicsWorldLeft = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+//    
+//    // Ground Box Right.
+//    physicsGroundBox.Set(b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
+//    physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
 }
-
-//-(void)updateSprite:(int)index
-//{
-//    //PhysicsSprite* selectedSprite = (PhysicsSprite*)[objectSpriteArray objectAtIndex:index];
-//    //b2Body* selectedBody = (b2Body*)[objectBodyArray objectAtIndex:index];
-//    //selectedBody -> SetTransform([self toMeters:selectedSprite.position], 0.0);
-//    droid1Body -> SetTransform([self toMeters:droid1.position], 0.0);
-//}
 
 
 -(void) dealloc {
@@ -299,7 +291,6 @@
         //user a tap will invoker this function
         touchOperation = TAP;
         if (CGRectContainsPoint([objectsContainer boundingBox], location)) {
-            touchedObjectTag = objectsContainer.tag;
             //update the location to relative position for children
             location = [self fromLayerCoord2Container:location];
             for (PhysicsSprite* child in objectsContainer.children) {
@@ -318,18 +309,12 @@
         //if the first tap for rotating is not inside the circle
         //cancel the rotating
         if (!CGRectContainsPoint(rotationCircle.boundingBox, location)) {
-            [self toggleRotationCircle: NO];
+            [self toggleRotationCircle:NO];
+            PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+            [cur getPhysicsBody]->SetAwake(true);
             touchedObjectTag = NOTAG;
         }
     }
-    
-    // Physics section. Turn off all physics calculations.
-    //droid1Body -> SetAwake(false);
-    /*for (id body in objectBodyArray)
-    {
-        b2Body* objectBody = (b2Body*)body;
-        objectBody -> SetAwake(false);
-    }*/
     
 }
 
@@ -344,55 +329,30 @@
     }
     
     //all touch opeartions entering this method can only be tap/moving or rotation
-    
     if (touchOperation == TAP || touchOperation == MOVING) {
         //since our touch is moving
         touchOperation = MOVING;
         [touchArray addObject:[NSValue valueWithCGPoint:location]];
-        
-        
+
         //try to check whether the touched sprite is the objects container or not
-        CCSprite* touched = nil;
+        CCSprite* touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
         CGRect rect = objectsContainer.boundingBox;
-        if (touchedObjectTag == objectsContainer.tag) {
-            touched = objectsContainer;
-            //modifer locaiton to make sure that the location is in the middle
-            //of the touchrect, because default anchor point is lower left corner
-            //when you try to move the rect, the center pointer is left corner, it's user unfriendly
-            //make the location lefter and lower than it is supposed to
-            location.x -= rect.size.width / 2;
-            location.y -= rect.size.height / 2;
-            
-            //make sure that the OMS is inside the screen
-            CGSize wins = [[CCDirector sharedDirector] winSize];
-            location.x = MAX(0, location.x);
-            location.x = MIN(wins.width - rect.size.width,  location.x);
-            
-            location.y = MAX(0, location.y);
-            location.y = MIN(wins.height - rect.size.height, location.y);
-            
-            
-            touched.position = location;
-        } else {
-            touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-            //since we did not change the anchor point of the children sprites
-            //we do not need to change the position of locaiton
-            //but we need to make sure that the location is inside the touch rect
-            location = [self fromLayerCoord2Container:location];
-            CGSize spriteBox = [touched boundingBox].size;
-            location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
-            location.x = MAX(location.x, spriteBox.width / 2);
-            location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
-            location.y = MAX(location.y, spriteBox.height / 2);
-            touched.position = location;
-            //moving the physical body as well
-            b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
-            body->SetTransform([self toMeters:location], body->GetAngle());
-            
-//            GameplayScene* scene = (GameplayScene*)self.parent;
-//            //tell scene we are done with moving one object
-//            [scene finishMovingOneObject:touched.tag withRatio:[self getSpriteRelativePos:touched]];
-        }
+
+        //since we did not change the anchor point of the children sprites
+        //we do not need to change the position of locaiton
+        //but we need to make sure that the location is inside the touch rect
+        location = [self fromLayerCoord2Container:location];
+        
+        CGSize spriteBox = [touched boundingBox].size;
+        location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
+        location.x = MAX(location.x, spriteBox.width / 2);
+        location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
+        location.y = MAX(location.y, spriteBox.height / 2);
+        touched.position = location;
+        CCLOG(@"%f, %f", location.x, location.y);
+        //moving the physical body as well
+        b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
+        body->SetTransform([self toMeters:location], body->GetAngle());
         
     } else {
         assert(touchOperation == ROTATING);
@@ -411,62 +371,42 @@
         //rotate the physical body as well
         b2Body* body = [rotated getPhysicsBody];
         body->SetTransform(body->GetPosition(), CC_DEGREES_TO_RADIANS(angle));
-//        GameplayScene* scene = (GameplayScene*)self.parent;
-//        //tell scene we are done with rotating one object
-//        [scene finishRotatingOneObject:touchedObjectTag withAngle:angle];
+
     }
 }
 
 -(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    //if user touch somewhere else in the screen other than OMS
     if (touchedObjectTag == NOTAG) {
         touchOperation = NONE;
     } else {
         if (touchOperation == TAP) {
-            //then check which part of tapped
-            if (touchedObjectTag == objectsContainer.tag) {
-                //if OMS itself got tapped, then cleanning
-                touchOperation = NONE;
-                touchedObjectTag = NOTAG;
-                //[self updatePhysicsGroundBody];
-            } else {
-                //show circle around tapped object, start to rotate
-                [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
-                touchOperation = ROTATING;
-                
-            }
+            //show circle around tapped object, start to rotate
+            [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
+            touchOperation = ROTATING;
+            
         } else {
             //here its either rotation finished or moving finished
             if (touchOperation == ROTATING) {
                 [self toggleRotationCircle:NO];
-            }
-            
-            //when finished with moving or rotating object
-            //wake physical calculation
-            if (touchedObjectTag != objectsContainer.tag) {
+                //when finished with rotating object
+                //wake physical calculation
                 PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
                 [cur getPhysicsBody]->SetAwake(true);
+                
+                //clean
+                touchOperation = NONE;
+                touchedObjectTag = NOTAG;
+            } else {
+                //show circle around tapped object, start to rotate
+                [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
+                touchOperation = ROTATING;
             }
-            
-
-            
-            touchOperation = NONE;
-            touchedObjectTag = NOTAG;
-
         }
     }
     
     //clear the touch array
     [touchArray removeAllObjects];
-    
-    // Physics section. Turn on all physics calculations.
-    //droid1Body -> SetAwake(true);
-    /*for (id body in objectBodyArray)
-    {
-        b2Body* objectBody = (b2Body*)body;
-        objectBody -> SetAwake(true);
-    }*/
 }
 
 @end
