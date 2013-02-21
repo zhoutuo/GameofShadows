@@ -75,6 +75,28 @@
     droid1Body -> CreateFixture(&fixtureDef);
     [droid1 setPhysicsBody:droid1Body];
     
+    droid1 = [PhysicsSprite spriteWithFile:@"Droid1.png"];
+    [droid1 setPosition:ccp(200, 100)]; //this is the relative position to the objects container after attaching
+    [objectsContainer addChild:droid1 z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+    
+    // Create a body for the droid object.
+    b2BodyDef droid2BodyDef;
+    droid2BodyDef.type = b2_dynamicBody;
+    droid2BodyDef.position = [self toMeters:droid1.position];
+    droid1Body = physicsWorld -> CreateBody(&droid1BodyDef);
+    droid1Body -> SetUserData((void*)droid1);
+    
+    // Define a box shape (for now) for the droid object.
+    b2PolygonShape dynamicBox2;
+    dynamicBox2.SetAsBox(0.7f, 1.3f);
+    b2FixtureDef fixtureDef2;
+    fixtureDef2.shape = &dynamicBox;
+    fixtureDef2.density = 1.0f;
+    fixtureDef2.friction = 0.3f;
+    fixtureDef2.restitution = 0.2f;
+    droid1Body -> CreateFixture(&fixtureDef2);
+    [droid1 setPhysicsBody:droid1Body];
+    
     // Add sprite and body to object arrays.
     [objectSpriteArray addObject:droid1];
     //[objectBodyArray addObject:(id)droid1Body];
