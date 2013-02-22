@@ -310,6 +310,7 @@
                 if (CGRectContainsPoint([child boundingBox], location)) {
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
+                    body->SetAwake(false);
                     body->SetActive(false);
                     break;
                 }
@@ -324,7 +325,9 @@
         if (!CGRectContainsPoint(rotationCircle.boundingBox, location)) {
             [self toggleRotationCircle:NO];
             PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-            [cur getPhysicsBody]->SetActive(true);
+            b2Body* body = [cur getPhysicsBody];
+            body->SetActive(true);
+            body->SetAwake(true);
             touchedObjectTag = NOTAG;
         }
     }
@@ -405,8 +408,9 @@
                 //when finished with rotating object
                 //wake physical calculation
                 PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-                [cur getPhysicsBody]->SetActive(true);
-                
+                b2Body* body = [cur getPhysicsBody];
+                body->SetActive(true);
+                body->SetAwake(true);
                 //clean
                 touchOperation = NONE;
                 touchedObjectTag = NOTAG;
