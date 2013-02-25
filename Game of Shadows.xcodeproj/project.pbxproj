@@ -222,6 +222,7 @@
 		28E4794E16CD9C7F007B3A2A /* ball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794616CD9C7F007B3A2A /* ball-hd.png */; };
 		28E4794F16CD9C7F007B3A2A /* play_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794716CD9C7F007B3A2A /* play_bg.png */; };
 		28E4795016CD9C7F007B3A2A /* rotate_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794816CD9C7F007B3A2A /* rotate_circle.png */; };
+		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
 /* End PBXBuildFile section */
 
@@ -637,6 +638,8 @@
 		28E4794616CD9C7F007B3A2A /* ball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ball-hd.png"; path = "Resources/ball-hd.png"; sourceTree = "<group>"; };
 		28E4794716CD9C7F007B3A2A /* play_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_bg.png; path = Resources/play_bg.png; sourceTree = "<group>"; };
 		28E4794816CD9C7F007B3A2A /* rotate_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rotate_circle.png; path = Resources/rotate_circle.png; sourceTree = "<group>"; };
+		82A0235316DC28BD00886573 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GB2ShapeCache.h; sourceTree = "<group>"; };
+		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		C0C1795D16D072580060BAD4 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -734,6 +737,7 @@
 				1E67DBA816D4753200BEF7CB /* MainMenuOptionsScene.mm */,
 				1E67DBA916D4753200BEF7CB /* MainMenuScene.h */,
 				1E67DBAA16D4753200BEF7CB /* MainMenuScene.mm */,
+				82A0235216DC28BD00886573 /* generic-box2d-plist */,
 				1E67DBAE16D4758500BEF7CB /* CCBReader */,
 				28E4771216CD9BA7007B3A2A /* Resources */,
 				28E4772C16CD9BA7007B3A2A /* libs */,
@@ -1297,6 +1301,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		82A0235216DC28BD00886573 /* generic-box2d-plist */ = {
+			isa = PBXGroup;
+			children = (
+				82A0235316DC28BD00886573 /* GB2ShapeCache.h */,
+				82A0235416DC28BD00886573 /* GB2ShapeCache.mm */,
+			);
+			path = "generic-box2d-plist";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1564,6 +1577,7 @@
 				1E67DBBE16D4758500BEF7CB /* CCBsequence.m in Sources */,
 				1E67DBBF16D4758500BEF7CB /* CCBSequenceProperty.m in Sources */,
 				1E67DBC016D4758500BEF7CB /* CCNode+CCBRelativePositioning.m in Sources */,
+				82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

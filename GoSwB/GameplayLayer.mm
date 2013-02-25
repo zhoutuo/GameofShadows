@@ -8,6 +8,7 @@
 
 #import "GameplayLayer.h"
 #import "GameplayScene.h"
+#import "GB2ShapeCache.h"
 
 @implementation GameplayLayer
 
@@ -65,15 +66,12 @@
     droid1Body = physicsWorld -> CreateBody(&droid1BodyDef);
     droid1Body -> SetUserData((void*)droid1);
     
-    // Define a box shape (for now) for the droid object.
-    b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(1.3f, 1.3f);
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &dynamicBox;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3f;
-    droid1Body -> CreateFixture(&fixtureDef);
+    //Using PhysicsEditor
+    [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"droid1_physicsBody.plist"];
+    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:droid1Body forShapeName: @"Droid1"];
+    
     [droid1 setPhysicsBody:droid1Body];
+    [droid1 setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape: @"Droid1"]];
     
     droid1 = [PhysicsSprite spriteWithFile:@"Droid1.png"];
     [droid1 setPosition:ccp(200, 100)]; //this is the relative position to the objects container after attaching
@@ -86,20 +84,19 @@
     droid1Body = physicsWorld -> CreateBody(&droid1BodyDef);
     droid1Body -> SetUserData((void*)droid1);
     
-    // Define a box shape (for now) for the droid object.
-    b2PolygonShape dynamicBox2;
-    dynamicBox2.SetAsBox(0.7f, 1.3f);
-    b2FixtureDef fixtureDef2;
-    fixtureDef2.shape = &dynamicBox;
-    fixtureDef2.density = 1.0f;
-    fixtureDef2.friction = 0.3f;
-    fixtureDef2.restitution = 0.2f;
-    droid1Body -> CreateFixture(&fixtureDef2);
+    //Using PhysicsEditor
+    [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"droid1_physicsBody.plist"];
+    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:droid1Body forShapeName: @"Droid1"];
+    
     [droid1 setPhysicsBody:droid1Body];
+    [droid1 setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape: @"Droid1"]];
+    
+    
     
     // Add sprite and body to object arrays.
     [objectSpriteArray addObject:droid1];
     //[objectBodyArray addObject:(id)droid1Body];
+
 }
 
 // Physics section
