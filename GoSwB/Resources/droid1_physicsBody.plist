@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+<!-- created with http://www.physicseditor.de -->
+
+<plist version="1.0">
+	<dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>1</integer>
+            <key>ptm_ratio</key>
+            <real>32</real>
+        </dict>
+        <key>bodies</key>
+		<dict>
+
+			<key>Droid1</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.4798,0.3685 }</string>
+				<key>fixtures</key>
+				<array>
+
+					<dict>
+                        <key>density</key> <real>13</real>
+                        <key>friction</key> <real>0.7</real>
+                        <key>restitution</key> <real>0.1</real>
+                        <key>filter_categoryBits</key> <integer>1</integer>
+                        <key>filter_groupIndex</key> <integer>0</integer>
+                        <key>filter_maskBits</key> <integer>65535</integer>
+                        <key>isSensor</key> <false/>
+                        <key>id</key> <string></string>
+                        <key>fixture_type</key> <string>POLYGON</string>
+
+						<key>polygons</key>
+						<array>
+							<array>	
+								<string>{ 13.130,36.521 }</string>	
+								<string>{ 8.130,29.521 }</string>	
+								<string>{ -18.870,-16.479 }</string>	
+								<string>{ -11.870,-18.479 }</string>	
+								<string>{ -2.870,-19.479 }</string>	
+								<string>{ 13.130,27.521 }</string>
+							</array>
+							<array>	
+								<string>{ -3.870,-27.479 }</string>	
+								<string>{ -2.870,-19.479 }</string>	
+								<string>{ -11.870,-18.479 }</string>	
+								<string>{ -9.870,-28.479 }</string>
+							</array>
+							<array>	
+								<string>{ -13.870,34.521 }</string>	
+								<string>{ -11.870,27.521 }</string>	
+								<string>{ -4.870,28.521 }</string>	
+								<string>{ -9.870,35.521 }</string>
+							</array>
+							<array>	
+								<string>{ 21.130,18.521 }</string>	
+								<string>{ 13.130,27.521 }</string>	
+								<string>{ -2.870,-19.479 }</string>	
+								<string>{ 5.130,-19.479 }</string>	
+								<string>{ 16.130,-16.479 }</string>	
+								<string>{ 21.130,5.521 }</string>
+							</array>
+							<array>	
+								<string>{ 8.130,-28.479 }</string>	
+								<string>{ 12.130,-28.479 }</string>	
+								<string>{ 16.130,-16.479 }</string>	
+								<string>{ 5.130,-19.479 }</string>
+							</array>
+							<array>	
+								<string>{ -11.870,27.521 }</string>	
+								<string>{ -19.870,16.521 }</string>	
+								<string>{ -18.870,-16.479 }</string>	
+								<string>{ 8.130,29.521 }</string>	
+								<string>{ -4.870,28.521 }</string>
+							</array>
+							<array>	
+								<string>{ 21.130,-15.479 }</string>	
+								<string>{ 21.130,5.521 }</string>	
+								<string>{ 16.130,-16.479 }</string>
+							</array>
+						</array>
+                    </dict>
+				</array>
+			</dict>
+		</dict>
+	</dict>
+</plist>
+
