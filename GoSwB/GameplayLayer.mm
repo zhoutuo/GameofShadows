@@ -35,10 +35,10 @@
         
         //background of the OMS. Shows the room.
         omsBackground = [CCSprite spriteWithFile: @"Room layout small window.png"];
-        CGSize omsBackgroundSize = [omsBackground boundingBox].size;
-        CGSize containerSize = [objectsContainer boundingBox].size;
-        [omsBackground setScaleX:containerSize.width/omsBackgroundSize.width];
-        [omsBackground setScaleY:containerSize.height/omsBackgroundSize.height];
+        //CGSize omsBackgroundSize = [omsBackground boundingBox].size;
+        //CGSize containerSize = [objectsContainer boundingBox].size;
+        //[omsBackground setScaleX:containerSize.width/omsBackgroundSize.width];
+        //[omsBackground setScaleY:containerSize.height/omsBackgroundSize.height];
         [omsBackground setOpacity: 150];
         [omsBackground setAnchorPoint:ccp(0,0)];
         [omsBackground setPosition:[objectsContainer position]];
@@ -227,6 +227,7 @@
     
     // Ground Box Bottom.
     physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
+    physicsGroundBody -> SetLinearDamping(0.6);
     physicsWorldBottom = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
     
     // Ground Box Top.
