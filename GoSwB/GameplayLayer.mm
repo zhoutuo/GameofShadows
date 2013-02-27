@@ -51,8 +51,38 @@
 // Creates an initializes arrays for the game objects and their corresponding physics bodies.
 - (void)setupObjects
 {
-    objectSpriteArray = [[NSMutableArray alloc] init];
-    objectBodyArray = [[NSMutableArray alloc] init];
+    [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"items.plist"];
+    NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
+    NSArray* objects = [levelObjects objectForKey:@"Level 01"];
+    float startX = 100.0f;
+    for (NSString* objectName in objects)
+    {
+        PhysicsSprite* objectSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", objectName]];
+        objectSprite.position = CGPointMake(startX, 200.0f);
+        b2BodyDef objectBodyDef;
+        objectBodyDef.type = b2_dynamicBody;
+        objectBodyDef.position.Set(objectSprite.position.x / PTM_RATIO, objectSprite.position.y / PTM_RATIO);
+        objectBodyDef.userData = objectSprite;
+        b2Body* objectBody = physicsWorld -> CreateBody(&objectBodyDef);
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:objectBody forShapeName:objectName];
+        [objectSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:objectName]];
+        [objectSprite setPhysicsBody:objectBody];
+        [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+        startX += 150.0f;
+    }
+
+    /*
+    PhysicsSprite* armchairSprite = [PhysicsSprite spriteWithFile:@"ArmChair.png"];
+    armchairSprite.position = CGPointMake(200, 200);
+    b2BodyDef armchairBodyDef;
+    armchairBodyDef.type = b2_dynamicBody;
+    armchairBodyDef.position.Set(armchairSprite.position.x / PTM_RATIO, armchairSprite.position.y / PTM_RATIO);
+    armchairBodyDef.userData = armchairSprite;
+    b2Body* armchairBody = physicsWorld -> CreateBody(&armchairBodyDef);
+    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:armchairBody forShapeName:@"ArmChair"];
+    [armchairSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"ArmChair"]];
+    [armchairSprite setPhysicsBody:armchairBody];
+    [objectsContainer addChild:armchairSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
     
     //add a test object for the layer
     droid1 = [PhysicsSprite spriteWithFile:@"Droid1.png"];
@@ -96,7 +126,7 @@
     // Add sprite and body to object arrays.
     [objectSpriteArray addObject:droid1];
     //[objectBodyArray addObject:(id)droid1Body];
-
+    */
 }
 
 // Physics section
@@ -180,8 +210,8 @@
     float OMSOriginY = 0.0f;
     
     
-    CCLOG(@"OMS Origin = %.2f, %.2f", OMSOriginX, OMSOriginY);
-    CCLOG(@"OMS Size = %.2f, %.2f", physicsGroundBoxWidth, physicsGroundBoxHeight);
+    //CCLOG(@"OMS Origin = %.2f, %.2f", OMSOriginX, OMSOriginY);
+    //CCLOG(@"OMS Size = %.2f, %.2f", physicsGroundBoxWidth, physicsGroundBoxHeight);
     
     // Ground Box Bottom.
     physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
