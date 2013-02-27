@@ -224,6 +224,8 @@
 		28E4795016CD9C7F007B3A2A /* rotate_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794816CD9C7F007B3A2A /* rotate_circle.png */; };
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
+		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
+		82EAD20116DCA468002F736F /* Room layout texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD20016DCA468002F736F /* Room layout texture.jpg */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
 /* End PBXBuildFile section */
 
@@ -642,6 +644,8 @@
 		82A0235316DC28BD00886573 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GB2ShapeCache.h; sourceTree = "<group>"; };
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
+		82EAD1FE16DCA460002F736F /* Room layout small window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window.png"; sourceTree = "<group>"; };
+		82EAD20016DCA468002F736F /* Room layout texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Room layout texture.jpg"; sourceTree = "<group>"; };
 		C0C1795D16D072580060BAD4 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -752,6 +756,8 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				82EAD1FE16DCA460002F736F /* Room layout small window.png */,
+				82EAD20016DCA468002F736F /* Room layout texture.jpg */,
 				28D4F30116D3E9B300F3C326 /* fps_images.png */,
 				28D4F2FF16D3E9B300F3C326 /* fps_images-hd.png */,
 				28D4F30016D3E9B300F3C326 /* fps_images-ipadhd.png */,
@@ -1410,6 +1416,8 @@
 				1E67DBA116D473F600BEF7CB /* Play.png in Resources */,
 				1E67DBA216D473F600BEF7CB /* Game of Shadows.png in Resources */,
 				82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */,
+				82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */,
+				82EAD20116DCA468002F736F /* Room layout texture.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,8 +30,20 @@
         //easier to contain all the children
         objectsContainer = [CCSprite spriteWithFile:@"play_bg.png"];
         [objectsContainer setAnchorPoint:ccp(0, 0)];
-        [objectsContainer setPosition:ccp(100, 100)];  //this is the relative position to the layer
+        [objectsContainer setPosition:ccp(0, 0)];  //this is the relative position to the layer
         [self addChild:objectsContainer z:BACKGROUND_DEPTH tag:[GameplayScene TagGenerater]];
+        
+        //background of the OMS. Shows the room.
+        omsBackground = [CCSprite spriteWithFile: @"Room layout small window.png"];
+        CGSize omsBackgroundSize = [omsBackground boundingBox].size;
+        CGSize containerSize = [objectsContainer boundingBox].size;
+        [omsBackground setScaleX:containerSize.width/omsBackgroundSize.width];
+        [omsBackground setScaleY:containerSize.height/omsBackgroundSize.height];
+        [omsBackground setOpacity: 150];
+        [omsBackground setAnchorPoint:ccp(0,0)];
+        [omsBackground setPosition:[objectsContainer position]];
+        [self addChild:omsBackground z:OBJECT_DEPTH-1];
+        
         
         
         //add rotation circle to the layer
@@ -291,6 +303,18 @@
     return ccpSub(point, objectsContainer.boundingBox.origin);
 }
 
+-(void) setOMSLocation : (bool) isLeft{
+    if(isLeft){
+        [objectsContainer setPosition:ccp(0, 0)];
+        [omsBackground setPosition:ccp(0,0)];
+    }else{
+        CGFloat winWidth = [CCDirector sharedDirector].winSize.width;
+        CGFloat width = [objectsContainer boundingBox].size.width;
+        [objectsContainer setPosition:ccp(winWidth - width,0)];
+        [omsBackground setPosition:ccp(winWidth - width,0)];
+    }
+}
+
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch* touch = [touches anyObject];
@@ -334,6 +358,7 @@
 -(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
+    [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
     location = [[CCDirector sharedDirector] convertToGL:location];
     
@@ -345,7 +370,6 @@
     if (touchOperation == TAP || touchOperation == MOVING) {
         //since our touch is moving
         touchOperation = MOVING;
-        [touchArray addObject:[NSValue valueWithCGPoint:location]];
 
         //try to check whether the touched sprite is the objects container or not
         CCSprite* touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
@@ -389,9 +413,29 @@
 }
 
 -(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    
+
     if (touchedObjectTag == NOTAG) {
         touchOperation = NONE;
+        CGPoint start;
+        [[touchArray objectAtIndex: 0 ] getValue:&start];
+        CGPoint end;
+        [[touchArray lastObject] getValue:&end];
+        //NSLog(@"start: %.2f, %.2f",start.x,start.y);
+        //NSLog(@"end: %.2f, %.2f",end.x,end.y);
+        float deltaX = end.x - start.x;
+        float deltaY = end.y - start.y;
+        //NSLog(@"deltax = %.2f", deltaX);
+        //NSLog(@"deltay = %.2f", deltaY);
+        if(deltaX > 200){
+         //swipe
+            [self setOMSLocation:false];
+        }else if(deltaX < -200){
+            [self setOMSLocation:true];
+        }else if(deltaY > 50){
+            NSLog(@"Swipe down");
+        }else if(deltaY < -50){
+            NSLog(@"Swipe up");
+        }
     } else {
         if (touchOperation == TAP) {
             //show circle around tapped object, start to rotate

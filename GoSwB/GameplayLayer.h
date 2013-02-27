@@ -23,6 +23,7 @@ typedef enum {
 @interface GameplayLayer : CCLayer {
     NSInteger touchedObjectTag;
     CCSprite* objectsContainer;
+    CCSprite* omsBackground;
     CGRect* containerBox;
     
     CCSprite* rotationCircle;
