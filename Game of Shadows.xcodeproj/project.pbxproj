@@ -226,6 +226,11 @@
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
 		82EAD20116DCA468002F736F /* Room layout texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD20016DCA468002F736F /* Room layout texture.jpg */; };
+		C07A02BD16DD846900D71044 /* ArmChair.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BA16DD846900D71044 /* ArmChair.png */; };
+		C07A02BE16DD846900D71044 /* Barrel.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BB16DD846900D71044 /* Barrel.png */; };
+		C07A02BF16DD846900D71044 /* Surfboard.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BC16DD846900D71044 /* Surfboard.png */; };
+		C07A02C116DD85B000D71044 /* items.plist in Resources */ = {isa = PBXBuildFile; fileRef = C07A02C016DD85B000D71044 /* items.plist */; };
+		C07A02C316DD8FDE00D71044 /* levelObjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = C07A02C216DD8FDE00D71044 /* levelObjects.plist */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
 /* End PBXBuildFile section */
 
@@ -646,6 +651,11 @@
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
 		82EAD1FE16DCA460002F736F /* Room layout small window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window.png"; sourceTree = "<group>"; };
 		82EAD20016DCA468002F736F /* Room layout texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Room layout texture.jpg"; sourceTree = "<group>"; };
+		C07A02BA16DD846900D71044 /* ArmChair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArmChair.png; sourceTree = "<group>"; };
+		C07A02BB16DD846900D71044 /* Barrel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Barrel.png; sourceTree = "<group>"; };
+		C07A02BC16DD846900D71044 /* Surfboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Surfboard.png; sourceTree = "<group>"; };
+		C07A02C016DD85B000D71044 /* items.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = items.plist; sourceTree = "<group>"; };
+		C07A02C216DD8FDE00D71044 /* levelObjects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = levelObjects.plist; sourceTree = "<group>"; };
 		C0C1795D16D072580060BAD4 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -758,6 +768,11 @@
 			children = (
 				82EAD1FE16DCA460002F736F /* Room layout small window.png */,
 				82EAD20016DCA468002F736F /* Room layout texture.jpg */,
+				C07A02C016DD85B000D71044 /* items.plist */,
+				C07A02BA16DD846900D71044 /* ArmChair.png */,
+				C07A02BB16DD846900D71044 /* Barrel.png */,
+				C07A02BC16DD846900D71044 /* Surfboard.png */,
+				C07A02C216DD8FDE00D71044 /* levelObjects.plist */,
 				28D4F30116D3E9B300F3C326 /* fps_images.png */,
 				28D4F2FF16D3E9B300F3C326 /* fps_images-hd.png */,
 				28D4F30016D3E9B300F3C326 /* fps_images-ipadhd.png */,
@@ -1418,6 +1433,11 @@
 				82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */,
 				82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */,
 				82EAD20116DCA468002F736F /* Room layout texture.jpg in Resources */,
+				C07A02BD16DD846900D71044 /* ArmChair.png in Resources */,
+				C07A02BE16DD846900D71044 /* Barrel.png in Resources */,
+				C07A02BF16DD846900D71044 /* Surfboard.png in Resources */,
+				C07A02C116DD85B000D71044 /* items.plist in Resources */,
+				C07A02C316DD8FDE00D71044 /* levelObjects.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
