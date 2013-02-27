@@ -8,7 +8,7 @@
 #import "ShadowsLayer.h"
 #import "GameplayScene.h"
 
-
+#define rotationThreshold 3.0f
 @implementation ShadowsLayer
 
 -(id) init {
@@ -16,6 +16,7 @@
         shadowHeightFactor = 2.0f;
         shadowWidthFactor = 2.0f;
         objShadowTable = [[NSMutableDictionary alloc] init];
+
     }
     return self;
 }
@@ -84,4 +85,56 @@
         child.rotation = angle;
     }
 }
+
+-(void) generateShadowMap {
+    
+    for (int i = 0; i < 768; ++i) {
+        for (int j = 0; j < 1024; ++j) {
+            shadowMap[i][j] = false;
+        }
+    }
+    
+    for (CCSprite* cur in self.children) {
+        CGRect boundingBox = cur.boundingBox;
+        CGRect textureRect = cur.textureRect;
+                
+        //if there is no rotation, just scan all points of boundingBox
+        if (cur.rotation < rotationThreshold or (360.0f - cur.rotation) < rotationThreshold) {
+            
+            CGPoint origin = boundingBox.origin;
+            for (int i = 0; i < boundingBox.size.height; ++i) {
+                for (int j = 0; j < boundingBox.size.width; ++j) {
+                    shadowMap[i + (int)origin.y][j + (int)origin.x] = true;
+                }
+            }
+        } else {
+            //if there is big rotation
+            CGPoint origin = boundingBox.origin;
+            for (int i = 0; i < boundingBox.size.height; ++i) {
+                for (int j = 0; j < boundingBox.size.width; ++j) {
+                    CGPoint pointInBoundingBox = ccpAdd(origin, ccp(j, i));
+                    
+                    if (CGRectContainsPoint(textureRect, [cur convertToNodeSpace:pointInBoundingBox])) {
+                        shadowMap[(int)pointInBoundingBox.y][(int)pointInBoundingBox.x] = true;
+                    }
+                }
+            }
+        }
+    }
+}
+
+-(void) testShadowMap:(CGPoint)testPoint {
+    CCLOG(@"%@", NSStringFromCGPoint(testPoint));
+    
+    int x = (int) testPoint.x;
+    int y = (int) testPoint.y;
+    
+    if (shadowMap[y][x]) {
+        CCLOG(@"yes");
+    } else {
+        CCLOG(@"no");
+    }
+    
+}
+
 @end

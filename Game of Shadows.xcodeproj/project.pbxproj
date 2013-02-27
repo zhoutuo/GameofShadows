@@ -225,12 +225,18 @@
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
-		82EAD20116DCA468002F736F /* Room layout texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD20016DCA468002F736F /* Room layout texture.jpg */; };
 		C07A02BD16DD846900D71044 /* ArmChair.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BA16DD846900D71044 /* ArmChair.png */; };
 		C07A02BE16DD846900D71044 /* Barrel.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BB16DD846900D71044 /* Barrel.png */; };
 		C07A02BF16DD846900D71044 /* Surfboard.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BC16DD846900D71044 /* Surfboard.png */; };
 		C07A02C116DD85B000D71044 /* items.plist in Resources */ = {isa = PBXBuildFile; fileRef = C07A02C016DD85B000D71044 /* items.plist */; };
 		C07A02C316DD8FDE00D71044 /* levelObjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = C07A02C216DD8FDE00D71044 /* levelObjects.plist */; };
+		C0915FC216DE89BE00C967ED /* ArmChair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC116DE89BE00C967ED /* ArmChair@2x.png */; };
+		C0915FC416DE8A6800C967ED /* play_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC316DE8A6800C967ED /* play_bg@2x.png */; };
+		C0915FC616DE8B0E00C967ED /* Room layout small window@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC516DE8B0E00C967ED /* Room layout small window@2x.png */; };
+		C0915FC816DE8BC700C967ED /* Barrel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC716DE8BC700C967ED /* Barrel@2x.png */; };
+		C0915FCB16DE8FB100C967ED /* Room layout texture.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC916DE8FB100C967ED /* Room layout texture.png */; };
+		C0915FCC16DE8FB100C967ED /* Room layout texture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FCA16DE8FB100C967ED /* Room layout texture@2x.png */; };
+		C0915FCE16DE931400C967ED /* rotate_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FCD16DE931400C967ED /* rotate_circle@2x.png */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
 /* End PBXBuildFile section */
 
@@ -650,12 +656,18 @@
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
 		82EAD1FE16DCA460002F736F /* Room layout small window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window.png"; sourceTree = "<group>"; };
-		82EAD20016DCA468002F736F /* Room layout texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Room layout texture.jpg"; sourceTree = "<group>"; };
 		C07A02BA16DD846900D71044 /* ArmChair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArmChair.png; sourceTree = "<group>"; };
 		C07A02BB16DD846900D71044 /* Barrel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Barrel.png; sourceTree = "<group>"; };
 		C07A02BC16DD846900D71044 /* Surfboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Surfboard.png; sourceTree = "<group>"; };
 		C07A02C016DD85B000D71044 /* items.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = items.plist; sourceTree = "<group>"; };
 		C07A02C216DD8FDE00D71044 /* levelObjects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = levelObjects.plist; sourceTree = "<group>"; };
+		C0915FC116DE89BE00C967ED /* ArmChair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArmChair@2x.png"; sourceTree = "<group>"; };
+		C0915FC316DE8A6800C967ED /* play_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_bg@2x.png"; path = "Resources/play_bg@2x.png"; sourceTree = "<group>"; };
+		C0915FC516DE8B0E00C967ED /* Room layout small window@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window@2x.png"; sourceTree = "<group>"; };
+		C0915FC716DE8BC700C967ED /* Barrel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Barrel@2x.png"; sourceTree = "<group>"; };
+		C0915FC916DE8FB100C967ED /* Room layout texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout texture.png"; sourceTree = "<group>"; };
+		C0915FCA16DE8FB100C967ED /* Room layout texture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout texture@2x.png"; sourceTree = "<group>"; };
+		C0915FCD16DE931400C967ED /* rotate_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rotate_circle@2x.png"; path = "Resources/rotate_circle@2x.png"; sourceTree = "<group>"; };
 		C0C1795D16D072580060BAD4 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -767,8 +779,11 @@
 			isa = PBXGroup;
 			children = (
 				82EAD1FE16DCA460002F736F /* Room layout small window.png */,
-				82EAD20016DCA468002F736F /* Room layout texture.jpg */,
+				C0915FC516DE8B0E00C967ED /* Room layout small window@2x.png */,
+				C0915FC916DE8FB100C967ED /* Room layout texture.png */,
+				C0915FCA16DE8FB100C967ED /* Room layout texture@2x.png */,
 				C07A02C016DD85B000D71044 /* items.plist */,
+				C0915FC116DE89BE00C967ED /* ArmChair@2x.png */,
 				C07A02BA16DD846900D71044 /* ArmChair.png */,
 				C07A02BB16DD846900D71044 /* Barrel.png */,
 				C07A02BC16DD846900D71044 /* Surfboard.png */,
@@ -777,6 +792,7 @@
 				28D4F2FF16D3E9B300F3C326 /* fps_images-hd.png */,
 				28D4F30016D3E9B300F3C326 /* fps_images-ipadhd.png */,
 				28E4794116CD9C7F007B3A2A /* Droid1.png */,
+				C0915FC716DE8BC700C967ED /* Barrel@2x.png */,
 				28E4794416CD9C7F007B3A2A /* Background.png */,
 				1E67DB6D16D473F600BEF7CB /* LevelSelectScene.ccbi */,
 				1E67DB6E16D473F600BEF7CB /* MainMenuOptionsScene.ccbi */,
@@ -789,6 +805,7 @@
 				1E67DB7516D473F600BEF7CB /* Level-1-3.png */,
 				1E67DB7616D473F600BEF7CB /* Level-1-2.png */,
 				1E67DB7716D473F600BEF7CB /* Level-1-1.png */,
+				C0915FC316DE8A6800C967ED /* play_bg@2x.png */,
 				1E67DB7816D473F600BEF7CB /* Main-Options-Button.png */,
 				1E67DB7916D473F600BEF7CB /* Main-Options-Play.png */,
 				1E67DB7A16D473F600BEF7CB /* Main-Options-Levels.png */,
@@ -808,6 +825,7 @@
 				1E67DB8716D473F600BEF7CB /* Game of Shadows.png */,
 				28E4794516CD9C7F007B3A2A /* ball.png */,
 				28E4794616CD9C7F007B3A2A /* ball-hd.png */,
+				C0915FCD16DE931400C967ED /* rotate_circle@2x.png */,
 				28E4794716CD9C7F007B3A2A /* play_bg.png */,
 				28E4794816CD9C7F007B3A2A /* rotate_circle.png */,
 				28E4771316CD9BA7007B3A2A /* Default.png */,
@@ -1432,12 +1450,18 @@
 				1E67DBA216D473F600BEF7CB /* Game of Shadows.png in Resources */,
 				82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */,
 				82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */,
-				82EAD20116DCA468002F736F /* Room layout texture.jpg in Resources */,
 				C07A02BD16DD846900D71044 /* ArmChair.png in Resources */,
 				C07A02BE16DD846900D71044 /* Barrel.png in Resources */,
 				C07A02BF16DD846900D71044 /* Surfboard.png in Resources */,
 				C07A02C116DD85B000D71044 /* items.plist in Resources */,
 				C07A02C316DD8FDE00D71044 /* levelObjects.plist in Resources */,
+				C0915FC216DE89BE00C967ED /* ArmChair@2x.png in Resources */,
+				C0915FC416DE8A6800C967ED /* play_bg@2x.png in Resources */,
+				C0915FC616DE8B0E00C967ED /* Room layout small window@2x.png in Resources */,
+				C0915FC816DE8BC700C967ED /* Barrel@2x.png in Resources */,
+				C0915FCB16DE8FB100C967ED /* Room layout texture.png in Resources */,
+				C0915FCC16DE8FB100C967ED /* Room layout texture@2x.png in Resources */,
+				C0915FCE16DE931400C967ED /* rotate_circle@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1660,6 +1684,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Zyda (4TS2GH2E9U)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1671,6 +1696,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "Game of Shadows";
+				PROVISIONING_PROFILE = "0B2AAD94-4A61-49B1-A79F-299EA9051A68";
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "\"GoSwB/libs\"";
 				WRAPPER_EXTENSION = app;
@@ -1681,6 +1707,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Zyda (4TS2GH2E9U)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = GoSwB/Prefix.pch;
@@ -1691,6 +1718,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "Game of Shadows";
+				PROVISIONING_PROFILE = "0B2AAD94-4A61-49B1-A79F-299EA9051A68";
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "\"GoSwB/libs\"";
 				VALIDATE_PRODUCT = YES;

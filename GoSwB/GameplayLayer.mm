@@ -37,10 +37,10 @@
         
         //background of the OMS. Shows the room.
         omsBackground = [CCSprite spriteWithFile: @"Room layout small window.png"];
-        CGSize omsBackgroundSize = [omsBackground boundingBox].size;
-        CGSize containerSize = [objectsContainer boundingBox].size;
-        [omsBackground setScaleX:containerSize.width/omsBackgroundSize.width];
-        [omsBackground setScaleY:containerSize.height/omsBackgroundSize.height];
+        //CGSize omsBackgroundSize = [omsBackground boundingBox].size;
+        //CGSize containerSize = [objectsContainer boundingBox].size;
+        //[omsBackground setScaleX:containerSize.width/omsBackgroundSize.width];
+        //[omsBackground setScaleY:containerSize.height/omsBackgroundSize.height];
         [omsBackground setOpacity: 150];
         [omsBackground setAnchorPoint:ccp(0,0)];
         [omsBackground setPosition:[objectsContainer position]];
@@ -170,6 +170,7 @@
     
     // Ground Box Bottom.
     physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
+    physicsGroundBody -> SetLinearDamping(0.6);
     physicsWorldBottom = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
     
     // Ground Box Top.
@@ -313,6 +314,12 @@
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
+    
+//    GameplayScene* scene = (GameplayScene*) [[CCDirector sharedDirector] runningScene];
+//    [scene generateShadowMap];
+//    [scene testShadowMap:location];
+    
+        
     if (touchOperation == NONE) {
         //user a tap will invoker this function
         
@@ -429,10 +436,13 @@
                 //clean
                 touchOperation = NONE;
                 touchedObjectTag = NOTAG;
+                
+                
             } else {
                 //show circle around tapped object, start to rotate
                 [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
                 touchOperation = ROTATING;
+                
             }
         }
     }
