@@ -296,6 +296,10 @@
     location = [[CCDirector sharedDirector] convertToGL:location];
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
+//    GameplayScene* scene = (GameplayScene*) [[CCDirector sharedDirector] runningScene];
+//    [scene generateShadowMap];
+//    [scene testShadowMap:location];
+    
         
     if (touchOperation == NONE) {
         //user a tap will invoker this function
