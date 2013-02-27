@@ -1,7 +1,3 @@
-*.xcuserstate
-Shadow_Part.xcodeproj/project.xcworkspace/xcuserdata/zhoutuoyang.xcuserdatad/xcdebugger/Expressions.xcexplist
-Shadow_Part.xcodeproj/xcuserdata/zhoutuoyang.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist
-Shadow_Part.xcodeproj/project.xcworkspace/xcuserdata/zhoutuoyang.xcuserdatad/WorkspaceSettings.xcsettings
-Shadow_Part.xcodeproj/xcuserdata/zhoutuoyang.xcuserdatad/xcschemes/Shadow_Part.xcscheme
-Shadow_Part.xcodeproj/xcuserdata/zhoutuoyang.xcuserdatad/xcschemes/xcschememanagement.plist
-Breakpoints.xcbkptlist
+.DS_Store
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/

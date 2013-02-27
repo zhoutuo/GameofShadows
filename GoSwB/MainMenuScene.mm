@@ -14,6 +14,7 @@
 #define PLAY_BUTTON_TAG 1
 #define LEVEL_BUTTON_TAG 2
 #define OPTIONS_BUTTON_TAG 3
+#define TEST_BUTTON_TAG 20
 
 @implementation MainMenuScene 
 
@@ -28,6 +29,10 @@
             break;
         case LEVEL_BUTTON_TAG:
             [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[CCBReader sceneWithNodeGraphFromFile:@"LevelSelectScene.ccbi"]]];
+            break;
+        case TEST_BUTTON_TAG:
+            //Ryan needs to change to his scene
+            [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[GameplayScene node]]];
             break;
     }
 }
