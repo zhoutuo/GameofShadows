@@ -42,6 +42,15 @@ typedef enum {
     
     NSMutableArray* objectSpriteArray;
     NSMutableArray* objectBodyArray;
+    
+    //Mode
+    bool isPuzzleMode;
+    
+    //Swipe Gesture Recognizer
+    UISwipeGestureRecognizer *swipeRight;
+    UISwipeGestureRecognizer *swipeLeft;
+    UISwipeGestureRecognizer *swipeUp;
+    UISwipeGestureRecognizer *swipeDown;
 }
 
 

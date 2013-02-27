@@ -19,6 +19,8 @@
 
 -(id) init {
     if (self = [super init]) {
+        isPuzzleMode = true; //setting modes.
+        [self initSwipeGestures];
         
         self.isTouchEnabled = YES;      //enable touch
         touchedObjectTag = NOTAG;              //the tag for the sprite being touched right now
@@ -43,8 +45,6 @@
         [omsBackground setAnchorPoint:ccp(0,0)];
         [omsBackground setPosition:[objectsContainer position]];
         [self addChild:omsBackground z:OBJECT_DEPTH-1];
-        
-        
         
         //add rotation circle to the layer
         //make it invisible
@@ -82,63 +82,6 @@
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
         startX += 150.0f;
     }
-
-    /*
-    PhysicsSprite* armchairSprite = [PhysicsSprite spriteWithFile:@"ArmChair.png"];
-    armchairSprite.position = CGPointMake(200, 200);
-    b2BodyDef armchairBodyDef;
-    armchairBodyDef.type = b2_dynamicBody;
-    armchairBodyDef.position.Set(armchairSprite.position.x / PTM_RATIO, armchairSprite.position.y / PTM_RATIO);
-    armchairBodyDef.userData = armchairSprite;
-    b2Body* armchairBody = physicsWorld -> CreateBody(&armchairBodyDef);
-    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:armchairBody forShapeName:@"ArmChair"];
-    [armchairSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"ArmChair"]];
-    [armchairSprite setPhysicsBody:armchairBody];
-    [objectsContainer addChild:armchairSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-    
-    //add a test object for the layer
-    droid1 = [PhysicsSprite spriteWithFile:@"Droid1.png"];
-    [droid1 setPosition:ccp(100, 100)]; //this is the relative position to the objects container after attaching
-    [objectsContainer addChild:droid1 z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-    
-    // Create a body for the droid object.
-    b2BodyDef droid1BodyDef;
-    droid1BodyDef.type = b2_dynamicBody;
-    droid1BodyDef.position = [self toMeters:droid1.position];
-    droid1Body = physicsWorld -> CreateBody(&droid1BodyDef);
-    droid1Body -> SetUserData((void*)droid1);
-    
-    //Using PhysicsEditor
-    [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"droid1_physicsBody.plist"];
-    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:droid1Body forShapeName: @"Droid1"];
-    
-    [droid1 setPhysicsBody:droid1Body];
-    [droid1 setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape: @"Droid1"]];
-    
-    droid1 = [PhysicsSprite spriteWithFile:@"Droid1.png"];
-    [droid1 setPosition:ccp(200, 100)]; //this is the relative position to the objects container after attaching
-    [objectsContainer addChild:droid1 z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-    
-    // Create a body for the droid object.
-    b2BodyDef droid2BodyDef;
-    droid2BodyDef.type = b2_dynamicBody;
-    droid2BodyDef.position = [self toMeters:droid1.position];
-    droid1Body = physicsWorld -> CreateBody(&droid1BodyDef);
-    droid1Body -> SetUserData((void*)droid1);
-    
-    //Using PhysicsEditor
-    [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"droid1_physicsBody.plist"];
-    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:droid1Body forShapeName: @"Droid1"];
-    
-    [droid1 setPhysicsBody:droid1Body];
-    [droid1 setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape: @"Droid1"]];
-    
-    
-    
-    // Add sprite and body to object arrays.
-    [objectSpriteArray addObject:droid1];
-    //[objectBodyArray addObject:(id)droid1Body];
-    */
 }
 
 // Physics section
@@ -246,6 +189,7 @@
 -(void) dealloc {
     [touchArray release]; //remove array since we retain it in the init function
     [rotationCircle release];
+    [self removeSwipeGestures];
     
     // Physics cleanup section.
     // Remove existing fixtures, if any.
@@ -333,18 +277,36 @@
     return ccpSub(point, objectsContainer.boundingBox.origin);
 }
 
--(void) setOMSLocation : (bool) isLeft{
-    if(isLeft){
-        [objectsContainer setPosition:ccp(0, 0)];
-        [omsBackground setPosition:ccp(0,0)];
-    }else{
+-(void) twoFingerSwipeRight {
+    if(isPuzzleMode){
+        isPuzzleMode = true;
         CGFloat winWidth = [CCDirector sharedDirector].winSize.width;
         CGFloat width = [objectsContainer boundingBox].size.width;
         [objectsContainer setPosition:ccp(winWidth - width,0)];
         [omsBackground setPosition:ccp(winWidth - width,0)];
     }
 }
+-(void) twoFingerSwipeLeft {
+    if(isPuzzleMode){
+        isPuzzleMode = true;
+        [objectsContainer setPosition:ccp(0, 0)];
+        [omsBackground setPosition:ccp(0,0)];
+    }
+}
+-(void) twoFingerSwipeUp{
+    isPuzzleMode = true;
+    CGFloat currentX = objectsContainer.position.x;
+    [objectsContainer setPosition:ccp(currentX,0)];
+    [omsBackground setPosition:ccp(currentX,0)];
+}
+-(void) twoFingerSwipeDown {
+    isPuzzleMode = false;
+    CGFloat height = [objectsContainer boundingBox].size.height;
+    CGFloat currentX = objectsContainer.position.x;
+    [objectsContainer setPosition:ccp(currentX,-height)];
+    [omsBackground setPosition:ccp(currentX,-height)];
 
+}
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch* touch = [touches anyObject];
@@ -353,12 +315,13 @@
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
     if (touchOperation == NONE) {
         //user a tap will invoker this function
-        touchOperation = TAP;
+        
         if (CGRectContainsPoint([objectsContainer boundingBox], location)) {
             //update the location to relative position for children
             location = [self fromLayerCoord2Container:location];
             for (PhysicsSprite* child in objectsContainer.children) {
                 if (CGRectContainsPoint([child boundingBox], location)) {
+                    touchOperation = TAP;
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
                     body->SetAwake(false);
@@ -380,6 +343,7 @@
             body->SetActive(true);
             body->SetAwake(true);
             touchedObjectTag = NOTAG;
+            touchOperation = NONE;
         }
     }
     
@@ -392,7 +356,7 @@
     
     location = [[CCDirector sharedDirector] convertToGL:location];
     
-    if (touchedObjectTag == NOTAG) {
+    if (touchOperation == NONE) {
         return;
     }
     
@@ -446,26 +410,6 @@
 
     if (touchedObjectTag == NOTAG) {
         touchOperation = NONE;
-        CGPoint start;
-        [[touchArray objectAtIndex: 0 ] getValue:&start];
-        CGPoint end;
-        [[touchArray lastObject] getValue:&end];
-        //NSLog(@"start: %.2f, %.2f",start.x,start.y);
-        //NSLog(@"end: %.2f, %.2f",end.x,end.y);
-        float deltaX = end.x - start.x;
-        float deltaY = end.y - start.y;
-        //NSLog(@"deltax = %.2f", deltaX);
-        //NSLog(@"deltay = %.2f", deltaY);
-        if(deltaX > 200){
-         //swipe
-            [self setOMSLocation:false];
-        }else if(deltaX < -200){
-            [self setOMSLocation:true];
-        }else if(deltaY > 50){
-            NSLog(@"Swipe down");
-        }else if(deltaY < -50){
-            NSLog(@"Swipe up");
-        }
     } else {
         if (touchOperation == TAP) {
             //show circle around tapped object, start to rotate
@@ -495,6 +439,37 @@
     
     //clear the touch array
     [touchArray removeAllObjects];
+}
+
+-(void) initSwipeGestures{
+    
+    swipeRight = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeRight)]autorelease];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [swipeRight setNumberOfTouchesRequired:2];
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeRight];
+    
+    swipeLeft = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeLeft)]autorelease];
+    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [swipeLeft setNumberOfTouchesRequired:2];
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeLeft];
+    
+    swipeUp = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeUp)]autorelease];
+    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [swipeUp setNumberOfTouchesRequired:2];
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeUp];
+    
+    swipeDown = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeDown)]autorelease];
+    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    [swipeDown setNumberOfTouchesRequired:2];
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeDown];
+
+}
+
+-(void) removeSwipeGestures{
+    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeUp];
+    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeDown];
+    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeLeft];
+    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeRight];
 }
 
 @end
