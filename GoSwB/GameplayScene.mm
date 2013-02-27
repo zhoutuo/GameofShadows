@@ -45,6 +45,14 @@ static NSInteger tagSeed = 10000;
     [shadowLayer updateShadowRot:objectTag withAngle:angle];
 }
 
+-(void) generateShadowMap {
+    [shadowLayer generateShadowMap];
+}
+
+
+-(void) testShadowMap:(CGPoint)testPoint {
+    [shadowLayer testShadowMap:testPoint];
+}
 
 +(NSInteger) TagGenerater {
     return tagSeed++;

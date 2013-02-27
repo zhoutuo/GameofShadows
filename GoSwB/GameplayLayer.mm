@@ -82,63 +82,6 @@
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
         startX += 150.0f;
     }
-
-    /*
-    PhysicsSprite* armchairSprite = [PhysicsSprite spriteWithFile:@"ArmChair.png"];
-    armchairSprite.position = CGPointMake(200, 200);
-    b2BodyDef armchairBodyDef;
-    armchairBodyDef.type = b2_dynamicBody;
-    armchairBodyDef.position.Set(armchairSprite.position.x / PTM_RATIO, armchairSprite.position.y / PTM_RATIO);
-    armchairBodyDef.userData = armchairSprite;
-    b2Body* armchairBody = physicsWorld -> CreateBody(&armchairBodyDef);
-    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:armchairBody forShapeName:@"ArmChair"];
-    [armchairSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"ArmChair"]];
-    [armchairSprite setPhysicsBody:armchairBody];
-    [objectsContainer addChild:armchairSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-    
-    //add a test object for the layer
-    droid1 = [PhysicsSprite spriteWithFile:@"Droid1.png"];
-    [droid1 setPosition:ccp(100, 100)]; //this is the relative position to the objects container after attaching
-    [objectsContainer addChild:droid1 z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-    
-    // Create a body for the droid object.
-    b2BodyDef droid1BodyDef;
-    droid1BodyDef.type = b2_dynamicBody;
-    droid1BodyDef.position = [self toMeters:droid1.position];
-    droid1Body = physicsWorld -> CreateBody(&droid1BodyDef);
-    droid1Body -> SetUserData((void*)droid1);
-    
-    //Using PhysicsEditor
-    [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"droid1_physicsBody.plist"];
-    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:droid1Body forShapeName: @"Droid1"];
-    
-    [droid1 setPhysicsBody:droid1Body];
-    [droid1 setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape: @"Droid1"]];
-    
-    droid1 = [PhysicsSprite spriteWithFile:@"Droid1.png"];
-    [droid1 setPosition:ccp(200, 100)]; //this is the relative position to the objects container after attaching
-    [objectsContainer addChild:droid1 z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-    
-    // Create a body for the droid object.
-    b2BodyDef droid2BodyDef;
-    droid2BodyDef.type = b2_dynamicBody;
-    droid2BodyDef.position = [self toMeters:droid1.position];
-    droid1Body = physicsWorld -> CreateBody(&droid1BodyDef);
-    droid1Body -> SetUserData((void*)droid1);
-    
-    //Using PhysicsEditor
-    [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"droid1_physicsBody.plist"];
-    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:droid1Body forShapeName: @"Droid1"];
-    
-    [droid1 setPhysicsBody:droid1Body];
-    [droid1 setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape: @"Droid1"]];
-    
-    
-    
-    // Add sprite and body to object arrays.
-    [objectSpriteArray addObject:droid1];
-    //[objectBodyArray addObject:(id)droid1Body];
-    */
 }
 
 // Physics section
@@ -351,6 +294,8 @@
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
+    
+        
     if (touchOperation == NONE) {
         //user a tap will invoker this function
         touchOperation = TAP;
@@ -485,10 +430,13 @@
                 //clean
                 touchOperation = NONE;
                 touchedObjectTag = NOTAG;
+                
+                
             } else {
                 //show circle around tapped object, start to rotate
                 [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
                 touchOperation = ROTATING;
+                
             }
         }
     }

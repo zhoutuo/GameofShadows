@@ -20,4 +20,6 @@
 -(void) finishObjectsCreation: (CCArray*) objects withRatios:(CCArray*) ratios;
 -(void) finishMovingOneObject: (NSInteger) objectTag withRatio:(CGPoint) ratio;
 -(void) finishRotatingOneObject: (NSInteger) objectTag withAngle:(float) angle;
+-(void) generateShadowMap;
+-(void) testShadowMap:(CGPoint)testPoint;
 @end
