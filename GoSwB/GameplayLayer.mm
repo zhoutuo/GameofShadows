@@ -131,7 +131,6 @@
             
             //rotation
             float angel = CC_RADIANS_TO_DEGREES(body->GetAngle());
-//            CCLOG(@"%f", CC_RADIANS_TO_DEGREES(radians));
             sprite.rotation = angel;
             [scene finishRotatingOneObject:sprite.tag withAngle:angel];
 
@@ -163,10 +162,6 @@
     
     float OMSOriginX = 0.0f;
     float OMSOriginY = 0.0f;
-    
-    
-    //CCLOG(@"OMS Origin = %.2f, %.2f", OMSOriginX, OMSOriginY);
-    //CCLOG(@"OMS Size = %.2f, %.2f", physicsGroundBoxWidth, physicsGroundBoxHeight);
     
     // Ground Box Bottom.
     physicsGroundBox.Set(b2Vec2(OMSOriginX, OMSOriginY), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
@@ -315,10 +310,6 @@
     location = [[CCDirector sharedDirector] convertToGL:location];
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
-//    GameplayScene* scene = (GameplayScene*) [[CCDirector sharedDirector] runningScene];
-//    [scene generateShadowMap];
-//    [scene testShadowMap:location];
-    
         
     if (touchOperation == NONE) {
         //user a tap will invoker this function
@@ -436,7 +427,6 @@
                 //clean
                 touchOperation = NONE;
                 touchedObjectTag = NOTAG;
-                
                 
             } else {
                 //show circle around tapped object, start to rotate

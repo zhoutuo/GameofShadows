@@ -8,12 +8,15 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
+#define DEVICE_WIDTH 1024
+#define DEVICE_HEIGHT 768
 
 @interface ShadowsLayer : CCLayer {
     float shadowHeightFactor;
     float shadowWidthFactor;
     NSMutableDictionary* objShadowTable;
-    bool shadowMap[768][1024];
+    bool shadowMap[DEVICE_HEIGHT][DEVICE_WIDTH];
+    int clearanceMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
@@ -21,4 +24,5 @@
 -(void) updateShadowRot:(NSInteger)objectSpriteTag withAngle:(float) angle;
 -(void) generateShadowMap;
 -(void) testShadowMap:(CGPoint)testPoint;
+-(void) generateClearanceMap;
 @end
