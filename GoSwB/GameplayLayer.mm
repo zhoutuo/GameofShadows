@@ -19,10 +19,6 @@
 
 -(id) init {
     if (self = [super init]) {
-        isPuzzleMode = true; //setting modes.
-        [self initSwipeGestures];
-        
-        self.isTouchEnabled = YES;      //enable touch
         touchedObjectTag = NOTAG;              //the tag for the sprite being touched right now
         touchOperation = NONE;
         touchArray = [CCArray array];  //this is the array used for recording touches
@@ -55,6 +51,8 @@
         [self initPhysics];
         [self setupObjects];
         [self scheduleUpdate];
+        
+        [self startPuzzleMode];
     }
     
     return self;
@@ -185,7 +183,6 @@
 -(void) dealloc {
     [touchArray release]; //remove array since we retain it in the init function
     [rotationCircle release];
-    [self removeSwipeGestures];
     
     // Physics cleanup section.
     // Remove existing fixtures, if any.
@@ -273,39 +270,15 @@
     return ccpSub(point, objectsContainer.boundingBox.origin);
 }
 
--(void) twoFingerSwipeRight {
-    if(isPuzzleMode){
-        isPuzzleMode = true;
-        CGFloat winWidth = [CCDirector sharedDirector].winSize.width;
-        CGFloat width = [objectsContainer boundingBox].size.width;
-        [objectsContainer setPosition:ccp(winWidth - width,0)];
-        [omsBackground setPosition:ccp(winWidth - width,0)];
-    }
-}
--(void) twoFingerSwipeLeft {
-    if(isPuzzleMode){
-        isPuzzleMode = true;
-        [objectsContainer setPosition:ccp(0, 0)];
-        [omsBackground setPosition:ccp(0,0)];
-    }
-}
--(void) twoFingerSwipeUp{
-    isPuzzleMode = true;
-    CGFloat currentX = objectsContainer.position.x;
-    [objectsContainer setPosition:ccp(currentX,0)];
-    [omsBackground setPosition:ccp(currentX,0)];
-}
--(void) twoFingerSwipeDown {
-    isPuzzleMode = false;
-    CGFloat height = [objectsContainer boundingBox].size.height;
-    CGFloat currentX = objectsContainer.position.x;
-    [objectsContainer setPosition:ccp(currentX,-height)];
-    [omsBackground setPosition:ccp(currentX,-height)];
-
-}
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    // disregard two fingers gestures
+    if (touchOperation == MOVING or touchOperation == TAP) {
+        return;
+    }
+    
     UITouch* touch = [touches anyObject];
+    
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
@@ -313,7 +286,6 @@
         
     if (touchOperation == NONE) {
         //user a tap will invoker this function
-        
         if (CGRectContainsPoint([objectsContainer boundingBox], location)) {
             //update the location to relative position for children
             location = [self fromLayerCoord2Container:location];
@@ -378,7 +350,7 @@
         location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
         location.y = MAX(location.y, spriteBox.height / 2);
         touched.position = location;
-        CCLOG(@"%f, %f", location.x, location.y);
+        //CCLOG(@"%f, %f", location.x, location.y);
         //moving the physical body as well
         b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
         body->SetTransform([self toMeters:location], body->GetAngle());
@@ -441,35 +413,45 @@
     [touchArray removeAllObjects];
 }
 
--(void) initSwipeGestures{
-    
-    swipeRight = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeRight)]autorelease];
-    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
-    [swipeRight setNumberOfTouchesRequired:2];
-    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeRight];
-    
-    swipeLeft = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeLeft)]autorelease];
-    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [swipeLeft setNumberOfTouchesRequired:2];
-    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeLeft];
-    
-    swipeUp = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeUp)]autorelease];
-    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
-    [swipeUp setNumberOfTouchesRequired:2];
-    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeUp];
-    
-    swipeDown = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeDown)]autorelease];
-    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
-    [swipeDown setNumberOfTouchesRequired:2];
-    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeDown];
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//GAMEPLAY LAYER EVENTS
+-(void) moveOMStoLeft {
+    [objectsContainer setPosition:ccp(0, 0)];
+    [omsBackground setPosition:ccp(0,0)];
 }
 
--(void) removeSwipeGestures{
-    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeUp];
-    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeDown];
-    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeLeft];
-    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeRight];
+-(void) moveOMStoRight {
+    CGFloat winWidth = [CCDirector sharedDirector].winSize.width;
+    CGFloat width = [objectsContainer boundingBox].size.width;
+    [objectsContainer setPosition:ccp(winWidth - width,0)];
+    [omsBackground setPosition:ccp(winWidth - width,0)];
 }
+
+-(void) startPuzzleMode {
+    CGFloat currentX = objectsContainer.position.x;
+    [objectsContainer setPosition:ccp(currentX,0)];
+    [omsBackground setPosition:ccp(currentX,0)];
+    self.isTouchEnabled = YES;
+    
+    CCLOG(@"Enter Puzzle Mode");
+}
+
+-(void) finishPuzzleMode {
+    CGFloat height = [objectsContainer boundingBox].size.height;
+    CGFloat currentX = objectsContainer.position.x;
+    [objectsContainer setPosition:ccp(currentX,-height)];
+    [omsBackground setPosition:ccp(currentX,-height)];
+    self.isTouchEnabled = NO;
+    
+    CCLOG(@"Leave Puzzle Mode");
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 @end

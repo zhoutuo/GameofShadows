@@ -25,10 +25,17 @@ static NSInteger tagSeed = 10000;
         gameplayLayer = [GameplayLayer node];
         [self addChild:gameplayLayer z:2];
         
+        [self initSwipeGestures];
+        isPuzzleMode = true; //setting modes.
         
     }
     return self;
     
+}
+
+-(void) dealloc {
+    [self removeSwipeGestures];
+    [super dealloc];
 }
 
 
@@ -45,16 +52,63 @@ static NSInteger tagSeed = 10000;
     [shadowLayer updateShadowRot:objectTag withAngle:angle];
 }
 
--(void) generateShadowMap {
-    [shadowLayer generateShadowMap];
-}
-
-
--(void) testShadowMap:(CGPoint)testPoint {
-    [shadowLayer testShadowMap:testPoint];
-}
 
 +(NSInteger) TagGenerater {
     return tagSeed++;
+}
+
+-(void) twoFingerSwipeRight {
+    if(isPuzzleMode){
+        isPuzzleMode = true;
+        [gameplayLayer moveOMStoRight];
+    }
+}
+-(void) twoFingerSwipeLeft {
+    if(isPuzzleMode){
+        isPuzzleMode = true;
+        [gameplayLayer moveOMStoLeft];
+    }
+}
+-(void) twoFingerSwipeUp{
+    isPuzzleMode = true;
+    [shadowLayer finishActionMode];
+    [gameplayLayer startPuzzleMode];
+    
+}
+-(void) twoFingerSwipeDown {
+    isPuzzleMode = false;
+    [gameplayLayer finishPuzzleMode];
+    [shadowLayer startActionMode];
+}
+
+-(void) initSwipeGestures{
+    
+    swipeRight = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeRight)]autorelease];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [swipeRight setNumberOfTouchesRequired:2];
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeRight];
+    
+    swipeLeft = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeLeft)]autorelease];
+    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [swipeLeft setNumberOfTouchesRequired:2];
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeLeft];
+    
+    swipeUp = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeUp)]autorelease];
+    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [swipeUp setNumberOfTouchesRequired:2];
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeUp];
+    
+    swipeDown = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeDown)]autorelease];
+    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    [swipeDown setNumberOfTouchesRequired:2];
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeDown];
+    
+}
+
+-(void) removeSwipeGestures{
+    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeUp];
+    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeDown];
+    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeLeft];
+    [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeRight];
 }
 @end
