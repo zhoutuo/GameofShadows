@@ -330,10 +330,6 @@
         return;
     }
     
-    if(touchOperation == TAP){
-        NSLog(@"tap");
-    }
-    
     //all touch opeartions entering this method can only be tap/moving or rotation
     if (touchOperation == TAP || touchOperation == MOVING) {
         //since our touch is moving
@@ -383,12 +379,10 @@
 -(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 
     if (touchedObjectTag == NOTAG) {
-        NSLog(@"no object tag");
         touchOperation = NONE;
     } else {
         if (touchOperation == TAP) {
             //show circle around tapped object, start to rotate
-            NSLog(@"tap");
             [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
             touchOperation = ROTATING;
             
@@ -396,7 +390,6 @@
             //here its either rotation finished or moving finished
             if (touchOperation == ROTATING) {
                 [self toggleRotationCircle:NO];
-                NSLog(@"Rotating");
                 //when finished with rotating object
                 //wake physical calculation
                 PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
@@ -409,11 +402,6 @@
                 
             } else {
                 //show circle around tapped object, start to rotate
-                if(touchOperation == MOVING){
-                    NSLog(@"moving");
-                }else if(touchOperation == NONE){
-                    NSLog(@"none");
-                }
                 [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
                 touchOperation = ROTATING;
                 
