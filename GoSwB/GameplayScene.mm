@@ -70,15 +70,20 @@ static NSInteger tagSeed = 10000;
     }
 }
 -(void) twoFingerSwipeUp{
-    isPuzzleMode = true;
-    [shadowLayer finishActionMode];
-    [gameplayLayer startPuzzleMode];
+    if (!isPuzzleMode) {
+        isPuzzleMode = true;
+        [shadowLayer finishActionMode];
+        [gameplayLayer startPuzzleMode];
+    }
+
     
 }
 -(void) twoFingerSwipeDown {
-    isPuzzleMode = false;
-    [gameplayLayer finishPuzzleMode];
-    [shadowLayer startActionMode];
+    if (isPuzzleMode) {
+        isPuzzleMode = false;
+        [gameplayLayer finishPuzzleMode];
+        [shadowLayer startActionMode];
+    }
 }
 
 -(void) initSwipeGestures{
