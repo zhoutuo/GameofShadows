@@ -43,6 +43,8 @@ typedef enum {
     NSMutableArray* objectSpriteArray;
     NSMutableArray* objectBodyArray;
     
+    CGFloat omsMovementSpeed;
+    
 
 }
 
