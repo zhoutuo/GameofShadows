@@ -24,6 +24,8 @@
         touchArray = [CCArray array];  //this is the array used for recording touches
         [touchArray retain];  //since this is a autorelease object, retain it
         
+        omsMovementSpeed = 0.2;
+        
         //by making background sprite center on lower left corner will make it
         //easier to contain all the children
         objectsContainer = [CCSprite spriteWithFile:@"play_bg.png"];
@@ -51,8 +53,8 @@
         [self initPhysics];
         [self setupObjects];
         [self scheduleUpdate];
-        
         [self startPuzzleMode];
+        
     }
     
     return self;
@@ -272,13 +274,8 @@
 
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    // disregard two fingers gestures
-    if (touchOperation == MOVING or touchOperation == TAP) {
-        return;
-    }
-    
+        
     UITouch* touch = [touches anyObject];
-    
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
@@ -300,8 +297,7 @@
                 }
             }
         }
-    } else {
-        assert(touchOperation == ROTATING);
+    } else if(touchOperation == ROTATING) {
         location = [self fromLayerCoord2Container:location];
         
         //if the first tap for rotating is not inside the circle
@@ -316,7 +312,7 @@
             touchOperation = NONE;
         }
     }
-    
+        
 }
 
 -(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -325,11 +321,7 @@
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
     location = [[CCDirector sharedDirector] convertToGL:location];
-    
-    if (touchOperation == NONE) {
-        return;
-    }
-    
+        
     //all touch opeartions entering this method can only be tap/moving or rotation
     if (touchOperation == TAP || touchOperation == MOVING) {
         //since our touch is moving
@@ -350,13 +342,11 @@
         location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
         location.y = MAX(location.y, spriteBox.height / 2);
         touched.position = location;
-        //CCLOG(@"%f, %f", location.x, location.y);
         //moving the physical body as well
         b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
         body->SetTransform([self toMeters:location], body->GetAngle());
         
-    } else {
-        assert(touchOperation == ROTATING);
+    } else if(touchOperation == ROTATING) {
         PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
         CGPoint relativeCenter = [self fromContainerCoord2Layer:rotated.position];
         CGPoint rotatePoint = ccpAdd(relativeCenter, ccp(0, 100));
@@ -377,36 +367,24 @@
 }
 
 -(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-
-    if (touchedObjectTag == NOTAG) {
+    if (touchOperation == TAP or touchOperation == MOVING) {
+        //show circle around tapped object, start to rotate
+        [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
+        touchOperation = ROTATING;
+        
+    } else if(touchOperation == ROTATING) {
+        //here its either rotation finished
+        [self toggleRotationCircle:NO];
+        //when finished with rotating object
+        //wake physical calculation
+        PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+        b2Body* body = [cur getPhysicsBody];
+        body->SetActive(true);
+        body->SetAwake(true);
+        //clean
         touchOperation = NONE;
-    } else {
-        if (touchOperation == TAP) {
-            //show circle around tapped object, start to rotate
-            [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
-            touchOperation = ROTATING;
-            
-        } else {
-            //here its either rotation finished or moving finished
-            if (touchOperation == ROTATING) {
-                [self toggleRotationCircle:NO];
-                //when finished with rotating object
-                //wake physical calculation
-                PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-                b2Body* body = [cur getPhysicsBody];
-                body->SetActive(true);
-                body->SetAwake(true);
-                //clean
-                touchOperation = NONE;
-                touchedObjectTag = NOTAG;
-                
-            } else {
-                //show circle around tapped object, start to rotate
-                [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
-                touchOperation = ROTATING;
-                
-            }
-        }
+        touchedObjectTag = NOTAG;
+        
     }
     
     //clear the touch array
@@ -419,21 +397,22 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //GAMEPLAY LAYER EVENTS
 -(void) moveOMStoLeft {
-    [objectsContainer setPosition:ccp(0, 0)];
-    [omsBackground setPosition:ccp(0,0)];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(0,0)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(0,0)], nil]];
 }
 
 -(void) moveOMStoRight {
     CGFloat winWidth = [CCDirector sharedDirector].winSize.width;
     CGFloat width = [objectsContainer boundingBox].size.width;
-    [objectsContainer setPosition:ccp(winWidth - width,0)];
-    [omsBackground setPosition:ccp(winWidth - width,0)];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(winWidth - width,0)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(winWidth - width,0)], nil]];
+
 }
 
 -(void) startPuzzleMode {
     CGFloat currentX = objectsContainer.position.x;
-    [objectsContainer setPosition:ccp(currentX,0)];
-    [omsBackground setPosition:ccp(currentX,0)];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,0)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,0)], nil]];
     self.isTouchEnabled = YES;
     
     CCLOG(@"Enter Puzzle Mode");
@@ -442,8 +421,8 @@
 -(void) finishPuzzleMode {
     CGFloat height = [objectsContainer boundingBox].size.height;
     CGFloat currentX = objectsContainer.position.x;
-    [objectsContainer setPosition:ccp(currentX,-height)];
-    [omsBackground setPosition:ccp(currentX,-height)];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,-height)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,-height)], nil]];
     self.isTouchEnabled = NO;
     
     CCLOG(@"Leave Puzzle Mode");
