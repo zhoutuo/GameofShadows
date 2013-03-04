@@ -253,6 +253,8 @@
 		C0915FCC16DE8FB100C967ED /* Room layout texture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FCA16DE8FB100C967ED /* Room layout texture@2x.png */; };
 		C0915FCE16DE931400C967ED /* rotate_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FCD16DE931400C967ED /* rotate_circle@2x.png */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
+		C0EBE2F316E5522E00673C22 /* Table.png in Resources */ = {isa = PBXBuildFile; fileRef = C0EBE2F116E5522E00673C22 /* Table.png */; };
+		C0EBE2F416E5522E00673C22 /* Table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0EBE2F216E5522E00673C22 /* Table@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -700,6 +702,8 @@
 		C0915FCD16DE931400C967ED /* rotate_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rotate_circle@2x.png"; path = "Resources/rotate_circle@2x.png"; sourceTree = "<group>"; };
 		C0C1795D16D072580060BAD4 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
+		C0EBE2F116E5522E00673C22 /* Table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Table.png; sourceTree = "<group>"; };
+		C0EBE2F216E5522E00673C22 /* Table@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Table@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -808,6 +812,8 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C0EBE2F116E5522E00673C22 /* Table.png */,
+				C0EBE2F216E5522E00673C22 /* Table@2x.png */,
 				82EAD1FE16DCA460002F736F /* Room layout small window.png */,
 				C0915FC516DE8B0E00C967ED /* Room layout small window@2x.png */,
 				C0915FC916DE8FB100C967ED /* Room layout texture.png */,
@@ -1522,6 +1528,8 @@
 				1EF73BD616E1740900BF4959 /* Main-Options-Sound@2x.png in Resources */,
 				1EF73BD716E1740900BF4959 /* Title-Text@2x.png in Resources */,
 				1EF73BD816E1740900BF4959 /* Home@2x.png in Resources */,
+				C0EBE2F316E5522E00673C22 /* Table.png in Resources */,
+				C0EBE2F416E5522E00673C22 /* Table@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
