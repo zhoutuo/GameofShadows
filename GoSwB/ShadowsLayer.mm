@@ -279,18 +279,38 @@
   //  [self makeAllTrueShadowMap];
     [self generateClearanceMap];
     self.isTouchEnabled = YES;
+    [self initTapGesture];
     
     CCLOG(@"Enter Action Mode");
 }
 
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
-    
+    [self removeTapGesture];
     CCLOG(@"Leave Action Mode");
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+-(void) tapRecognized:(UITapGestureRecognizer *) recognizer {
+    CGPoint touchPoint = [recognizer locationOfTouch:0 inView: [[CCDirector sharedDirector]view]];
+    int x =touchPoint.x;
+    int y = DEVICE_HEIGHT - touchPoint.y;
+    
+    NSLog(@"Tap yay! x: %d  y: %d" ,x,y);
+    [self pathFinder :400 :400 :x :y];
+}
+
+- (void) initTapGesture{
+    tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized:)]autorelease];
+    [tap setNumberOfTapsRequired:1];
+    [tap setNumberOfTouchesRequired:1];
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:tap];
+}
+
+- (void) removeTapGesture {
+    [[[CCDirector sharedDirector]view] removeGestureRecognizer:tap];
+}
 
 @end

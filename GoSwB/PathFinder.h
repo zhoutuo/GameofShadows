@@ -20,6 +20,6 @@
     
 }
 -(id)initSize:(int)MonsterSizeIn :(int)DeviceWidthIn :(int)DeviceHeightIn :(int[768][1024])mapIn;
--(bool)findPath:(int)startX :(int)startY :(int)endX :(int)endY;
+-(NSMutableArray*)findPath:(int)startX :(int)startY :(int)endX :(int)endY;
 
 @end
