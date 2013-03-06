@@ -41,5 +41,18 @@
 }
 
 
+-(void) pauseButtonMenu : (id) sender {
+    if(isGamePause){
+        NSLog(@"Button pushed in isGamePause == true");
+    }
+    else{
+        NSLog(@"Button pushed in isGamePause == false");
+        isGamePause = true;
+        ccColor4B c = ccc4(130,130,130,100);
+        PauseLayer * p = [[[PauseLayer alloc]initWithColor:c]autorelease];
+        [self.parent addChild:p z:10];
+        [[CCDirector sharedDirector] pause];
+    }
+}
 
 @end

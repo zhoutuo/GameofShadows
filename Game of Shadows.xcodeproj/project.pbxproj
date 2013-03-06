@@ -1725,6 +1725,8 @@
 				1E67DBBF16D4758500BEF7CB /* CCBSequenceProperty.m in Sources */,
 				1E67DBC016D4758500BEF7CB /* CCNode+CCBRelativePositioning.m in Sources */,
 				82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */,
+				1EF73BDB16E54FAD00BF4959 /* PauseLayer.mm in Sources */,
+				1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */,
 				94127C1E16E53D250066DEE0 /* PathFinder.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
