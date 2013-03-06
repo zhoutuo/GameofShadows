@@ -23,6 +23,7 @@
     UISwipeGestureRecognizer *swipeLeft;
     UISwipeGestureRecognizer *swipeUp;
     UISwipeGestureRecognizer *swipeDown;
+    UITapGestureRecognizer *tap;
 }
 
 +(NSInteger) TagGenerater;

@@ -5,8 +5,8 @@
 //  Created by Zhoutuo Yang on 1/30/13.
 //
 //
-#import "ShadowsLayer.h"
 #import "GameplayScene.h"
+#import "ShadowsLayer.h"
 
 #define rotationThreshold 3.0f
 @implementation ShadowsLayer
@@ -178,6 +178,25 @@
     return res;
 }
 
+-(void)makeAllTrueShadowMap{
+    for(int i=0; i< DEVICE_HEIGHT; i++){
+        for(int j =0; j< DEVICE_WIDTH; j++){
+            shadowMap[i][j] = true;
+        }
+    }
+}
+
+
+-(bool)pathFinder: (int)startX :(int)startY :(int)endX :(int)endY{
+
+    PathFinder* temp = [[PathFinder alloc]initSize :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
+    return [temp findPath:startX :startY :endX :endY];
+}
+
+
+
+
+
 -(void) testShadowMap:(CGPoint)testPoint {
     CCLOG(@"%@", NSStringFromCGPoint(testPoint));
     int x = (int) testPoint.x;
@@ -191,11 +210,73 @@
     
 }
 
+/////////////////
+//test
+
+-(bool)checkExpansionCmap: (int)x : (int)y : (int)size{
+    
+    if(x + size < 1024){
+        for(int i =size - 1; i < size + x; i ++){
+            if(shadowMap[y + size - 1][i] == false){
+                return false;
+            }
+        }
+    }
+    
+    if(y + size < 768){
+        for(int i = size - 1; i < size + y; i ++){
+            if(shadowMap[i][x + size - 1] == false){
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(void)createClearanceMap{
+    
+    [self generateShadowMap];
+    
+    //nested for loop to go over all points in the shadowMap
+    for(int i=0; i < 768; i ++){
+        for(int j=0; j< 1024; j++){
+            
+            if(shadowMap[i][j] == true){
+                clearanceMap[i][j] = 1;
+                
+                //see how large we can expand the square for clearance
+                //start at 2 and then goooooo on
+                for(int k = 2; k < 768; k ++){
+                    //increments over the square size
+                    if([self checkExpansionCmap:i :j :k] == true){
+                        clearanceMap[i][j] = k;
+                    }
+                    //if there is not an expansion then it will break from the loop
+                    else{
+                        break;
+                    }
+                }
+            }else{
+                // NSLog(@"its a 0");
+                clearanceMap[i][j] = 0;
+            }//end else cMap i j
+        }//end j for loop
+    }//end i for loop
+}
+
+
+//end test
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADOW LAYER EVENTS
 -(void) startActionMode {
     [self generateShadowMap];
+  //  [self makeAllTrueShadowMap];
     [self generateClearanceMap];
     self.isTouchEnabled = YES;
     
