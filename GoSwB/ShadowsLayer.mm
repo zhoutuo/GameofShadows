@@ -283,6 +283,7 @@
   //  [self makeAllTrueShadowMap];
     [self generateClearanceMap];
     self.isTouchEnabled = YES;
+    [shadowMonster setVisible:YES];
     [self initTapGesture];
     
     CCLOG(@"Enter Action Mode");
@@ -290,6 +291,7 @@
 
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
+    [shadowMonster setVisible:NO];
     [self removeTapGesture];
     CCLOG(@"Leave Action Mode");
 }
