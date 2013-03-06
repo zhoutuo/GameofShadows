@@ -7,6 +7,8 @@
 //
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "PathFinder.h"
+
 
 #define DEVICE_WIDTH 1024
 #define DEVICE_HEIGHT 768
@@ -25,4 +27,7 @@
 -(void) updateShadowRot:(NSInteger)objectSpriteTag withAngle:(float) angle;
 -(void) startActionMode;
 -(void) finishActionMode;
+
+-(bool)pathFinder: (int)startX :(int)startY :(int)endX :(int)endY;
+
 @end

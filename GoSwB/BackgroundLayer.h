@@ -8,6 +8,9 @@
 
 #import "cocos2d.h"
 
-@interface BackgroundLayer : CCLayer
+@interface BackgroundLayer : CCLayer{
+    
+       CCSprite* spook; 
+}
 
 @end

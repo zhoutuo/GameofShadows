@@ -246,6 +246,7 @@
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
+		94127C1E16E53D250066DEE0 /* PathFinder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94127C1D16E53D250066DEE0 /* PathFinder.mm */; };
 		C07A02BD16DD846900D71044 /* ArmChair.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BA16DD846900D71044 /* ArmChair.png */; };
 		C07A02BE16DD846900D71044 /* Barrel.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BB16DD846900D71044 /* Barrel.png */; };
 		C07A02BF16DD846900D71044 /* Surfboard.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BC16DD846900D71044 /* Surfboard.png */; };
@@ -702,6 +703,8 @@
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
 		82EAD1FE16DCA460002F736F /* Room layout small window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window.png"; sourceTree = "<group>"; };
+		94127C1C16E53D250066DEE0 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
+		94127C1D16E53D250066DEE0 /* PathFinder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PathFinder.mm; sourceTree = "<group>"; };
 		C07A02BA16DD846900D71044 /* ArmChair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArmChair.png; sourceTree = "<group>"; };
 		C07A02BB16DD846900D71044 /* Barrel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Barrel.png; sourceTree = "<group>"; };
 		C07A02BC16DD846900D71044 /* Surfboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Surfboard.png; sourceTree = "<group>"; };
@@ -811,6 +814,8 @@
 				28E4793A16CD9C14007B3A2A /* ShadowsLayer.mm */,
 				C0C1795D16D072580060BAD4 /* PhysicsSprite.h */,
 				C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */,
+				94127C1C16E53D250066DEE0 /* PathFinder.h */,
+				94127C1D16E53D250066DEE0 /* PathFinder.mm */,
 				1E67DBA516D4753200BEF7CB /* LevelSelectScene.h */,
 				1E67DBA616D4753200BEF7CB /* LevelSelectScene.mm */,
 				1E67DBA716D4753200BEF7CB /* MainMenuOptionsScene.h */,
@@ -1730,6 +1735,7 @@
 				82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */,
 				1EF73BDB16E54FAD00BF4959 /* PauseLayer.mm in Sources */,
 				1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */,
+				94127C1E16E53D250066DEE0 /* PathFinder.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
