@@ -19,7 +19,11 @@
         shadowMonster = [CCSprite spriteWithFile:@"shadow-monster.png"];
         [shadowMonster setPosition:ccp(400, 400)];
         [shadowMonster setVisible:NO];
-        [self addChild:shadowMonster];
+        [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
+        
+        wormhole = [CCSprite spriteWithFile:@"Wormhole.png"];
+        [wormhole setPosition:[shadowMonster position]];
+        [self addChild:wormhole z:WORMHOLE_DEPTH];
         
     }
     return self;
@@ -107,7 +111,14 @@
             CGPoint origin = boundingBox.origin;
             for (int i = 0; i < boundingBox.size.height; ++i) {
                 for (int j = 0; j < boundingBox.size.width; ++j) {
-                    shadowMap[i + (int)origin.y][j + (int)origin.x] = true;
+                    int newX = j + (int)origin.x;
+                    int newY = i + (int)origin.y;
+                    newX = MAX(0, newX);
+                    newX = MIN(newX, DEVICE_WIDTH);
+                    
+                    newY = MAX(0, newY);
+                    newY = MIN(newY, DEVICE_HEIGHT);
+                    shadowMap[newY][newX] = true;
                 }
             }
         } else {
@@ -117,7 +128,16 @@
                 for (int j = 0; j < boundingBox.size.width; ++j) {
                     CGPoint pointInBoundingBox = ccpAdd(origin, ccp(j, i));
                     if (CGRectContainsPoint(textureRect, [cur convertToNodeSpace:pointInBoundingBox])) {
-                        shadowMap[(int)pointInBoundingBox.y][(int)pointInBoundingBox.x] = true;
+                        int newX = j + (int)pointInBoundingBox.x;
+                        int newY = i + (int)pointInBoundingBox.y;
+                        newX = MAX(0, newX);
+                        newX = MIN(newX, DEVICE_WIDTH);
+                        
+                        newY = MAX(0, newY);
+                        newY = MIN(newY, DEVICE_HEIGHT);
+
+                        
+                        shadowMap[newY][newX] = true;
                     }
                 }
             }

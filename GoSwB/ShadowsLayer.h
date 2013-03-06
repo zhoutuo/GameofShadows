@@ -12,6 +12,9 @@
 
 #define DEVICE_WIDTH 1024
 #define DEVICE_HEIGHT 768
+#define SHADOW_SPRITE_DEPTH 1
+#define WORMHOLE_DEPTH 2
+#define SHADOW_MONESTER_DEPTH 100
 
 @interface ShadowsLayer : CCLayer {
     float shadowHeightFactor;
@@ -20,6 +23,7 @@
     bool shadowMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     int clearanceMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     CCSprite* shadowMonster;
+    CCSprite* wormhole;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
