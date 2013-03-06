@@ -201,7 +201,7 @@
 }
 
 
--(bool)findPath:(int)startX :(int)startY :(int)endX :(int)endY
+-(NSMutableArray*)findPath:(int)startX :(int)startY :(int)endX :(int)endY
 {
 	//find path function. takes a starting point and end point and performs the A-Star algorithm
 	//to find a path, if possible. Once a path is found it can be traced by following the last
@@ -209,9 +209,6 @@
 	
     NSLog(@"start find path");
     
-    if([self spaceIsBlocked:endX :endY ]){
-        return false;
-    }
     
     NSMutableArray *path;    
 	int x,y;
@@ -219,17 +216,27 @@
 	int currentX,currentY;
 	NSMutableArray *openList, *closedList;
     CGPoint tempLoc;
+    
+    path = [NSMutableArray array];
+    
+    if([self spaceIsBlocked:endX :endY ]){
+        return path;
+    }
 	
 	if((startX == endX) && (startY == endY)){
         NSLog(@"Path Found!");
-		return true; //make sure we're not already there
+        tempLoc.x = endX;
+        tempLoc.y = endY;
+        [path addObject: [NSValue valueWithCGPoint:tempLoc]];
+        
+		return path; //make sure we're not already there
     }
 	
 	openList = [NSMutableArray array]; //array to hold open nodes
     
 	closedList = [NSMutableArray array]; //array to hold closed nodes
     
-    path = [NSMutableArray array];
+    
 
 	
 	PathFindNode *currentNode = nil;
@@ -270,7 +277,7 @@
                         
                         tempLoc.x = aNode->nodeX;
                         tempLoc.y = aNode->nodeY;
-                        NSLog(@"X: %f  Y: %f", tempLoc.x,tempLoc.y);
+                      //  NSLog(@"X: %f  Y: %f", tempLoc.x,tempLoc.y);
                         [path addObject: [NSValue valueWithCGPoint:tempLoc]];
                                           
                         aNode = aNode->parentNode;
@@ -279,7 +286,7 @@
             
             
             NSLog(@"Path Found!");
-			return true;
+			return path;
 			//*****************************************//
 		}
 		else
@@ -342,6 +349,6 @@
 	}
 	//**** NO PATH FOUND *****
     NSLog(@"No Path Found :(");
-    return false;
+    return path;
 }
 @end

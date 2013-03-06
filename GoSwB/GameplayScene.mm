@@ -72,7 +72,6 @@ static NSInteger tagSeed = 10000;
 -(void) twoFingerSwipeUp{
     if (!isPuzzleMode) {
         isPuzzleMode = true;
-        [self removeTapGesture];
         [shadowLayer finishActionMode];
         [gameplayLayer startPuzzleMode];
     }
@@ -84,24 +83,11 @@ static NSInteger tagSeed = 10000;
         isPuzzleMode = false;
         [gameplayLayer finishPuzzleMode];
         [shadowLayer startActionMode];
-        [self initTapGesture];
     }
 }
--(void) tapRecognized:(UITapGestureRecognizer *) recognizer {
-    CGPoint touchPoint = [recognizer locationOfTouch:0 inView: [[CCDirector sharedDirector]view]];
-    int x =touchPoint.x;
-    int y = DEVICE_HEIGHT - touchPoint.y;
-    
-    NSLog(@"Tap yay! x: %d  y: %d" ,x,y);
-    [shadowLayer pathFinder:400 :400 :x :DEVICE_HEIGHT - y];
-}
 
-- (void) initTapGesture{
-    tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized:)]autorelease];
-    [tap setNumberOfTapsRequired:1];
-    [tap setNumberOfTouchesRequired:1];
-    [[[CCDirector sharedDirector] view] addGestureRecognizer:tap];
-}
+
+
 
 -(void) initSwipeGestures{
     
@@ -138,7 +124,4 @@ static NSInteger tagSeed = 10000;
     [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeRight];
 }
 
-- (void) removeTapGesture {
-    [[[CCDirector sharedDirector]view] removeGestureRecognizer:tap];
-}
 @end
