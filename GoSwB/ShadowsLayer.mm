@@ -16,6 +16,10 @@
         shadowHeightFactor = 2.0f;
         shadowWidthFactor = 2.0f;
         objShadowTable = [[NSMutableDictionary alloc] init];
+        shadowMonster = [CCSprite spriteWithFile:@"shadow-monster.png"];
+        [shadowMonster setPosition:ccp(400, 400)];
+        [shadowMonster setVisible:NO];
+        [self addChild:shadowMonster];
         
     }
     return self;
@@ -198,13 +202,14 @@
     [self generateShadowMap];
     [self generateClearanceMap];
     self.isTouchEnabled = YES;
+    [shadowMonster setVisible:YES];
     
     CCLOG(@"Enter Action Mode");
 }
 
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
-    
+    [shadowMonster setVisible:NO];
     CCLOG(@"Leave Action Mode");
 }
 

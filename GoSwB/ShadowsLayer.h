@@ -17,6 +17,7 @@
     NSMutableDictionary* objShadowTable;
     bool shadowMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     int clearanceMap[DEVICE_HEIGHT][DEVICE_WIDTH];
+    CCSprite* shadowMonster;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
