@@ -251,8 +251,9 @@
 	//add it to the open list to be examined
 	[openList addObject: startNode];
 	
-	while([openList count])
+	while([openList count] > 0)
 	{
+        //NSLog(@"The count is: %d", [openList count]);
 		//while there are nodes to be examined...
 		
 		//get the lowest cost node so far:
@@ -330,7 +331,7 @@
 										aNode->nodeX = newX;
 										aNode->nodeY = newY;
 										aNode->parentNode = currentNode;
-										//aNode->cost = currentNode->cost + 1.0;
+										aNode->cost = currentNode->cost + 1.0;
 										
 										
 										//distance, added to the existing cost
