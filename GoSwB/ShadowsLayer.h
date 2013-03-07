@@ -24,7 +24,7 @@
     int clearanceMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     CCSprite* shadowMonster;
     CCSprite* wormhole;
-    UITapGestureRecognizer *tap;
+//    UITapGestureRecognizer *tap;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
@@ -32,7 +32,5 @@
 -(void) updateShadowRot:(NSInteger)objectSpriteTag withAngle:(float) angle;
 -(void) startActionMode;
 -(void) finishActionMode;
-
--(bool)pathFinder: (int)startX :(int)startY :(int)endX :(int)endY;
 
 @end

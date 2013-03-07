@@ -17,7 +17,7 @@
         shadowWidthFactor = 2.0f;
         objShadowTable = [[NSMutableDictionary alloc] init];
         shadowMonster = [CCSprite spriteWithFile:@"shadow-monster.png"];
-        [shadowMonster setPosition:ccp(400, 400)];
+        [shadowMonster setPosition:ccp(500, 200)];
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
@@ -211,12 +211,24 @@
 }
 
 
--(bool)pathFinder: (int)startX :(int)startY :(int)endX :(int)endY{
+-(void)pathFinding: (CGPoint)start :(CGPoint)end{
 
-    PathFinder* temp = [[PathFinder alloc]initSize :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
-    return [temp findPath:startX :startY :endX :endY];
+    PathFinder* pathfinder = [[PathFinder alloc]initSize :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
+    CCArray* path = [CCArray array];
+    NSMutableArray* actions = [NSMutableArray array];
+    [pathfinder findPath:start :end :path];
+
+    for (NSInteger i = [path count] - 1; i >= 0; --i) {
+        NSValue* object = [path objectAtIndex:i];
+        CGPoint curPoint = object.CGPointValue;
+        CCAction* action = [CCMoveTo actionWithDuration:0.01 position:curPoint];
+        [actions addObject:action];
+    }
+    
+    if ([actions count] != 0) {
+        [shadowMonster runAction:[CCSequence actionWithArray:actions]];
+    }
 }
-
 
 
 
@@ -304,7 +316,7 @@
     [self generateClearanceMap];
     self.isTouchEnabled = YES;
     [shadowMonster setVisible:YES];
-    [self initTapGesture];
+//    [self initTapGesture];
     
     CCLOG(@"Enter Action Mode");
 }
@@ -312,31 +324,41 @@
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
     [shadowMonster setVisible:NO];
-    [self removeTapGesture];
+//    [self removeTapGesture];
     CCLOG(@"Leave Action Mode");
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
--(void) tapRecognized:(UITapGestureRecognizer *) recognizer {
-    CGPoint touchPoint = [recognizer locationOfTouch:0 inView: [[CCDirector sharedDirector]view]];
-    int x =touchPoint.x;
-    int y = DEVICE_HEIGHT - touchPoint.y;
-    
-    NSLog(@"Tap yay! x: %d  y: %d" ,x,y);
-    [self pathFinder :400 :400 :x :y];
+-(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch* touch = [touches anyObject];
+    CGPoint location = [touch locationInView:[touch view]];
+    location = [[CCDirector sharedDirector] convertToGL:location];
+    [self pathFinding :[shadowMonster position] :location];
+
 }
 
-- (void) initTapGesture{
-    tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized:)]autorelease];
-    [tap setNumberOfTapsRequired:1];
-    [tap setNumberOfTouchesRequired:1];
-    [[[CCDirector sharedDirector] view] addGestureRecognizer:tap];
-}
 
-- (void) removeTapGesture {
-    [[[CCDirector sharedDirector]view] removeGestureRecognizer:tap];
-}
+
+//-(void) tapRecognized:(UITapGestureRecognizer *) recognizer {
+//    CGPoint touchPoint = [recognizer locationOfTouch:0 inView: [[CCDirector sharedDirector]view]];
+//    int x =touchPoint.x;
+//    int y = DEVICE_HEIGHT - touchPoint.y;
+//    
+//    NSLog(@"Tap yay! x: %d  y: %d" ,x,y);
+//    [self pathFinding :[shadowMonster position] :ccp(x, y)];
+//}
+//
+//- (void) initTapGesture{
+//    tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized:)]autorelease];
+//    [tap setNumberOfTapsRequired:1];
+//    [tap setNumberOfTouchesRequired:1];
+//    [[[CCDirector sharedDirector] view] addGestureRecognizer:tap];
+//}
+//
+//- (void) removeTapGesture {
+//    [[[CCDirector sharedDirector]view] removeGestureRecognizer:tap];
+//}
 
 @end

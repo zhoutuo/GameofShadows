@@ -800,30 +800,10 @@
 		28E4771116CD9BA7007B3A2A /* Game of Shadows */ = {
 			isa = PBXGroup;
 			children = (
+				28E481E216E80BFA008EB69B /* Menu */,
+				28E481E116E80BEA008EB69B /* Gameplay */,
 				28E4793216CD9C14007B3A2A /* AppDelegate.h */,
 				28E4793316CD9C14007B3A2A /* AppDelegate.mm */,
-				28E079B816D41B8C007011F2 /* GameplayScene.h */,
-				28E079B916D41B8C007011F2 /* GameplayScene.mm */,
-				28E4793416CD9C14007B3A2A /* BackgroundLayer.h */,
-				28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */,
-				1EF73BD916E54FAD00BF4959 /* PauseLayer.h */,
-				1EF73BDA16E54FAD00BF4959 /* PauseLayer.mm */,
-				1EF73BE016E5561A00BF4959 /* Globals.h */,
-				1EF73BE116E5574B00BF4959 /* Globals.mm */,
-				28E4793616CD9C14007B3A2A /* GameplayLayer.h */,
-				28E4793B16CD9C14007B3A2A /* GameplayLayer.mm */,
-				28E4793816CD9C14007B3A2A /* ShadowsLayer.h */,
-				28E4793A16CD9C14007B3A2A /* ShadowsLayer.mm */,
-				C0C1795D16D072580060BAD4 /* PhysicsSprite.h */,
-				C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */,
-				94127C1C16E53D250066DEE0 /* PathFinder.h */,
-				94127C1D16E53D250066DEE0 /* PathFinder.mm */,
-				1E67DBA516D4753200BEF7CB /* LevelSelectScene.h */,
-				1E67DBA616D4753200BEF7CB /* LevelSelectScene.mm */,
-				1E67DBA716D4753200BEF7CB /* MainMenuOptionsScene.h */,
-				1E67DBA816D4753200BEF7CB /* MainMenuOptionsScene.mm */,
-				1E67DBA916D4753200BEF7CB /* MainMenuScene.h */,
-				1E67DBAA16D4753200BEF7CB /* MainMenuScene.mm */,
 				82A0235216DC28BD00886573 /* generic-box2d-plist */,
 				1E67DBAE16D4758500BEF7CB /* CCBReader */,
 				28E4771216CD9BA7007B3A2A /* Resources */,
@@ -1422,6 +1402,42 @@
 				28E4791A16CD9BAA007B3A2A /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		28E481E116E80BEA008EB69B /* Gameplay */ = {
+			isa = PBXGroup;
+			children = (
+				28E4793616CD9C14007B3A2A /* GameplayLayer.h */,
+				28E4793B16CD9C14007B3A2A /* GameplayLayer.mm */,
+				28E4793816CD9C14007B3A2A /* ShadowsLayer.h */,
+				28E4793A16CD9C14007B3A2A /* ShadowsLayer.mm */,
+				C0C1795D16D072580060BAD4 /* PhysicsSprite.h */,
+				C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */,
+				94127C1C16E53D250066DEE0 /* PathFinder.h */,
+				94127C1D16E53D250066DEE0 /* PathFinder.mm */,
+				28E079B816D41B8C007011F2 /* GameplayScene.h */,
+				28E079B916D41B8C007011F2 /* GameplayScene.mm */,
+				28E4793416CD9C14007B3A2A /* BackgroundLayer.h */,
+				28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */,
+			);
+			name = Gameplay;
+			sourceTree = "<group>";
+		};
+		28E481E216E80BFA008EB69B /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				1EF73BD916E54FAD00BF4959 /* PauseLayer.h */,
+				1EF73BDA16E54FAD00BF4959 /* PauseLayer.mm */,
+				1EF73BE016E5561A00BF4959 /* Globals.h */,
+				1EF73BE116E5574B00BF4959 /* Globals.mm */,
+				1E67DBA516D4753200BEF7CB /* LevelSelectScene.h */,
+				1E67DBA616D4753200BEF7CB /* LevelSelectScene.mm */,
+				1E67DBA716D4753200BEF7CB /* MainMenuOptionsScene.h */,
+				1E67DBA816D4753200BEF7CB /* MainMenuOptionsScene.mm */,
+				1E67DBA916D4753200BEF7CB /* MainMenuScene.h */,
+				1E67DBAA16D4753200BEF7CB /* MainMenuScene.mm */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 		82A0235216DC28BD00886573 /* generic-box2d-plist */ = {
