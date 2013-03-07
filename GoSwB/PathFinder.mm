@@ -7,7 +7,6 @@
 //
 
 #import "PathFinder.h"
-#import "ShadowsLayer.h"
 
 /****************** PathFindNode <--- Object that holds node information (cost, x, y, etc.) */
 @interface PathFindNode : NSObject {
@@ -201,26 +200,29 @@
 }
 
 
--(NSMutableArray*)findPath:(int)startX :(int)startY :(int)endX :(int)endY
+-(void)findPath:(CGPoint)start :(CGPoint)end :(CCArray *)path
 {
 	//find path function. takes a starting point and end point and performs the A-Star algorithm
 	//to find a path, if possible. Once a path is found it can be traced by following the last
 	//node's parent nodes back to the start
+    //(int)startX :(int)startY :(int)endX :(int)endY
+    
+    int startX = (int)start.x;
+    int startY = (int)start.y;
+    int endX = (int)end.x;
+    int endY = (int)end.y;
+    
 	
     NSLog(@"start find path");
     
-    
-    NSMutableArray *path;    
-	int x,y;
+    int x,y;
 	int newX,newY;
 	int currentX,currentY;
 	NSMutableArray *openList, *closedList;
     CGPoint tempLoc;
-    
-    path = [NSMutableArray array];
-    
-    if([self spaceIsBlocked:endX :endY ]){
-        return path;
+        
+    if([self spaceIsBlocked:endX :endY]){
+        return;
     }
 	
 	if((startX == endX) && (startY == endY)){
@@ -229,7 +231,7 @@
         tempLoc.y = endY;
         [path addObject: [NSValue valueWithCGPoint:tempLoc]];
         
-		return path; //make sure we're not already there
+		return; //make sure we're not already there
     }
 	
 	openList = [NSMutableArray array]; //array to hold open nodes
@@ -287,7 +289,7 @@
             
             
             NSLog(@"Path Found!");
-			return path;
+			return;
 			//*****************************************//
 		}
 		else
@@ -350,6 +352,6 @@
 	}
 	//**** NO PATH FOUND *****
     NSLog(@"No Path Found :(");
-    return path;
+    return;
 }
 @end
