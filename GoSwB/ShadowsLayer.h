@@ -23,8 +23,9 @@
     bool shadowMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     int clearanceMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     CCSprite* shadowMonster;
-    CCSprite* wormhole;
-//    UITapGestureRecognizer *tap;
+    CCSprite* wormholeEntrance;
+    CCSprite* wormholeExit;
+    bool isExitFound;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;

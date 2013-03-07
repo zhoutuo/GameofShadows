@@ -21,9 +21,16 @@
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
-        wormhole = [CCSprite spriteWithFile:@"Wormhole.png"];
-        [wormhole setPosition:[shadowMonster position]];
-        [self addChild:wormhole z:WORMHOLE_DEPTH];
+        wormholeEntrance = [CCSprite spriteWithFile:@"WormholeEntrance.png"];
+        [wormholeEntrance setPosition:[shadowMonster position]];
+        [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
+        
+        wormholeExit = [CCSprite spriteWithFile:@"WormholeExit.png"];
+        [wormholeExit setPosition:ccp(500, 500)];
+        [self addChild:wormholeExit z:WORMHOLE_DEPTH];
+        
+        isExitFound = false;
+
         
     }
     return self;
@@ -211,7 +218,7 @@
 }
 
 
--(void)pathFinding: (CGPoint)start :(CGPoint)end{
+-(void)pathFinding: (CGPoint)start :(CGPoint)end {
 
     PathFinder* pathfinder = [[PathFinder alloc]initSize :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
     CCArray* path = [CCArray array];
@@ -226,11 +233,24 @@
     }
     
     if ([actions count] != 0) {
+        if (CGRectContainsPoint([wormholeExit boundingBox], end)) {
+            isExitFound = true;
+            [self scheduleUpdate];
+        }
+        
         [shadowMonster runAction:[CCSequence actionWithArray:actions]];
     }
 }
 
 
+- (void)update:(ccTime)delta {
+    if (isExitFound) {
+        if(CGRectContainsPoint([wormholeExit boundingBox], [shadowMonster position])) {
+            CCLOG(@"CONG");
+            [self unscheduleUpdate];
+        }
+    }
+}
 
 
 -(void) testShadowMap:(CGPoint)testPoint {
@@ -312,11 +332,9 @@
 //SHADOW LAYER EVENTS
 -(void) startActionMode {
     [self generateShadowMap];
-  //  [self makeAllTrueShadowMap];
     [self generateClearanceMap];
     self.isTouchEnabled = YES;
     [shadowMonster setVisible:YES];
-//    [self initTapGesture];
     
     CCLOG(@"Enter Action Mode");
 }
@@ -324,7 +342,6 @@
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
     [shadowMonster setVisible:NO];
-//    [self removeTapGesture];
     CCLOG(@"Leave Action Mode");
 }
 
@@ -338,27 +355,5 @@
     [self pathFinding :[shadowMonster position] :location];
 
 }
-
-
-
-//-(void) tapRecognized:(UITapGestureRecognizer *) recognizer {
-//    CGPoint touchPoint = [recognizer locationOfTouch:0 inView: [[CCDirector sharedDirector]view]];
-//    int x =touchPoint.x;
-//    int y = DEVICE_HEIGHT - touchPoint.y;
-//    
-//    NSLog(@"Tap yay! x: %d  y: %d" ,x,y);
-//    [self pathFinding :[shadowMonster position] :ccp(x, y)];
-//}
-//
-//- (void) initTapGesture{
-//    tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized:)]autorelease];
-//    [tap setNumberOfTapsRequired:1];
-//    [tap setNumberOfTouchesRequired:1];
-//    [[[CCDirector sharedDirector] view] addGestureRecognizer:tap];
-//}
-//
-//- (void) removeTapGesture {
-//    [[[CCDirector sharedDirector]view] removeGestureRecognizer:tap];
-//}
 
 @end
