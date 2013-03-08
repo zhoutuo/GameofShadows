@@ -823,6 +823,10 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2864C92F16E82E8300A9D1D7 /* WormholeEntrance.png */,
+				2864C93016E82E8300A9D1D7 /* WormholeExit.png */,
+				287B97F916E7D5BF0008C334 /* Room layout texture@2x.jpg */,
+				287B97F716E7D5AA0008C334 /* shadow-monster.png */,
 				C0883E8416E7D44800EAD78A /* couch.png */,
 				C0883E8516E7D44800EAD78A /* couch@2x.png */,
 				C0EBE2F116E5522E00673C22 /* Table.png */,
@@ -1583,6 +1587,10 @@
 				C0EBE2F416E5522E00673C22 /* Table@2x.png in Resources */,
 				1EF73BDE16E5506A00BF4959 /* pause.png in Resources */,
 				1EF73BDF16E5506A00BF4959 /* pause@2x.png in Resources */,
+				287B97F816E7D5AA0008C334 /* shadow-monster.png in Resources */,
+				287B97FA16E7D5BF0008C334 /* Room layout texture@2x.jpg in Resources */,
+				2864C93116E82E8300A9D1D7 /* WormholeEntrance.png in Resources */,
+				2864C93216E82E8300A9D1D7 /* WormholeExit.png in Resources */,
 				C0883E8616E7D44800EAD78A /* couch.png in Resources */,
 				C0883E8716E7D44800EAD78A /* couch@2x.png in Resources */,
 			);
