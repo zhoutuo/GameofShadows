@@ -86,6 +86,9 @@ static NSInteger tagSeed = 10000;
     }
 }
 
+
+
+
 -(void) initSwipeGestures{
     
     swipeRight = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeRight)]autorelease];
@@ -120,4 +123,5 @@ static NSInteger tagSeed = 10000;
     [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeLeft];
     [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeRight];
 }
+
 @end

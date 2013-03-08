@@ -5,8 +5,8 @@
 //  Created by Zhoutuo Yang on 1/30/13.
 //
 //
-#import "ShadowsLayer.h"
 #import "GameplayScene.h"
+#import "ShadowsLayer.h"
 
 #define rotationThreshold 3.0f
 @implementation ShadowsLayer
@@ -16,6 +16,21 @@
         shadowHeightFactor = 2.0f;
         shadowWidthFactor = 2.0f;
         objShadowTable = [[NSMutableDictionary alloc] init];
+        shadowMonster = [CCSprite spriteWithFile:@"shadow-monster.png"];
+        [shadowMonster setPosition:ccp(500, 200)];
+        [shadowMonster setVisible:NO];
+        [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
+        
+        wormholeEntrance = [CCSprite spriteWithFile:@"WormholeEntrance.png"];
+        [wormholeEntrance setPosition:[shadowMonster position]];
+        [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
+        
+        wormholeExit = [CCSprite spriteWithFile:@"WormholeExit.png"];
+        [wormholeExit setPosition:ccp(500, 500)];
+        [self addChild:wormholeExit z:WORMHOLE_DEPTH];
+        
+        isExitFound = false;
+
         
     }
     return self;
@@ -103,7 +118,14 @@
             CGPoint origin = boundingBox.origin;
             for (int i = 0; i < boundingBox.size.height; ++i) {
                 for (int j = 0; j < boundingBox.size.width; ++j) {
-                    shadowMap[i + (int)origin.y][j + (int)origin.x] = true;
+                    int newX = j + (int)origin.x;
+                    int newY = i + (int)origin.y;
+                    newX = MAX(0, newX);
+                    newX = MIN(newX, DEVICE_WIDTH);
+                    
+                    newY = MAX(0, newY);
+                    newY = MIN(newY, DEVICE_HEIGHT);
+                    shadowMap[newY][newX] = true;
                 }
             }
         } else {
@@ -113,7 +135,16 @@
                 for (int j = 0; j < boundingBox.size.width; ++j) {
                     CGPoint pointInBoundingBox = ccpAdd(origin, ccp(j, i));
                     if (CGRectContainsPoint(textureRect, [cur convertToNodeSpace:pointInBoundingBox])) {
-                        shadowMap[(int)pointInBoundingBox.y][(int)pointInBoundingBox.x] = true;
+                        int newX = j + (int)pointInBoundingBox.x;
+                        int newY = i + (int)pointInBoundingBox.y;
+                        newX = MAX(0, newX);
+                        newX = MIN(newX, DEVICE_WIDTH);
+                        
+                        newY = MAX(0, newY);
+                        newY = MIN(newY, DEVICE_HEIGHT);
+
+                        
+                        shadowMap[newY][newX] = true;
                     }
                 }
             }
@@ -178,6 +209,50 @@
     return res;
 }
 
+-(void)makeAllTrueShadowMap{
+    for(int i=0; i< DEVICE_HEIGHT; i++){
+        for(int j =0; j< DEVICE_WIDTH; j++){
+            shadowMap[i][j] = true;
+        }
+    }
+}
+
+
+-(void)pathFinding: (CGPoint)start :(CGPoint)end {
+
+    PathFinder* pathfinder = [[PathFinder alloc]initSize :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
+    CCArray* path = [CCArray array];
+    NSMutableArray* actions = [NSMutableArray array];
+    [pathfinder findPath:start :end :path];
+
+    for (NSInteger i = [path count] - 1; i >= 0; --i) {
+        NSValue* object = [path objectAtIndex:i];
+        CGPoint curPoint = object.CGPointValue;
+        CCAction* action = [CCMoveTo actionWithDuration:0.01 position:curPoint];
+        [actions addObject:action];
+    }
+    
+    if ([actions count] != 0) {
+        if (CGRectContainsPoint([wormholeExit boundingBox], end)) {
+            isExitFound = true;
+            [self scheduleUpdate];
+        }
+        
+        [shadowMonster runAction:[CCSequence actionWithArray:actions]];
+    }
+}
+
+
+- (void)update:(ccTime)delta {
+    if (isExitFound) {
+        if(CGRectContainsPoint([wormholeExit boundingBox], [shadowMonster position])) {
+            CCLOG(@"CONG");
+            [self unscheduleUpdate];
+        }
+    }
+}
+
+
 -(void) testShadowMap:(CGPoint)testPoint {
     CCLOG(@"%@", NSStringFromCGPoint(testPoint));
     int x = (int) testPoint.x;
@@ -191,6 +266,67 @@
     
 }
 
+/////////////////
+//test
+
+-(bool)checkExpansionCmap: (int)x : (int)y : (int)size{
+    
+    if(x + size < 1024){
+        for(int i =size - 1; i < size + x; i ++){
+            if(shadowMap[y + size - 1][i] == false){
+                return false;
+            }
+        }
+    }
+    
+    if(y + size < 768){
+        for(int i = size - 1; i < size + y; i ++){
+            if(shadowMap[i][x + size - 1] == false){
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(void)createClearanceMap{
+    
+    [self generateShadowMap];
+    
+    //nested for loop to go over all points in the shadowMap
+    for(int i=0; i < 768; i ++){
+        for(int j=0; j< 1024; j++){
+            
+            if(shadowMap[i][j] == true){
+                clearanceMap[i][j] = 1;
+                
+                //see how large we can expand the square for clearance
+                //start at 2 and then goooooo on
+                for(int k = 2; k < 768; k ++){
+                    //increments over the square size
+                    if([self checkExpansionCmap:i :j :k] == true){
+                        clearanceMap[i][j] = k;
+                    }
+                    //if there is not an expansion then it will break from the loop
+                    else{
+                        break;
+                    }
+                }
+            }else{
+                // NSLog(@"its a 0");
+                clearanceMap[i][j] = 0;
+            }//end else cMap i j
+        }//end j for loop
+    }//end i for loop
+}
+
+
+//end test
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADOW LAYER EVENTS
@@ -198,18 +334,26 @@
     [self generateShadowMap];
     [self generateClearanceMap];
     self.isTouchEnabled = YES;
+    [shadowMonster setVisible:YES];
     
     CCLOG(@"Enter Action Mode");
 }
 
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
-    
+    [shadowMonster setVisible:NO];
     CCLOG(@"Leave Action Mode");
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+-(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch* touch = [touches anyObject];
+    CGPoint location = [touch locationInView:[touch view]];
+    location = [[CCDirector sharedDirector] convertToGL:location];
+    [self pathFinding :[shadowMonster position] :location];
+
+}
 
 @end

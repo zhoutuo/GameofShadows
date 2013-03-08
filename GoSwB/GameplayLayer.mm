@@ -108,7 +108,7 @@
 }
 
 // Physics step update function.
-- (void)update:(ccTime)delta
+-(void)update:(ccTime)delta
 {
     int32 velocityIterations = 8;
     int32 positionIterations = 1;
