@@ -22,8 +22,11 @@ static NSInteger tagSeed = 10000;
         shadowLayer = [ShadowsLayer node];
         [self addChild:shadowLayer z:1];
         
+        shadowDisruptionLayer = [ShadowDisruptionLayer node];
+        [self addChild:shadowDisruptionLayer z:2];
+        
         gameplayLayer = [GameplayLayer node];
-        [self addChild:gameplayLayer z:2];
+        [self addChild:gameplayLayer z:3];
         
         [self initSwipeGestures];
         isPuzzleMode = true; //setting modes.
@@ -122,6 +125,10 @@ static NSInteger tagSeed = 10000;
     [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeDown];
     [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeLeft];
     [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeRight];
+}
+
+-(bool) checkLightSourceCoordinates:(int)ycoor :(int)xcoor{
+    return [shadowDisruptionLayer checkIfInLight:ycoor : xcoor];
 }
 
 @end

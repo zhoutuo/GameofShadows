@@ -245,6 +245,9 @@
 		28E4794E16CD9C7F007B3A2A /* ball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794616CD9C7F007B3A2A /* ball-hd.png */; };
 		28E4794F16CD9C7F007B3A2A /* play_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794716CD9C7F007B3A2A /* play_bg.png */; };
 		28E4795016CD9C7F007B3A2A /* rotate_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794816CD9C7F007B3A2A /* rotate_circle.png */; };
+		8290A2A116EAB5F600AC6664 /* ShadowDisruptionLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */; };
+		8290A2A316EACFD800AC6664 /* lightSource.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2A216EACFD800AC6664 /* lightSource.png */; };
+		8290A2A516EAD31700AC6664 /* lightSource@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2A416EAD31700AC6664 /* lightSource@2x.png */; };
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
@@ -703,6 +706,10 @@
 		28E4794616CD9C7F007B3A2A /* ball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ball-hd.png"; path = "Resources/ball-hd.png"; sourceTree = "<group>"; };
 		28E4794716CD9C7F007B3A2A /* play_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_bg.png; path = Resources/play_bg.png; sourceTree = "<group>"; };
 		28E4794816CD9C7F007B3A2A /* rotate_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rotate_circle.png; path = Resources/rotate_circle.png; sourceTree = "<group>"; };
+		8290A29F16EAB5F500AC6664 /* ShadowDisruptionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowDisruptionLayer.h; sourceTree = "<group>"; };
+		8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShadowDisruptionLayer.mm; sourceTree = "<group>"; };
+		8290A2A216EACFD800AC6664 /* lightSource.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightSource.png; path = Resources/lightSource.png; sourceTree = "<group>"; };
+		8290A2A416EAD31700AC6664 /* lightSource@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightSource@2x.png"; path = "Resources/lightSource@2x.png"; sourceTree = "<group>"; };
 		82A0235316DC28BD00886573 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GB2ShapeCache.h; sourceTree = "<group>"; };
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
@@ -819,6 +826,8 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8290A2A416EAD31700AC6664 /* lightSource@2x.png */,
+				8290A2A216EACFD800AC6664 /* lightSource.png */,
 				2864C92F16E82E8300A9D1D7 /* WormholeEntrance.png */,
 				2864C93016E82E8300A9D1D7 /* WormholeExit.png */,
 				287B97F916E7D5BF0008C334 /* Room layout texture@2x.jpg */,
@@ -1422,6 +1431,8 @@
 				28E079B916D41B8C007011F2 /* GameplayScene.mm */,
 				28E4793416CD9C14007B3A2A /* BackgroundLayer.h */,
 				28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */,
+				8290A29F16EAB5F500AC6664 /* ShadowDisruptionLayer.h */,
+				8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */,
 			);
 			name = Gameplay;
 			sourceTree = "<group>";
@@ -1585,6 +1596,8 @@
 				287B97FA16E7D5BF0008C334 /* Room layout texture@2x.jpg in Resources */,
 				2864C93116E82E8300A9D1D7 /* WormholeEntrance.png in Resources */,
 				2864C93216E82E8300A9D1D7 /* WormholeExit.png in Resources */,
+				8290A2A316EACFD800AC6664 /* lightSource.png in Resources */,
+				8290A2A516EAD31700AC6664 /* lightSource@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1760,6 +1773,7 @@
 				1EF73BDB16E54FAD00BF4959 /* PauseLayer.mm in Sources */,
 				1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */,
 				94127C1E16E53D250066DEE0 /* PathFinder.mm in Sources */,
+				8290A2A116EAB5F600AC6664 /* ShadowDisruptionLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

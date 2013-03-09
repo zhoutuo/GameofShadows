@@ -125,7 +125,12 @@
                     
                     newY = MAX(0, newY);
                     newY = MIN(newY, DEVICE_HEIGHT);
-                    shadowMap[newY][newX] = true;
+                    if([(GameplayScene*)[[CCDirector sharedDirector] runningScene] checkLightSourceCoordinates :newY : newX]){
+                        shadowMap[newY][newX] = false;
+                    }else{
+                        shadowMap[newY][newX] = true;
+                    }
+                    
                 }
             }
         } else {
@@ -143,8 +148,11 @@
                         newY = MAX(0, newY);
                         newY = MIN(newY, DEVICE_HEIGHT);
 
-                        
-                        shadowMap[newY][newX] = true;
+                        if([(GameplayScene*)[[CCDirector sharedDirector] runningScene] checkLightSourceCoordinates :newY : newX]){
+                            shadowMap[newY][newX] = false;
+                        }else{
+                            shadowMap[newY][newX] = true;
+                        }
                     }
                 }
             }
