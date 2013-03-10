@@ -9,11 +9,13 @@
 #import "cocos2d.h"
 #import "BackgroundLayer.h"
 #import "ShadowsLayer.h"
+#import "ShadowDisruptionLayer.h"
 #import "GameplayLayer.h"
 @interface GameplayScene : CCScene {
     BackgroundLayer* backgroundLayer;
     ShadowsLayer* shadowLayer;
     GameplayLayer* gameplayLayer;
+    ShadowDisruptionLayer* shadowDisruptionLayer;
 
     //Mode
     bool isPuzzleMode;
@@ -29,4 +31,5 @@
 -(void) finishObjectsCreation: (CCArray*) objects withRatios:(CCArray*) ratios;
 -(void) finishMovingOneObject: (NSInteger) objectTag withRatio:(CGPoint) ratio;
 -(void) finishRotatingOneObject: (NSInteger) objectTag withAngle:(float) angle;
+-(bool) checkLightSourceCoordinates: (int) ycoor : (int) xcoor;
 @end
