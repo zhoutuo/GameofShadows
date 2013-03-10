@@ -777,6 +777,17 @@
 			path = CCBReader;
 			sourceTree = "<group>";
 		};
+		283A53DF16E857BA00511559 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				28E481E216E80BFA008EB69B /* Menu */,
+				28E481E116E80BEA008EB69B /* Gameplay */,
+				28E4793216CD9C14007B3A2A /* AppDelegate.h */,
+				28E4793316CD9C14007B3A2A /* AppDelegate.mm */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		28E476F316CD9BA7007B3A2A = {
 			isa = PBXGroup;
 			children = (
@@ -813,10 +824,7 @@
 		28E4771116CD9BA7007B3A2A /* Game of Shadows */ = {
 			isa = PBXGroup;
 			children = (
-				28E481E216E80BFA008EB69B /* Menu */,
-				28E481E116E80BEA008EB69B /* Gameplay */,
-				28E4793216CD9C14007B3A2A /* AppDelegate.h */,
-				28E4793316CD9C14007B3A2A /* AppDelegate.mm */,
+				283A53DF16E857BA00511559 /* Classes */,
 				82A0235216DC28BD00886573 /* generic-box2d-plist */,
 				1E67DBAE16D4758500BEF7CB /* CCBReader */,
 				28E4771216CD9BA7007B3A2A /* Resources */,
