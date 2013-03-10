@@ -193,10 +193,10 @@
     if (physicsWorldLeft != NULL) physicsGroundBody -> DestroyFixture(physicsWorldLeft);
     if (physicsWorldRight != NULL) physicsGroundBody -> DestroyFixture(physicsWorldRight);
     delete physicsWorld; physicsWorld = NULL;
-    delete physicsWorldTop; physicsWorldTop = NULL;
-    delete physicsWorldBottom; physicsWorldBottom = NULL;
-    delete physicsWorldLeft; physicsWorldLeft = NULL;
-    delete physicsWorldRight; physicsWorldRight = NULL;
+    physicsWorldTop = NULL;
+    physicsWorldBottom = NULL;
+    physicsWorldLeft = NULL;
+    physicsWorldRight = NULL;
     
     // Release object arrays.
     [objectSpriteArray release];
