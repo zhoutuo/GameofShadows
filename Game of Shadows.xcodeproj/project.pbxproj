@@ -62,6 +62,7 @@
 		1EF73BDE16E5506A00BF4959 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EF73BDC16E5506A00BF4959 /* pause.png */; };
 		1EF73BDF16E5506A00BF4959 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EF73BDD16E5506A00BF4959 /* pause@2x.png */; };
 		1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1EF73BE116E5574B00BF4959 /* Globals.mm */; };
+		2804A3DF16EE695A00C4638D /* GameStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 2804A3DE16EE695A00C4638D /* GameStats.m */; };
 		2864C93116E82E8300A9D1D7 /* WormholeEntrance.png in Resources */ = {isa = PBXBuildFile; fileRef = 2864C92F16E82E8300A9D1D7 /* WormholeEntrance.png */; };
 		2864C93216E82E8300A9D1D7 /* WormholeExit.png in Resources */ = {isa = PBXBuildFile; fileRef = 2864C93016E82E8300A9D1D7 /* WormholeExit.png */; };
 		287B97F816E7D5AA0008C334 /* shadow-monster.png in Resources */ = {isa = PBXBuildFile; fileRef = 287B97F716E7D5AA0008C334 /* shadow-monster.png */; };
@@ -338,6 +339,8 @@
 		1EF73BDD16E5506A00BF4959 /* pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause@2x.png"; path = "Resources/pause@2x.png"; sourceTree = "<group>"; };
 		1EF73BE016E5561A00BF4959 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 		1EF73BE116E5574B00BF4959 /* Globals.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Globals.mm; sourceTree = "<group>"; };
+		2804A3DD16EE695A00C4638D /* GameStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStats.h; sourceTree = "<group>"; };
+		2804A3DE16EE695A00C4638D /* GameStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameStats.m; sourceTree = "<group>"; };
 		2864C92F16E82E8300A9D1D7 /* WormholeEntrance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WormholeEntrance.png; path = Resources/WormholeEntrance.png; sourceTree = "<group>"; };
 		2864C93016E82E8300A9D1D7 /* WormholeExit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WormholeExit.png; path = Resources/WormholeExit.png; sourceTree = "<group>"; };
 		287B97F716E7D5AA0008C334 /* shadow-monster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shadow-monster.png"; path = "Resources/shadow-monster.png"; sourceTree = "<group>"; };
@@ -1447,6 +1450,8 @@
 				28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */,
 				8290A29F16EAB5F500AC6664 /* ShadowDisruptionLayer.h */,
 				8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */,
+				2804A3DD16EE695A00C4638D /* GameStats.h */,
+				2804A3DE16EE695A00C4638D /* GameStats.m */,
 			);
 			name = Gameplay;
 			sourceTree = "<group>";
@@ -1790,6 +1795,7 @@
 				1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */,
 				94127C1E16E53D250066DEE0 /* PathFinder.mm in Sources */,
 				8290A2A116EAB5F600AC6664 /* ShadowDisruptionLayer.mm in Sources */,
+				2804A3DF16EE695A00C4638D /* GameStats.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

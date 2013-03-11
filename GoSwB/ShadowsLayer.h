@@ -26,7 +26,7 @@
     CCSprite* wormholeEntrance;
     CCSprite* wormholeExit;
     bool isExitFound;
-    
+        
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
 -(void) updateShadowPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint) relativePos;
