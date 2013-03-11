@@ -65,22 +65,20 @@
 {
     [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"items.plist"];
     NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
-    NSArray* objects = [levelObjects objectForKey:@"Level 01"];
-    float startX = 100.0f;
-    for (NSString* objectName in objects)
+    NSArray* objects = [[levelObjects objectForKey:@"Level 01"] objectForKey:@"Objects"];
+    for (NSArray* objectData in objects)
     {
-        PhysicsSprite* objectSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", objectName]];
-        objectSprite.position = CGPointMake(startX, 200.0f);
+        PhysicsSprite* objectSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [objectData objectAtIndex:0]]];
+        objectSprite.position = CGPointMake([[objectData objectAtIndex:1] floatValue], [[objectData objectAtIndex:2] floatValue]);
         b2BodyDef objectBodyDef;
         objectBodyDef.type = b2_dynamicBody;
         objectBodyDef.position.Set(objectSprite.position.x / PTM_RATIO, objectSprite.position.y / PTM_RATIO);
         objectBodyDef.userData = objectSprite;
         b2Body* objectBody = physicsWorld -> CreateBody(&objectBodyDef);
-        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:objectBody forShapeName:objectName];
-        [objectSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:objectName]];
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:objectBody forShapeName:[objectData objectAtIndex:0]];
+        [objectSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:[objectData objectAtIndex:0]]];
         [objectSprite setPhysicsBody:objectBody];
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-        startX += 150.0f;
     }
 }
 
