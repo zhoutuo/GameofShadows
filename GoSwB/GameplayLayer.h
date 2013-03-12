@@ -5,7 +5,7 @@
 //  Created by Zhoutuo Yang on 1/30/13.
 //
 //
-
+#import "Foundation/Foundation.h"
 #import "cocos2d.h"
 #import "Box2D.h"
 #import "PhysicsSprite.h"

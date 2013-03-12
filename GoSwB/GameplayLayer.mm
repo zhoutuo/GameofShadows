@@ -9,6 +9,8 @@
 #import "GameplayLayer.h"
 #import "GameplayScene.h"
 #import "GB2ShapeCache.h"
+#import "CCDrawingPrimitives.h"
+#import "Globals.h"
 
 @implementation GameplayLayer
 
@@ -65,7 +67,8 @@
 {
     [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"items.plist"];
     NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
-    NSArray* objects = [[levelObjects objectForKey:@"Level 01"] objectForKey:@"Objects"];
+    NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
+    NSArray* objects = [[levelObjects objectForKey: level] objectForKey:@"Objects"];
     for (NSArray* objectData in objects)
     {
         PhysicsSprite* objectSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [objectData objectAtIndex:0]]];
