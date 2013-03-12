@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#define MONSTER_SIZE 24
 
 @interface PathFinder : CCNode {
     int deviceHeight;

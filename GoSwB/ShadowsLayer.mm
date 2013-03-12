@@ -8,7 +8,8 @@
 #import "GameplayScene.h"
 #import "ShadowsLayer.h"
 
-#define rotationThreshold 3.0f
+#define ROTATIONTHRESHOLD 3.0f
+#define SHADOWMONSTER_SIZE 20
 @implementation ShadowsLayer
 
 -(id) init {
@@ -81,7 +82,7 @@
          setObject:[NSNumber numberWithInteger:shadow.tag]
          forKey:[NSNumber numberWithInteger:cur.tag]];
         
-        [self addChild:shadow];
+        [self addChild:shadow z:SHADOW_SPRITE_DEPTH];
         
         CGPoint ratio = [[ratios objectAtIndex:i] CGPointValue];
         
@@ -106,18 +107,27 @@
 
 -(void) generateShadowMap {
     
+    GameplayScene* curScene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
+    
     for (int i = 0; i < DEVICE_HEIGHT; ++i) {
         for (int j = 0; j < DEVICE_WIDTH; ++j) {
             shadowMap[i][j] = false;
         }
     }
     
+    
+        
     for (CCSprite* cur in self.children) {
+        
+        if (cur.zOrder != SHADOW_SPRITE_DEPTH) {
+            continue;
+        }
+        
         CGRect boundingBox = cur.boundingBox;
         CGRect textureRect = cur.textureRect;
         
         //if there is no rotation, just scan all points of boundingBox
-        if (cur.rotation < rotationThreshold or (360.0f - cur.rotation) < rotationThreshold) {
+        if (cur.rotation < ROTATIONTHRESHOLD or (360.0f - cur.rotation) < ROTATIONTHRESHOLD) {
             CGPoint origin = boundingBox.origin;
             for (int i = 0; i < boundingBox.size.height; ++i) {
                 for (int j = 0; j < boundingBox.size.width; ++j) {
@@ -128,7 +138,12 @@
                     
                     newY = MAX(0, newY);
                     newY = MIN(newY, DEVICE_HEIGHT);
-                    shadowMap[newY][newX] = true;
+                    if([curScene checkLightSourceCoordinates :newY : newX]){
+                        shadowMap[newY][newX] = false;
+                    }else{
+                        shadowMap[newY][newX] = true;
+                    }
+                    
                 }
             }
         } else {
@@ -146,8 +161,11 @@
                         newY = MAX(0, newY);
                         newY = MIN(newY, DEVICE_HEIGHT);
 
-                        
-                        shadowMap[newY][newX] = true;
+                        if([(GameplayScene*)[[CCDirector sharedDirector] runningScene] checkLightSourceCoordinates :newY : newX]){
+                            shadowMap[newY][newX] = false;
+                        }else{
+                            shadowMap[newY][newX] = true;
+                        }
                     }
                 }
             }
@@ -221,7 +239,7 @@
 }
 
 
--(void)pathFinding: (CGPoint)start :(CGPoint)end {
+-(void)pathFinding: (CGPoint)end {
 
     //PathFinder* pathfinder = [[PathFinder alloc]init :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
     NSMutableArray *path = [[NSMutableArray alloc] init];
@@ -341,6 +359,19 @@
     [shadowMonster setVisible:YES];
     
     CCLOG(@"Enter Action Mode");
+    
+    //check whether the shadow monster
+    //is inside the shadow or not
+    
+    CGPoint pos = shadowMonster.position;
+    CCLOG(@"%@", NSStringFromCGPoint(pos));
+    if (clearanceMap[(int)pos.y][(int)pos.x] < SHADOWMONSTER_SIZE) {
+        GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
+        [scene shadowMonsterDead];
+    }
+    
+    
+    
 }
 
 -(void) finishActionMode {
@@ -356,7 +387,7 @@
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
-    [self pathFinding :[shadowMonster position] :location];
+    [self pathFinding :location];
 
 }
 

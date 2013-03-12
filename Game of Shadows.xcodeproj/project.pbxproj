@@ -62,6 +62,7 @@
 		1EF73BDE16E5506A00BF4959 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EF73BDC16E5506A00BF4959 /* pause.png */; };
 		1EF73BDF16E5506A00BF4959 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EF73BDD16E5506A00BF4959 /* pause@2x.png */; };
 		1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1EF73BE116E5574B00BF4959 /* Globals.mm */; };
+		2804A3DF16EE695A00C4638D /* GameStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 2804A3DE16EE695A00C4638D /* GameStats.m */; };
 		2864C93116E82E8300A9D1D7 /* WormholeEntrance.png in Resources */ = {isa = PBXBuildFile; fileRef = 2864C92F16E82E8300A9D1D7 /* WormholeEntrance.png */; };
 		2864C93216E82E8300A9D1D7 /* WormholeExit.png in Resources */ = {isa = PBXBuildFile; fileRef = 2864C93016E82E8300A9D1D7 /* WormholeExit.png */; };
 		287B97F816E7D5AA0008C334 /* shadow-monster.png in Resources */ = {isa = PBXBuildFile; fileRef = 287B97F716E7D5AA0008C334 /* shadow-monster.png */; };
@@ -245,6 +246,9 @@
 		28E4794E16CD9C7F007B3A2A /* ball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794616CD9C7F007B3A2A /* ball-hd.png */; };
 		28E4794F16CD9C7F007B3A2A /* play_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794716CD9C7F007B3A2A /* play_bg.png */; };
 		28E4795016CD9C7F007B3A2A /* rotate_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794816CD9C7F007B3A2A /* rotate_circle.png */; };
+		8290A2A116EAB5F600AC6664 /* ShadowDisruptionLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */; };
+		8290A2A316EACFD800AC6664 /* lightSource.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2A216EACFD800AC6664 /* lightSource.png */; };
+		8290A2A516EAD31700AC6664 /* lightSource@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2A416EAD31700AC6664 /* lightSource@2x.png */; };
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
@@ -255,7 +259,6 @@
 		C07A02BF16DD846900D71044 /* Surfboard.png in Resources */ = {isa = PBXBuildFile; fileRef = C07A02BC16DD846900D71044 /* Surfboard.png */; };
 		C07A02C116DD85B000D71044 /* items.plist in Resources */ = {isa = PBXBuildFile; fileRef = C07A02C016DD85B000D71044 /* items.plist */; };
 		C07A02C316DD8FDE00D71044 /* levelObjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = C07A02C216DD8FDE00D71044 /* levelObjects.plist */; };
-		C0915FC216DE89BE00C967ED /* ArmChair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC116DE89BE00C967ED /* ArmChair@2x.png */; };
 		C0915FC416DE8A6800C967ED /* play_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC316DE8A6800C967ED /* play_bg@2x.png */; };
 		C0915FC616DE8B0E00C967ED /* Room layout small window@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC516DE8B0E00C967ED /* Room layout small window@2x.png */; };
 		C0915FC816DE8BC700C967ED /* Barrel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC716DE8BC700C967ED /* Barrel@2x.png */; };
@@ -334,6 +337,8 @@
 		1EF73BDD16E5506A00BF4959 /* pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause@2x.png"; path = "Resources/pause@2x.png"; sourceTree = "<group>"; };
 		1EF73BE016E5561A00BF4959 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 		1EF73BE116E5574B00BF4959 /* Globals.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Globals.mm; sourceTree = "<group>"; };
+		2804A3DD16EE695A00C4638D /* GameStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStats.h; sourceTree = "<group>"; };
+		2804A3DE16EE695A00C4638D /* GameStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameStats.m; sourceTree = "<group>"; };
 		2864C92F16E82E8300A9D1D7 /* WormholeEntrance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WormholeEntrance.png; path = Resources/WormholeEntrance.png; sourceTree = "<group>"; };
 		2864C93016E82E8300A9D1D7 /* WormholeExit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WormholeExit.png; path = Resources/WormholeExit.png; sourceTree = "<group>"; };
 		287B97F716E7D5AA0008C334 /* shadow-monster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shadow-monster.png"; path = "Resources/shadow-monster.png"; sourceTree = "<group>"; };
@@ -704,6 +709,10 @@
 		28E4794616CD9C7F007B3A2A /* ball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ball-hd.png"; path = "Resources/ball-hd.png"; sourceTree = "<group>"; };
 		28E4794716CD9C7F007B3A2A /* play_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_bg.png; path = Resources/play_bg.png; sourceTree = "<group>"; };
 		28E4794816CD9C7F007B3A2A /* rotate_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rotate_circle.png; path = Resources/rotate_circle.png; sourceTree = "<group>"; };
+		8290A29F16EAB5F500AC6664 /* ShadowDisruptionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowDisruptionLayer.h; sourceTree = "<group>"; };
+		8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShadowDisruptionLayer.mm; sourceTree = "<group>"; };
+		8290A2A216EACFD800AC6664 /* lightSource.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightSource.png; path = Resources/lightSource.png; sourceTree = "<group>"; };
+		8290A2A416EAD31700AC6664 /* lightSource@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightSource@2x.png"; path = "Resources/lightSource@2x.png"; sourceTree = "<group>"; };
 		82A0235316DC28BD00886573 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GB2ShapeCache.h; sourceTree = "<group>"; };
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
@@ -716,7 +725,6 @@
 		C07A02BC16DD846900D71044 /* Surfboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Surfboard.png; sourceTree = "<group>"; };
 		C07A02C016DD85B000D71044 /* items.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = items.plist; sourceTree = "<group>"; };
 		C07A02C216DD8FDE00D71044 /* levelObjects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = levelObjects.plist; sourceTree = "<group>"; };
-		C0915FC116DE89BE00C967ED /* ArmChair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArmChair@2x.png"; sourceTree = "<group>"; };
 		C0915FC316DE8A6800C967ED /* play_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_bg@2x.png"; path = "Resources/play_bg@2x.png"; sourceTree = "<group>"; };
 		C0915FC516DE8B0E00C967ED /* Room layout small window@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window@2x.png"; sourceTree = "<group>"; };
 		C0915FC716DE8BC700C967ED /* Barrel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Barrel@2x.png"; sourceTree = "<group>"; };
@@ -768,6 +776,17 @@
 			path = CCBReader;
 			sourceTree = "<group>";
 		};
+		283A53DF16E857BA00511559 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				28E481E216E80BFA008EB69B /* Menu */,
+				28E481E116E80BEA008EB69B /* Gameplay */,
+				28E4793216CD9C14007B3A2A /* AppDelegate.h */,
+				28E4793316CD9C14007B3A2A /* AppDelegate.mm */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		28E476F316CD9BA7007B3A2A = {
 			isa = PBXGroup;
 			children = (
@@ -804,10 +823,7 @@
 		28E4771116CD9BA7007B3A2A /* Game of Shadows */ = {
 			isa = PBXGroup;
 			children = (
-				28E481E216E80BFA008EB69B /* Menu */,
-				28E481E116E80BEA008EB69B /* Gameplay */,
-				28E4793216CD9C14007B3A2A /* AppDelegate.h */,
-				28E4793316CD9C14007B3A2A /* AppDelegate.mm */,
+				283A53DF16E857BA00511559 /* Classes */,
 				82A0235216DC28BD00886573 /* generic-box2d-plist */,
 				1E67DBAE16D4758500BEF7CB /* CCBReader */,
 				28E4771216CD9BA7007B3A2A /* Resources */,
@@ -821,6 +837,18 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C043967516EE8C9D00FCD095 /* Couch.png */,
+				C043967616EE8C9D00FCD095 /* Couch@2x.png */,
+				C043966116EE838600FCD095 /* ArmChair.png */,
+				C043966216EE838600FCD095 /* ArmChair@2x.png */,
+				C043966516EE838600FCD095 /* Door.png */,
+				C043966616EE838600FCD095 /* Door@2x.png */,
+				C043966716EE838600FCD095 /* Dresser.png */,
+				C043966816EE838600FCD095 /* Dresser@2x.png */,
+				C043966916EE838600FCD095 /* FootRest.png */,
+				C043966A16EE838600FCD095 /* FootRest@2x.png */,
+				8290A2A416EAD31700AC6664 /* lightSource@2x.png */,
+				8290A2A216EACFD800AC6664 /* lightSource.png */,
 				2864C92F16E82E8300A9D1D7 /* WormholeEntrance.png */,
 				2864C93016E82E8300A9D1D7 /* WormholeExit.png */,
 				287B97F916E7D5BF0008C334 /* Room layout texture@2x.jpg */,
@@ -833,8 +861,6 @@
 				C0915FC916DE8FB100C967ED /* Room layout texture.png */,
 				C0915FCA16DE8FB100C967ED /* Room layout texture@2x.png */,
 				C07A02C016DD85B000D71044 /* items.plist */,
-				C0915FC116DE89BE00C967ED /* ArmChair@2x.png */,
-				C07A02BA16DD846900D71044 /* ArmChair.png */,
 				C07A02BB16DD846900D71044 /* Barrel.png */,
 				C07A02BC16DD846900D71044 /* Surfboard.png */,
 				C07A02C216DD8FDE00D71044 /* levelObjects.plist */,
@@ -1425,6 +1451,10 @@
 				28E079B916D41B8C007011F2 /* GameplayScene.mm */,
 				28E4793416CD9C14007B3A2A /* BackgroundLayer.h */,
 				28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */,
+				8290A29F16EAB5F500AC6664 /* ShadowDisruptionLayer.h */,
+				8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */,
+				2804A3DD16EE695A00C4638D /* GameStats.h */,
+				2804A3DE16EE695A00C4638D /* GameStats.m */,
 			);
 			name = Gameplay;
 			sourceTree = "<group>";
@@ -1553,12 +1583,10 @@
 				1E67DBA216D473F600BEF7CB /* Game of Shadows.png in Resources */,
 				82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */,
 				82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */,
-				C07A02BD16DD846900D71044 /* ArmChair.png in Resources */,
 				C07A02BE16DD846900D71044 /* Barrel.png in Resources */,
 				C07A02BF16DD846900D71044 /* Surfboard.png in Resources */,
 				C07A02C116DD85B000D71044 /* items.plist in Resources */,
 				C07A02C316DD8FDE00D71044 /* levelObjects.plist in Resources */,
-				C0915FC216DE89BE00C967ED /* ArmChair@2x.png in Resources */,
 				C0915FC416DE8A6800C967ED /* play_bg@2x.png in Resources */,
 				C0915FC616DE8B0E00C967ED /* Room layout small window@2x.png in Resources */,
 				C0915FC816DE8BC700C967ED /* Barrel@2x.png in Resources */,
@@ -1764,6 +1792,8 @@
 				1EF73BDB16E54FAD00BF4959 /* PauseLayer.mm in Sources */,
 				1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */,
 				94127C1E16E53D250066DEE0 /* PathFinder.mm in Sources */,
+				8290A2A116EAB5F600AC6664 /* ShadowDisruptionLayer.mm in Sources */,
+				2804A3DF16EE695A00C4638D /* GameStats.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
