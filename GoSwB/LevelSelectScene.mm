@@ -41,6 +41,9 @@
             [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[GameplayScene node]]];
             break;
         case LEVEL_1_4_TAG:
+            currentLevel = 4;
+            [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[GameplayScene node]]];
+            break;
         case BACK_BUTTON_TAG:
         case FORWARD_BUTTON_TAG:
         case HOME_BUTTON_TAG:

@@ -25,20 +25,20 @@
         NSArray* portals = [[levelObjects objectForKey: level] objectForKey:@"Portals"];
         
         NSArray* startPortalData = [portals objectAtIndex:0];        
-        CCSprite* startPortal = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
+        wormholeEntrance = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
         /*[startPortal setAnchorPoint:CGPointMake([startPortal boundingBox].size.width/2 , [startPortal boundingBox].size.height/2 )];*/
-        [startPortal setPosition:CGPointMake([[startPortalData objectAtIndex:1] floatValue], [[startPortalData objectAtIndex:2] floatValue])];
-        [self addChild:startPortal z:WORMHOLE_DEPTH];
+        [wormholeEntrance setPosition:CGPointMake([[startPortalData objectAtIndex:1] floatValue], [[startPortalData objectAtIndex:2] floatValue])];
+        [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
         
         NSArray* endPortalData = [portals objectAtIndex:1];
-        CCSprite* endPortal = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [endPortalData objectAtIndex:0]]];
-        [endPortal setPosition:CGPointMake([[endPortalData objectAtIndex:1] floatValue], [[endPortalData objectAtIndex:2] floatValue])];
-        [self addChild:endPortal z:WORMHOLE_DEPTH];
+        wormholeExit = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [endPortalData objectAtIndex:0]]];
+        [wormholeExit setPosition:CGPointMake([[endPortalData objectAtIndex:1] floatValue], [[endPortalData objectAtIndex:2] floatValue])];
+        [self addChild:wormholeExit z:WORMHOLE_DEPTH];
         
         
         shadowMonster = [CCSprite spriteWithFile:@"shadow-monster.png"];
-        [shadowMonster setPosition: CGPointMake([startPortal boundingBox].size.width/2 + [startPortal boundingBox].origin.x
-                                                , [startPortal boundingBox].size.height/2 + [startPortal boundingBox].origin.y)];
+        [shadowMonster setPosition: CGPointMake([wormholeEntrance boundingBox].size.width/2 + [wormholeEntrance boundingBox].origin.x
+                                                , [wormholeEntrance boundingBox].size.height/2 + [wormholeEntrance boundingBox].origin.y)];
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
