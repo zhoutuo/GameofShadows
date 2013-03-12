@@ -7,7 +7,7 @@
 //
 
 #import "GameplayScene.h"
-
+#import "CCBReader.h"
 
 @implementation GameplayScene
 
@@ -139,14 +139,15 @@ static NSInteger tagSeed = 10000;
     [shadowLayer finishActionMode];
     
     //Ryan Ball
-    
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[CCBReader sceneWithNodeGraphFromFile:@"LossScene.ccbi"]]];
     CCLOG(@"LOST, U SUCK");
 }
 
 -(void) shadowMonterRescued {
     gamestats.isMonsterDead = false;
     [shadowLayer finishActionMode];
-    //Ryan Ball
+    //Ryan Ball TODO WinScene failing
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[CCBReader sceneWithNodeGraphFromFile:@"WinScene.ccbi"]]];
     CCLOG(@"WIN, STILL SUCK");
 }
 
