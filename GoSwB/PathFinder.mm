@@ -22,77 +22,161 @@
 {
 	return [[[PathFindNode alloc] init] autorelease];
 }
+
+
 @end
-/*********************************************************************************/
+/************************ PathFindNode END ************************************************/
 
 
-/******************************** Min Heap *****************************************/
+
+
+/******************************** Min Heap ************************************************/
 @interface MinHeap : PathFindNode{
     int heapSize;
-    NSMutableArray* heap;
+    NSMutableArray* q;
 }
+-(void)insertNode:(PathFindNode*)item;
+-(bool)nodeInArray: (int)x :(int)y;
+-(PathFindNode*)getMin;
+-(int) count;
 
 @end
 
 @implementation MinHeap
 
 
--(id) init{
-    if(self = [super init]){
-        heap = [[NSMutableArray alloc] init];
-        
+-(id)init{
+    
+    if ([super init]) {
+        q = [NSMutableArray array];
     }
+    
     return self;
 }
 
--(void)insert:(PathFindNode*) inNode{
-    heapSize++;
-    heap[heapSize] = inNode;
-    //heapify
+-(int) count{
+    return [q count];
+}
+
+
+-(void) printHeap{
+    PathFindNode *temp;
+    for(int i =0; i < [q count]; i++){
+        temp = [q objectAtIndex:i];
+        NSLog(@"%f",temp->cost);
+    }
     
 }
 
--(void) heapify{
-    
+-(bool)nodeInArray: (int)x :(int)y{
+    PathFindNode *temp;
+    for(int i =0; i < [q count]; i ++){
+        temp = [q objectAtIndex:i];
+        if(temp->nodeX == x && temp->nodeY == y){
+            return true;
+        }
+    }
+    return false;
 }
 
--(void)siftDown: (int)start :(int)end{
-    int root = start;
+- (void)insertNode:(PathFindNode*)item {
     
-    while(root * 2 + 1 <= end){
-        int child = root * 2 + 1;
-        int swap = root;
+    int index;
+    
+    [q addObject:item];
+    
+    index = [q count] - 1;
+    
+    // Maintain heap-ness
+    while(YES) {
+        PathFindNode* temp;
+        temp = [q objectAtIndex:index];
         
-        //check if root is smaller than left child
-    //    PathFindNode* swap = heap[swap];
-     //   if(heap[swap]-> cost){
+        PathFindNode* temp2;
+        temp2 = [q objectAtIndex:((index - 1)/2)];
+        
+        if(temp->cost < temp2->cost) {
+            [q exchangeObjectAtIndex:index withObjectAtIndex:((index - 1)/ 2)];
+            index = (index - 1)/ 2;
+        }
+        else{
+            break;
+        }
             
-      //  }
     }
 }
 
-
--(void) swap: (int)a :(int)b{
-    PathFindNode* temp = heap[a];
+- (PathFindNode*)getMin{
     
-    heap[a] = heap[b];
-    heap[b] = temp;
+    // Exchange the first element with the last element to save
+    // the cost of moving them all forward and then re-heaping it
+    PathFindNode *e;
+    
+    int size = [q count];
+    
+    if(size == 0){
+        return nil;
+    }
+    
+    [q exchangeObjectAtIndex:0 withObjectAtIndex:(size - 1)];
+    
+  //  [[q objectAtIndex:(size - 1)] getValue:e];
+    e = [[q objectAtIndex:(size - 1)] retain];
+    
+    [q removeLastObject];
+    
+    // Now one of 0 or 1 are the next min...
+    // If there are 0 or 1
+    [self heapify:0];
+    // Do the update to maintain heap property
+    return e;
 }
 
--(PathFindNode*) getMin{
-    if(heapSize > 0){
-        return heap[0];
-        //heapify
-    }else{
-        return NULL;
-    }
+- (void)heapify:(int)i{
+
+        int left, right;
+        int min;
+        int max_index = [q count];
+    
+        left = 2 * i + 1;
+        right = 2 * i + 2;
+        
+        
+        
+        PathFindNode *leftNode, *rightNode, *minNode, *iNode;
+
+        min = i;
+        if(left < max_index) {
+            leftNode = [q objectAtIndex:left];
+            iNode = [q objectAtIndex:i];
+            
+            if(leftNode->cost < iNode->cost){
+                min = left;
+            }
+        }else{
+            min = i;
+        }
+        
+        if(right < max_index) {
+            rightNode = [q objectAtIndex:right];
+            minNode = [q objectAtIndex:min];
+            
+            if(rightNode->cost < minNode->cost){
+                min = right;
+            }
+        }
+    
+        if(min != i) {
+            [q exchangeObjectAtIndex:i withObjectAtIndex:min];
+            [self heapify:min];
+        }
 }
 
 
 @end
 
 
-/*********************************************************************************/
+/******************************* Min Heap END *****************************************/
 
 
 
@@ -103,7 +187,7 @@
 
 
 
--(id)initSize:(int)MonsterSizeIn :(int)DeviceWidthIn :(int)DeviceHeightIn :(int[768][1024])mapIn{
+-(id)init:(int)MonsterSizeIn :(int)DeviceWidthIn :(int)DeviceHeightIn :(int[768][1024])mapIn{
     if(self = [super init]){
         monsterSize = MonsterSizeIn;
         
@@ -133,62 +217,6 @@
 }
 
 
-
-
--(PathFindNode*)nodeInArray:(NSMutableArray*)a withX:(int)x Y:(int)y
-{
-	//Quickie method to find a given node in the array with a specific x,y value
-	NSEnumerator *e = [a objectEnumerator];
-	PathFindNode *n;
-	
-	while((n = [e nextObject]))
-	{
-
-		 if((n->nodeX == x) && (n->nodeY == y))
-		{
-			return n;
-		}
-	}
-	
-	return nil;
-}
-
-
-
-
--(PathFindNode*)lowestCostNodeInArray:(NSMutableArray*)a
-{
-	//Finds the node in a given array which has the lowest cost
-	PathFindNode *n, *lowest;
-	lowest = nil;
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"cost" ascending:YES];
-    [a sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-	NSEnumerator *e = [a objectEnumerator];
-	int count =0;
-	while((n = [e nextObject]))
-	{
-    //    NSLog(@"cost is: %d", n->cost);
-		if(lowest == nil)
-		{
-			lowest = n;
-            // return lowest;
-		}
-		else
-		{
-			if(n->cost < lowest->cost)
-			{
-				lowest = n;
-                NSLog(@"The count is: %d",count);
-                return lowest;
-			}
-		}
-        count++;
-	}
-  //  NSLog(@"The end count is: %d",count);
-  //  NSLog(@"end cost is: %d", lowest->cost);
-	return lowest;
-}
-
 //simple distance formula 
 -(double) heuristic:(int)startX :(int)startY :(int)endX :(int) endY{
     double x = pow((endX - startX),2);
@@ -200,7 +228,7 @@
 }
 
 
--(void)findPath:(CGPoint)start :(CGPoint)end :(CCArray *)path
+-(void)findPath:(CGPoint)start :(CGPoint)end :(NSMutableArray *)path
 {
 	//find path function. takes a starting point and end point and performs the A-Star algorithm
 	//to find a path, if possible. Once a path is found it can be traced by following the last
@@ -212,16 +240,20 @@
     int endX = (int)end.x;
     int endY = (int)end.y;
     
+    
 	
-    NSLog(@"start find path");
+    NSLog(@"Start Find Path");
     
     int x,y;
 	int newX,newY;
 	int currentX,currentY;
-	NSMutableArray *openList, *closedList;
     CGPoint tempLoc;
-        
-    if([self spaceIsBlocked:endX :endY]){
+    
+    MinHeap *openListMin = [[[MinHeap alloc] init] autorelease];
+    
+    
+    if([self spaceIsBlocked:endX :endY] || [self spaceIsBlocked:startX :startY ]){
+        NSLog(@"No Path Found :(");
         return;
     }
 	
@@ -233,13 +265,16 @@
         
 		return; //make sure we're not already there
     }
-	
-	openList = [NSMutableArray array]; //array to hold open nodes
-    
-	closedList = [NSMutableArray array]; //array to hold closed nodes
-    
-    
 
+    //0 is empty ---- n
+    //1 is open list ---- o
+    //2 is closed list ---- c
+    for(int i=0; i < 768;i ++){
+        for(int j=0; j < 1024; j ++){
+            ocList[i][j] = 'n';
+        }
+    }
+    
 	
 	PathFindNode *currentNode = nil;
 	PathFindNode *aNode = nil;
@@ -250,23 +285,17 @@
 	startNode->nodeY = startY;
 	startNode->parentNode = nil;
 	startNode->cost = 0.0;
+    
 	//add it to the open list to be examined
-	[openList addObject: startNode];
+    [openListMin insertNode:startNode];
+    ocList[startY][startX] = 'o';
+    
 	
-	while([openList count] > 0)
+	while([openListMin count] > 0)
 	{
-        //NSLog(@"The count is: %d", [openList count]);
-		//while there are nodes to be examined...
-		
-		//get the lowest cost node so far:
-		//currentNode = [self lowestCostNodeInArray: openList];
-        
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"cost" ascending:YES];
-        [openList sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-        
-        currentNode = openList[0];
-      //  NSLog(@"Current Cost: %f",currentNode->cost);
-        
+        currentNode = [openListMin getMin];
+
+        ocList[currentNode->nodeY][currentNode->nodeX] = 0;
 		
 		if((currentNode->nodeX == endX) && (currentNode->nodeY == endY))
 		{
@@ -288,58 +317,54 @@
             
             
             
-            NSLog(@"Path Found!");
+            NSLog(@"Path Found! You Go Gurl!");
 			return;
 			//*****************************************//
 		}
 		else
 		{
-           // NSLog(@"Made it to the else");
-			//...otherwise, examine this node.
-			//remove it from open list, add it to closed:
-			[closedList addObject: currentNode];
-			[openList removeObject: currentNode];
-			
-         //   NSLog(@"size of openlist: %d", openList.count);
+            ocList[currentNode->nodeY][currentNode->nodeX] = 'c';
             
 			//lets keep track of our coordinates:
 			currentX = currentNode->nodeX;
 			currentY = currentNode->nodeY;
 			
 			//check all the surrounding nodes/tiles:
-			for(y=-1;y<=1;y++)
-			{
+			for(y=-1;y<=1;y++){
+                
 				newY = currentY+y;
-				for(x=-1;x<=1;x++)
-				{
+				for(x=-1;x<=1;x++){
+                    
 					newX = currentX+x;
-					if(y || x) //avoid 0,0
-					{
+                    
+                    //avoid 0,0
+					if(y || x) {
+                        
 						// bounds check 
-						if((newX>=0)&&(newY>=0)&&(newX<1024)&&(newY<768))
-						{
+						if((newX>=0)&&(newY>=0)&&(newX<1024)&&(newY<768)){
+                            
 							//if the node isn't in the open list...
-							if(![self nodeInArray: openList withX: newX Y:newY])
-							{
+                            if(ocList[newY][newX] == 'n'){
+                                
 								//and its not in the closed list...
-								if(![self nodeInArray: closedList withX: newX Y:newY])
-								{
+                                if(ocList[newY][newX] == 'n'){
+                                    
 									//and the space isn't blocked
-									if(![self spaceIsBlocked: newX :newY])
-									{
+									if(![self spaceIsBlocked: newX :newY]){
+                                        
 										//then add it to our open list and figure out
 										//the 'cost':
 										aNode = [PathFindNode node];
 										aNode->nodeX = newX;
 										aNode->nodeY = newY;
 										aNode->parentNode = currentNode;
-										aNode->cost = currentNode->cost + 1.0;
-										
+										aNode->cost = currentNode->cost;
 										
 										//distance, added to the existing cost
 										aNode->cost += [self heuristic:newX :newY :endX :endY];
 										
-										[openList addObject: aNode];
+                                        [openListMin insertNode:aNode];
+                                        ocList[newY][newX] = 'o';
 										
 									}
 								}

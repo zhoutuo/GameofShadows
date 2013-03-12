@@ -26,6 +26,7 @@
     CCSprite* wormholeEntrance;
     CCSprite* wormholeExit;
     bool isExitFound;
+    PathFinder *pathFinder;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
