@@ -10,6 +10,7 @@
 #import "CCBReader.h"
 #import "CCMenu.h"
 #import "GameplayScene.h"
+#import "Globals.h"
 
 #define PLAY_BUTTON_TAG 1
 #define LEVEL_BUTTON_TAG 2
@@ -22,6 +23,7 @@
     CCMenuItem *button = (CCMenuItem*) sender;
     switch (button.tag) {
         case PLAY_BUTTON_TAG:
+            currentLevel = 1;
            [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[GameplayScene node]]];
             break;
         case OPTIONS_BUTTON_TAG:

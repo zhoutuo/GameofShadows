@@ -7,9 +7,10 @@
 //
 #import "GameplayScene.h"
 #import "ShadowsLayer.h"
+#import "Globals.h"
 
 #define ROTATIONTHRESHOLD 3.0f
-#define SHADOWMONSTER_SIZE 20
+#define SHADOWMONSTER_SIZE 50
 @implementation ShadowsLayer
 
 -(id) init {
@@ -17,18 +18,39 @@
         shadowHeightFactor = 2.0f;
         shadowWidthFactor = 2.0f;
         objShadowTable = [[NSMutableDictionary alloc] init];
+        
+        
+        NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
+        NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
+        NSArray* portals = [[levelObjects objectForKey: level] objectForKey:@"Portals"];
+        
+        NSArray* startPortalData = [portals objectAtIndex:0];        
+        wormholeEntrance = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
+        /*[startPortal setAnchorPoint:CGPointMake([startPortal boundingBox].size.width/2 , [startPortal boundingBox].size.height/2 )];*/
+        [wormholeEntrance setPosition:CGPointMake([[startPortalData objectAtIndex:1] floatValue], [[startPortalData objectAtIndex:2] floatValue])];
+        [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
+        
+        NSArray* endPortalData = [portals objectAtIndex:1];
+        wormholeExit = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [endPortalData objectAtIndex:0]]];
+        [wormholeExit setPosition:CGPointMake([[endPortalData objectAtIndex:1] floatValue], [[endPortalData objectAtIndex:2] floatValue])];
+        [self addChild:wormholeExit z:WORMHOLE_DEPTH];
+        
+        
         shadowMonster = [CCSprite spriteWithFile:@"shadow-monster.png"];
-        [shadowMonster setPosition:ccp(500, 200)];
+        [shadowMonster setPosition: CGPointMake([wormholeEntrance boundingBox].size.width/2 + [wormholeEntrance boundingBox].origin.x
+                                                , [wormholeEntrance boundingBox].size.height/2 + [wormholeEntrance boundingBox].origin.y)];
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
+        
+        /*
         wormholeEntrance = [CCSprite spriteWithFile:@"WormholeEntrance.png"];
         [wormholeEntrance setPosition:[shadowMonster position]];
         [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
         
         wormholeExit = [CCSprite spriteWithFile:@"WormholeExit.png"];
         [wormholeExit setPosition:ccp(500, 500)];
-        [self addChild:wormholeExit z:WORMHOLE_DEPTH];
+        [self addChild:wormholeExit z:WORMHOLE_DEPTH];*/
         
         isExitFound = false;
         
@@ -87,6 +109,7 @@
         CGPoint ratio = [[ratios objectAtIndex:i] CGPointValue];
         
         [self updateShadowPos:cur.tag withRelativePos: ratio];
+        
     }
 }
 

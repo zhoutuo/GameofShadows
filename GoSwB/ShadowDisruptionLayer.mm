@@ -8,6 +8,7 @@
 
 #import "GameplayLayer.h"
 #import "ShadowDisruptionLayer.h"
+#import "Globals.h"
 
 @implementation ShadowDisruptionLayer
 
@@ -16,10 +17,22 @@
         [self initializeMap];
     }
     
+    NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
+    NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
+    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    for(NSArray* lightSources in lights){
+        
+        CCSprite* lightSourceSprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [lightSources objectAtIndex:0]]];
+        [lightSourceSprite setAnchorPoint:ccp(0,0)];
+        [lightSourceSprite setPosition:CGPointMake([[lightSources objectAtIndex:1] floatValue], [[lightSources objectAtIndex:2] floatValue])];
+        [self addLightSource:lightSourceSprite];
+    }
+    
+    /*
     CCSprite* lightSourceSprite = [CCSprite spriteWithFile:@"lightSource.png"];
     [lightSourceSprite setAnchorPoint:ccp(0, 0)];
     [lightSourceSprite setPosition:ccp(500, 300)];
-    [self addLightSource:lightSourceSprite];
+    [self addLightSource:lightSourceSprite];*/
     return self;
 }
 

@@ -2,7 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Level 01</key>
+	<key>Level 1</key>
+	<dict>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>Door</string>
+				<integer>256</integer>
+				<integer>300</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array/>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
+				<integer>220</integer>
+				<integer>150</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>700</integer>
+				<integer>250</integer>
+			</array>
+		</array>
+	</dict>
+	<key>Level 2</key>
 	<dict>
 		<key>Objects</key>
 		<array>
@@ -16,12 +42,12 @@
 				<integer>400</integer>
 				<integer>100</integer>
 			</array>
-            <array>
+			<array>
 				<string>Dresser</string>
 				<integer>400</integer>
 				<integer>300</integer>
 			</array>
-            <array>
+			<array>
 				<string>Dresser</string>
 				<integer>200</integer>
 				<integer>300</integer>
@@ -32,13 +58,97 @@
 		<key>Portals</key>
 		<array>
 			<array>
-				<string>Start</string>
+				<string>WormholeEntrance</string>
 				<integer>100</integer>
 				<integer>100</integer>
 			</array>
 			<array>
-				<string>End</string>
+				<string>WormholeExit</string>
+				<integer>624</integer>
+				<integer>600</integer>
+			</array>
+		</array>
+	</dict>
+	<key>Level 3</key>
+	<dict>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>Dresser</string>
+				<integer>100</integer>
+				<integer>100</integer>
+			</array>
+			<array>
+				<string>Dresser</string>
+				<integer>400</integer>
+				<integer>100</integer>
+			</array>
+			<array>
+				<string>Door</string>
+				<integer>200</integer>
+				<integer>300</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array>
+			<array>
+				<string>lightSource1</string>
+				<integer>400</integer>
+				<integer>50</integer>
+			</array>
+		</array>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
 				<integer>250</integer>
+				<integer>100</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>800</integer>
+				<integer>100</integer>
+			</array>
+		</array>
+	</dict>
+	<key>Level 4</key>
+	<dict>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>Dresser</string>
+				<integer>100</integer>
+				<integer>100</integer>
+			</array>
+			<array>
+				<string>Dresser</string>
+				<integer>400</integer>
+				<integer>100</integer>
+			</array>
+			<array>
+				<string>ArmChair</string>
+				<integer>400</integer>
+				<integer>300</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array>
+			<array>
+				<string>lightSource1</string>
+				<integer>400</integer>
+				<integer>50</integer>
+			</array>
+		</array>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
+				<integer>250</integer>
+				<integer>100</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>800</integer>
 				<integer>100</integer>
 			</array>
 		</array>
