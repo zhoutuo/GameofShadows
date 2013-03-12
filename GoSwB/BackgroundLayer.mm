@@ -28,7 +28,7 @@
         //UIView* glView = (UIView*) [[CCDirector sharedDirector] view];
         
         CCMenuItem *pauseMenuItem = [CCMenuItemImage
-                                    itemWithNormalImage:@"pause.png" selectedImage:@"pause.png"
+                                    itemWithNormalImage:@"Pause.png" selectedImage:@"Pause.png"
                                     target:self selector:@selector(pauseButtonMenu:)];
         pauseMenuItem.position = ccp(984, 730);
         CCMenu *pauseMenu = [CCMenu menuWithItems:pauseMenuItem, nil];

@@ -266,6 +266,8 @@
     if (isExitFound) {
         if(CGRectContainsPoint([wormholeExit boundingBox], [shadowMonster position])) {
             CCLOG(@"CONG");
+            GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
+            [scene shadowMonterRescued];
             [self unscheduleUpdate];
         }
     }
