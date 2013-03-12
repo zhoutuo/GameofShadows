@@ -152,27 +152,33 @@
             }
         } else {
             //if there is big rotation
+            int count = 0;
             CGPoint origin = boundingBox.origin;
             for (int i = 0; i < boundingBox.size.height; ++i) {
                 for (int j = 0; j < boundingBox.size.width; ++j) {
                     CGPoint pointInBoundingBox = ccpAdd(origin, ccp(j, i));
                     if (CGRectContainsPoint(textureRect, [cur convertToNodeSpace:pointInBoundingBox])) {
-                        int newX = j + (int)pointInBoundingBox.x;
-                        int newY = i + (int)pointInBoundingBox.y;
+                        int newX = (int)pointInBoundingBox.x;
+                        int newY = (int)pointInBoundingBox.y;
                         newX = MAX(0, newX);
                         newX = MIN(newX, DEVICE_WIDTH);
                         
                         newY = MAX(0, newY);
                         newY = MIN(newY, DEVICE_HEIGHT);
+                        ++count;
+                        
+                        //CCLOG(@"fff");
 
-                        if([(GameplayScene*)[[CCDirector sharedDirector] runningScene] checkLightSourceCoordinates :newY : newX]){
+                        if([curScene checkLightSourceCoordinates :newY : newX]){
                             shadowMap[newY][newX] = false;
-                        }else{
+                        } else {
                             shadowMap[newY][newX] = true;
                         }
                     }
                 }
             }
+            
+//            CCLOG(@"%d", count);
         }
     }
 }
