@@ -244,7 +244,7 @@
     //PathFinder* pathfinder = [[PathFinder alloc]init :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
     NSMutableArray *path = [[NSMutableArray alloc] init];
     NSMutableArray* actions = [NSMutableArray array];
-    [pathFinder findPath:start :end :path];
+    [pathFinder findPath:shadowMonster.position :end :path];
 
     for (NSInteger i = [path count] - 1; i >= 0; --i) {
         NSValue* object = [path objectAtIndex:i];

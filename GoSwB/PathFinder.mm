@@ -266,9 +266,9 @@
 		return; //make sure we're not already there
     }
 
-    //0 is empty ---- n
-    //1 is open list ---- o
-    //2 is closed list ---- c
+    //n is empty
+    //o is open list
+    //c is closed list
     for(int i=0; i < 768;i ++){
         for(int j=0; j < 1024; j ++){
             ocList[i][j] = 'n';
