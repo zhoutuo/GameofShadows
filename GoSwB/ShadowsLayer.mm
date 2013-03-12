@@ -149,9 +149,13 @@
         CGRect boundingBox = cur.boundingBox;
         CGRect textureRect = cur.textureRect;
         
+        CCLOG(@"%f", fabsf(cur.rotation));
+        
+        
         //if there is no rotation, just scan all points of boundingBox
-        if (cur.rotation < ROTATIONTHRESHOLD or (360.0f - cur.rotation) < ROTATIONTHRESHOLD) {
+        if (fabsf(cur.rotation) < ROTATIONTHRESHOLD) {
             CGPoint origin = boundingBox.origin;
+            
             for (int i = 0; i < boundingBox.size.height; ++i) {
                 for (int j = 0; j < boundingBox.size.width; ++j) {
                     int newX = j + (int)origin.x;
