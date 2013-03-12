@@ -1703,6 +1703,8 @@
 				8290A2A716EFCF2A00AC6664 /* shadow-monster@2x.png in Resources */,
 				8290A2A916EFCF7300AC6664 /* WormholeEntrance@2x.png in Resources */,
 				8290A2AB16EFCFB100AC6664 /* WormholeExit@2x.png in Resources */,
+				94AE3A0916EFDCCA00B00B94 /* grahh.png in Resources */,
+				94AE3A0A16EFDCCA00B00B94 /* grahh@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
