@@ -15,10 +15,11 @@
     int deviceWidth;
     int monsterSize;
     int (*map)[1024];
+    char ocList[768][1024];
     
     
 }
--(id)initSize:(int)MonsterSizeIn :(int)DeviceWidthIn :(int)DeviceHeightIn :(int[768][1024])mapIn;
--(void)findPath:(CGPoint)start :(CGPoint)end :(CCArray*) path;
+-(id)init:(int)MonsterSizeIn :(int)DeviceWidthIn :(int)DeviceHeightIn :(int[768][1024])mapIn;
+-(void)findPath:(CGPoint)start :(CGPoint)end :(NSMutableArray*) path;
 
 @end

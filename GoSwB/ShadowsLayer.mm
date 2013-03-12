@@ -32,6 +32,7 @@
         
         isExitFound = false;
         
+        pathFinder = [[PathFinder alloc]init :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
 
         
     }
@@ -41,6 +42,7 @@
 
 -(void) dealloc {
     [objShadowTable release];
+    [pathFinder release];
     [super dealloc];
 }
 
@@ -239,10 +241,10 @@
 
 -(void)pathFinding: (CGPoint)end {
 
-    PathFinder* pathfinder = [[PathFinder alloc]initSize :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
-    CCArray* path = [CCArray array];
+    //PathFinder* pathfinder = [[PathFinder alloc]init :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
+    NSMutableArray *path = [[NSMutableArray alloc] init];
     NSMutableArray* actions = [NSMutableArray array];
-    [pathfinder findPath:shadowMonster.position :end :path];
+    [pathFinder findPath:shadowMonster.position :end :path];
 
     for (NSInteger i = [path count] - 1; i >= 0; --i) {
         NSValue* object = [path objectAtIndex:i];
@@ -259,6 +261,7 @@
         
         [shadowMonster runAction:[CCSequence actionWithArray:actions]];
     }
+    [path release];
 }
 
 
