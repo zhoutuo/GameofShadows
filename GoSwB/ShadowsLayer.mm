@@ -37,8 +37,9 @@
         
         
         shadowMonster = [CCSprite spriteWithFile:@"shadow-monster.png"];
-        [shadowMonster setPosition: CGPointMake([wormholeEntrance boundingBox].size.width/2 + [wormholeEntrance boundingBox].origin.x
-                                                , [wormholeEntrance boundingBox].size.height/2 + [wormholeEntrance boundingBox].origin.y)];
+        [shadowMonster setPosition: CGPointMake([wormholeEntrance boundingBox].origin.x
+                                                , [wormholeEntrance boundingBox].origin.y)];
+        [shadowMonster setAnchorPoint:ccp(0, 0)];
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
@@ -54,7 +55,7 @@
         
         isExitFound = false;
         
-        pathFinder = [[PathFinder alloc]init :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
+        pathFinder = [[PathFinder alloc]init :SHADOWMONSTER_SIZE :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
 
         
     }
@@ -175,27 +176,33 @@
             }
         } else {
             //if there is big rotation
+            int count = 0;
             CGPoint origin = boundingBox.origin;
             for (int i = 0; i < boundingBox.size.height; ++i) {
                 for (int j = 0; j < boundingBox.size.width; ++j) {
                     CGPoint pointInBoundingBox = ccpAdd(origin, ccp(j, i));
                     if (CGRectContainsPoint(textureRect, [cur convertToNodeSpace:pointInBoundingBox])) {
-                        int newX = j + (int)pointInBoundingBox.x;
-                        int newY = i + (int)pointInBoundingBox.y;
+                        int newX = (int)pointInBoundingBox.x;
+                        int newY = (int)pointInBoundingBox.y;
                         newX = MAX(0, newX);
                         newX = MIN(newX, DEVICE_WIDTH);
                         
                         newY = MAX(0, newY);
                         newY = MIN(newY, DEVICE_HEIGHT);
+                        ++count;
+                        
+                        //CCLOG(@"fff");
 
-                        if([(GameplayScene*)[[CCDirector sharedDirector] runningScene] checkLightSourceCoordinates :newY : newX]){
+                        if([curScene checkLightSourceCoordinates :newY : newX]){
                             shadowMap[newY][newX] = false;
-                        }else{
+                        } else {
                             shadowMap[newY][newX] = true;
                         }
                     }
                 }
             }
+            
+//            CCLOG(@"%d", count);
         }
     }
 }
@@ -222,18 +229,21 @@
     int x = (int)point.x;
     int y = (int)point.y;
     
+    int potential = 0;
     //reuse the computed valuees from the 2d array
     //the value for this pos will be at least as big as the value of neighbours - 1
     if (x != 0 and y != 0) {
-        res = MAX(clearanceMap[x - 1][y - 1],
+        potential = MAX(clearanceMap[x - 1][y - 1],
                   MAX(clearanceMap[x][y - 1], clearanceMap[x - 1][y])) - 1;
     } else if(x == 0 xor y == 0) {
         if (x == 0) {
-            res = clearanceMap[x][y - 1] - 1;
+            potential = clearanceMap[x][y - 1] - 1;
         } else {
-            res = clearanceMap[x - 1][y] - 1;
+            potential = clearanceMap[x - 1][y] - 1;
         }
     }
+    
+    res = MAX(res, potential);
     
     //loop through the boudry of the potential size
     while ((x + res < DEVICE_HEIGHT) and (y + res < DEVICE_WIDTH)) {
@@ -257,13 +267,13 @@
     return res;
 }
 
--(void)makeAllTrueShadowMap{
-    for(int i=0; i< DEVICE_HEIGHT; i++){
-        for(int j =0; j< DEVICE_WIDTH; j++){
-            shadowMap[i][j] = true;
-        }
-    }
-}
+//-(void)makeAllTrueShadowMap{
+//    for(int i=0; i< DEVICE_HEIGHT; i++){
+//        for(int j =0; j< DEVICE_WIDTH; j++){
+//            shadowMap[i][j] = true;
+//        }
+//    }
+//}
 
 
 -(void)pathFinding: (CGPoint)end {
@@ -271,6 +281,7 @@
     //PathFinder* pathfinder = [[PathFinder alloc]init :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
     NSMutableArray *path = [[NSMutableArray alloc] init];
     NSMutableArray* actions = [NSMutableArray array];
+    end = ccpSub(end, ccp(shadowMonster.boundingBox.size.width / 2, shadowMonster.boundingBox.size.width / 2));
     [pathFinder findPath:shadowMonster.position :end :path];
 
     for (NSInteger i = [path count] - 1; i >= 0; --i) {
@@ -294,7 +305,8 @@
 
 - (void)update:(ccTime)delta {
     if (isExitFound) {
-        if(CGRectContainsPoint([wormholeExit boundingBox], [shadowMonster position])) {
+        
+        if(CGRectContainsPoint([wormholeExit boundingBox], ccpAdd([shadowMonster position], ccp(shadowMonster.boundingBox.size.width / 2, shadowMonster.boundingBox.size.width / 2)))) {
             CCLOG(@"CONG");
             GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
             [scene shadowMonterRescued];
@@ -304,76 +316,76 @@
 }
 
 
--(void) testShadowMap:(CGPoint)testPoint {
-    CCLOG(@"%@", NSStringFromCGPoint(testPoint));
-    int x = (int) testPoint.x;
-    int y = (int) testPoint.y;
-    
-    if (shadowMap[y][x]) {
-        CCLOG(@"yes");
-    } else {
-        CCLOG(@"no");
-    }
-    
-}
+//-(void) testShadowMap:(CGPoint)testPoint {
+//    CCLOG(@"%@", NSStringFromCGPoint(testPoint));
+//    int x = (int) testPoint.x;
+//    int y = (int) testPoint.y;
+//    
+//    if (shadowMap[y][x]) {
+//        CCLOG(@"yes");
+//    } else {
+//        CCLOG(@"no");
+//    }
+//    
+//}
 
-/////////////////
-//test
-
--(bool)checkExpansionCmap: (int)x : (int)y : (int)size{
-    
-    if(x + size < 1024){
-        for(int i =size - 1; i < size + x; i ++){
-            if(shadowMap[y + size - 1][i] == false){
-                return false;
-            }
-        }
-    }
-    
-    if(y + size < 768){
-        for(int i = size - 1; i < size + y; i ++){
-            if(shadowMap[i][x + size - 1] == false){
-                return false;
-            }
-        }
-    }
-    
-    return true;
-}
-
--(void)createClearanceMap{
-    
-    [self generateShadowMap];
-    
-    //nested for loop to go over all points in the shadowMap
-    for(int i=0; i < 768; i ++){
-        for(int j=0; j< 1024; j++){
-            
-            if(shadowMap[i][j] == true){
-                clearanceMap[i][j] = 1;
-                
-                //see how large we can expand the square for clearance
-                //start at 2 and then goooooo on
-                for(int k = 2; k < 768; k ++){
-                    //increments over the square size
-                    if([self checkExpansionCmap:i :j :k] == true){
-                        clearanceMap[i][j] = k;
-                    }
-                    //if there is not an expansion then it will break from the loop
-                    else{
-                        break;
-                    }
-                }
-            }else{
-                // NSLog(@"its a 0");
-                clearanceMap[i][j] = 0;
-            }//end else cMap i j
-        }//end j for loop
-    }//end i for loop
-}
-
-
-//end test
+///////////////////
+////test
+//
+//-(bool)checkExpansionCmap: (int)x : (int)y : (int)size{
+//    
+//    if(x + size < 1024){
+//        for(int i =size - 1; i < size + x; i ++){
+//            if(shadowMap[y + size - 1][i] == false){
+//                return false;
+//            }
+//        }
+//    }
+//    
+//    if(y + size < 768){
+//        for(int i = size - 1; i < size + y; i ++){
+//            if(shadowMap[i][x + size - 1] == false){
+//                return false;
+//            }
+//        }
+//    }
+//    
+//    return true;
+//}
+//
+//-(void)createClearanceMap{
+//    
+//    [self generateShadowMap];
+//    
+//    //nested for loop to go over all points in the shadowMap
+//    for(int i=0; i < 768; i ++){
+//        for(int j=0; j< 1024; j++){
+//            
+//            if(shadowMap[i][j] == true){
+//                clearanceMap[i][j] = 1;
+//                
+//                //see how large we can expand the square for clearance
+//                //start at 2 and then goooooo on
+//                for(int k = 2; k < 768; k ++){
+//                    //increments over the square size
+//                    if([self checkExpansionCmap:i :j :k] == true){
+//                        clearanceMap[i][j] = k;
+//                    }
+//                    //if there is not an expansion then it will break from the loop
+//                    else{
+//                        break;
+//                    }
+//                }
+//            }else{
+//                // NSLog(@"its a 0");
+//                clearanceMap[i][j] = 0;
+//            }//end else cMap i j
+//        }//end j for loop
+//    }//end i for loop
+//}
+//
+//
+////end test
 
 
 
@@ -393,10 +405,13 @@
     //is inside the shadow or not
     
     CGPoint pos = shadowMonster.position;
+
     CCLOG(@"%@", NSStringFromCGPoint(pos));
     if (clearanceMap[(int)pos.y][(int)pos.x] < SHADOWMONSTER_SIZE) {
         GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
         [scene shadowMonsterDead];
+        CCLOG(@"died");
+        CCLOG(@"%d", clearanceMap[(int)pos.y][(int)pos.x]);
     }
     
     

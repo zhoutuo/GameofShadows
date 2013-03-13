@@ -253,7 +253,8 @@
     
     
     if([self spaceIsBlocked:endX :endY] || [self spaceIsBlocked:startX :startY ]){
-        NSLog(@"No Path Found :(");
+        NSLog(@"No Path Found :( %d", map[endY][endX]);
+        
         return;
     }
 	
