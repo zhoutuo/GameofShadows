@@ -36,7 +36,7 @@
         [self addChild:wormholeExit z:WORMHOLE_DEPTH];
         
         
-        shadowMonster = [CCSprite spriteWithFile:@"shadow-monster.png"];
+        shadowMonster = [CCSprite spriteWithFile:@"squirtle.png"];
         [shadowMonster setPosition: CGPointMake([wormholeEntrance boundingBox].origin.x
                                                 , [wormholeEntrance boundingBox].origin.y)];
         [shadowMonster setAnchorPoint:ccp(0, 0)];

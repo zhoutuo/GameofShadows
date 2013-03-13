@@ -262,6 +262,8 @@
 		8290A2A716EFCF2A00AC6664 /* shadow-monster@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2A616EFCF2900AC6664 /* shadow-monster@2x.png */; };
 		8290A2A916EFCF7300AC6664 /* WormholeEntrance@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2A816EFCF7200AC6664 /* WormholeEntrance@2x.png */; };
 		8290A2AB16EFCFB100AC6664 /* WormholeExit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2AA16EFCFB000AC6664 /* WormholeExit@2x.png */; };
+		8290A2AE16F0146E00AC6664 /* squirtle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2AC16F0146D00AC6664 /* squirtle.png */; };
+		8290A2AF16F0146E00AC6664 /* squirtle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2AD16F0146E00AC6664 /* squirtle@2x.png */; };
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
@@ -751,6 +753,8 @@
 		8290A2A616EFCF2900AC6664 /* shadow-monster@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shadow-monster@2x.png"; path = "Resources/shadow-monster@2x.png"; sourceTree = "<group>"; };
 		8290A2A816EFCF7200AC6664 /* WormholeEntrance@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WormholeEntrance@2x.png"; path = "Resources/WormholeEntrance@2x.png"; sourceTree = "<group>"; };
 		8290A2AA16EFCFB000AC6664 /* WormholeExit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WormholeExit@2x.png"; path = "Resources/WormholeExit@2x.png"; sourceTree = "<group>"; };
+		8290A2AC16F0146D00AC6664 /* squirtle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = squirtle.png; path = Resources/squirtle.png; sourceTree = "<group>"; };
+		8290A2AD16F0146E00AC6664 /* squirtle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "squirtle@2x.png"; path = "Resources/squirtle@2x.png"; sourceTree = "<group>"; };
 		82A0235316DC28BD00886573 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GB2ShapeCache.h; sourceTree = "<group>"; };
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
@@ -885,6 +889,8 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8290A2AC16F0146D00AC6664 /* squirtle.png */,
+				8290A2AD16F0146E00AC6664 /* squirtle@2x.png */,
 				C043967516EE8C9D00FCD095 /* Couch.png */,
 				1EE102DF16EFC7CB00EDB8FC /* WinScene.ccbi */,
 				C043967616EE8C9D00FCD095 /* Couch@2x.png */,
@@ -1705,6 +1711,8 @@
 				8290A2AB16EFCFB100AC6664 /* WormholeExit@2x.png in Resources */,
 				94AE3A0916EFDCCA00B00B94 /* grahh.png in Resources */,
 				94AE3A0A16EFDCCA00B00B94 /* grahh@2x.png in Resources */,
+				8290A2AE16F0146E00AC6664 /* squirtle.png in Resources */,
+				8290A2AF16F0146E00AC6664 /* squirtle@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
