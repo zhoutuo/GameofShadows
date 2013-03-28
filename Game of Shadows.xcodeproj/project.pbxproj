@@ -267,7 +267,6 @@
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
-		94127C1E16E53D250066DEE0 /* PathFinder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94127C1D16E53D250066DEE0 /* PathFinder.mm */; };
 		94AE3A0916EFDCCA00B00B94 /* grahh.png in Resources */ = {isa = PBXBuildFile; fileRef = 94AE3A0716EFDCCA00B00B94 /* grahh.png */; };
 		94AE3A0A16EFDCCA00B00B94 /* grahh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94AE3A0816EFDCCA00B00B94 /* grahh@2x.png */; };
 		C043966B16EE838600FCD095 /* ArmChair.png in Resources */ = {isa = PBXBuildFile; fileRef = C043966116EE838600FCD095 /* ArmChair.png */; };
@@ -759,8 +758,6 @@
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
 		82EAD1FE16DCA460002F736F /* Room layout small window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window.png"; sourceTree = "<group>"; };
-		94127C1C16E53D250066DEE0 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
-		94127C1D16E53D250066DEE0 /* PathFinder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PathFinder.mm; sourceTree = "<group>"; };
 		94AE3A0716EFDCCA00B00B94 /* grahh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grahh.png; sourceTree = "<group>"; };
 		94AE3A0816EFDCCA00B00B94 /* grahh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grahh@2x.png"; sourceTree = "<group>"; };
 		C043966116EE838600FCD095 /* ArmChair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArmChair.png; sourceTree = "<group>"; };
@@ -1511,8 +1508,6 @@
 				28E4793A16CD9C14007B3A2A /* ShadowsLayer.mm */,
 				C0C1795D16D072580060BAD4 /* PhysicsSprite.h */,
 				C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */,
-				94127C1C16E53D250066DEE0 /* PathFinder.h */,
-				94127C1D16E53D250066DEE0 /* PathFinder.mm */,
 				28E079B816D41B8C007011F2 /* GameplayScene.h */,
 				28E079B916D41B8C007011F2 /* GameplayScene.mm */,
 				28E4793416CD9C14007B3A2A /* BackgroundLayer.h */,
@@ -1887,7 +1882,6 @@
 				82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */,
 				1EF73BDB16E54FAD00BF4959 /* PauseLayer.mm in Sources */,
 				1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */,
-				94127C1E16E53D250066DEE0 /* PathFinder.mm in Sources */,
 				8290A2A116EAB5F600AC6664 /* ShadowDisruptionLayer.mm in Sources */,
 				2804A3DF16EE695A00C4638D /* GameStats.m in Sources */,
 				1EE102D816EEF81500EDB8FC /* LossScene.mm in Sources */,

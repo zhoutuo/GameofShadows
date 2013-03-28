@@ -11,6 +11,7 @@
 
 #define ROTATIONTHRESHOLD 3.0f
 #define SHADOWMONSTER_SIZE 50
+#define SHADOWMONSTER_SPEED 80.0f
 @implementation ShadowsLayer
 
 -(id) init {
@@ -26,7 +27,6 @@
         
         NSArray* startPortalData = [portals objectAtIndex:0];        
         wormholeEntrance = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
-        /*[startPortal setAnchorPoint:CGPointMake([startPortal boundingBox].size.width/2 , [startPortal boundingBox].size.height/2 )];*/
         [wormholeEntrance setPosition:CGPointMake([[startPortalData objectAtIndex:1] floatValue], [[startPortalData objectAtIndex:2] floatValue])];
         [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
         
@@ -37,27 +37,11 @@
         
         
         shadowMonster = [CCSprite spriteWithFile:@"squirtle.png"];
-        [shadowMonster setPosition: CGPointMake([wormholeEntrance boundingBox].origin.x
-                                                , [wormholeEntrance boundingBox].origin.y)];
-        [shadowMonster setAnchorPoint:ccp(0, 0)];
+        [shadowMonster setPosition: wormholeEntrance.position];
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
-        
-        
-        /*
-        wormholeEntrance = [CCSprite spriteWithFile:@"WormholeEntrance.png"];
-        [wormholeEntrance setPosition:[shadowMonster position]];
-        [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
-        
-        wormholeExit = [CCSprite spriteWithFile:@"WormholeExit.png"];
-        [wormholeExit setPosition:ccp(500, 500)];
-        [self addChild:wormholeExit z:WORMHOLE_DEPTH];*/
-        
-        isExitFound = false;
-        
-        pathFinder = [[PathFinder alloc]init :SHADOWMONSTER_SIZE :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
 
-        
+        isExitFound = false;
     }
     return self;
 }
@@ -65,7 +49,6 @@
 
 -(void) dealloc {
     [objShadowTable release];
-    [pathFinder release];
     [super dealloc];
 }
 
@@ -191,8 +174,6 @@
                         newY = MIN(newY, DEVICE_HEIGHT);
                         ++count;
                         
-                        //CCLOG(@"fff");
-
                         if([curScene checkLightSourceCoordinates :newY : newX]){
                             shadowMap[newY][newX] = false;
                         } else {
@@ -202,7 +183,6 @@
                 }
             }
             
-//            CCLOG(@"%d", count);
         }
     }
 }
@@ -267,126 +247,37 @@
     return res;
 }
 
-//-(void)makeAllTrueShadowMap{
-//    for(int i=0; i< DEVICE_HEIGHT; i++){
-//        for(int j =0; j< DEVICE_WIDTH; j++){
-//            shadowMap[i][j] = true;
-//        }
-//    }
-//}
 
 
 -(void)pathFinding: (CGPoint)end {
-
-    //PathFinder* pathfinder = [[PathFinder alloc]init :20 :DEVICE_WIDTH :DEVICE_HEIGHT :clearanceMap];
-    NSMutableArray *path = [[NSMutableArray alloc] init];
-    NSMutableArray* actions = [NSMutableArray array];
-    end = ccpSub(end, ccp(shadowMonster.boundingBox.size.width / 2, shadowMonster.boundingBox.size.width / 2));
-    [pathFinder findPath:shadowMonster.position :end :path];
-
-    for (NSInteger i = [path count] - 1; i >= 0; --i) {
-        NSValue* object = [path objectAtIndex:i];
-        CGPoint curPoint = object.CGPointValue;
-        CCAction* action = [CCMoveTo actionWithDuration:0.01 position:curPoint];
-        [actions addObject:action];
+    //get the distance to calculate the duration for the moving
+    float distance = ccpDistance(shadowMonster.position, end);
+    id actionMove = [CCMoveTo actionWithDuration:(distance / SHADOWMONSTER_SPEED) position:end];
+    //schedule terminal detection
+    if (CGRectContainsPoint([wormholeExit boundingBox], end)) {//if the end is inside the exit
+        isExitFound = true;
+        [self scheduleUpdate];
     }
-    
-    if ([actions count] != 0) {
-        if (CGRectContainsPoint([wormholeExit boundingBox], end)) {
-            isExitFound = true;
-            [self scheduleUpdate];
-        }
-        
-        [shadowMonster runAction:[CCSequence actionWithArray:actions]];
-    }
-    [path release];
+    //stop the current moving if any
+    [shadowMonster stopAllActions];
+    //do the moving here
+    [shadowMonster runAction:actionMove];
 }
 
 
 - (void)update:(ccTime)delta {
     if (isExitFound) {
         
-        if(CGRectContainsPoint([wormholeExit boundingBox], ccpAdd([shadowMonster position], ccp(shadowMonster.boundingBox.size.width / 2, shadowMonster.boundingBox.size.width / 2)))) {
+        if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
             CCLOG(@"CONG");
             GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
+            //game accomplish event triggered
             [scene shadowMonterRescued];
+            //unschedule the udpate fucntion
             [self unscheduleUpdate];
         }
     }
 }
-
-
-//-(void) testShadowMap:(CGPoint)testPoint {
-//    CCLOG(@"%@", NSStringFromCGPoint(testPoint));
-//    int x = (int) testPoint.x;
-//    int y = (int) testPoint.y;
-//    
-//    if (shadowMap[y][x]) {
-//        CCLOG(@"yes");
-//    } else {
-//        CCLOG(@"no");
-//    }
-//    
-//}
-
-///////////////////
-////test
-//
-//-(bool)checkExpansionCmap: (int)x : (int)y : (int)size{
-//    
-//    if(x + size < 1024){
-//        for(int i =size - 1; i < size + x; i ++){
-//            if(shadowMap[y + size - 1][i] == false){
-//                return false;
-//            }
-//        }
-//    }
-//    
-//    if(y + size < 768){
-//        for(int i = size - 1; i < size + y; i ++){
-//            if(shadowMap[i][x + size - 1] == false){
-//                return false;
-//            }
-//        }
-//    }
-//    
-//    return true;
-//}
-//
-//-(void)createClearanceMap{
-//    
-//    [self generateShadowMap];
-//    
-//    //nested for loop to go over all points in the shadowMap
-//    for(int i=0; i < 768; i ++){
-//        for(int j=0; j< 1024; j++){
-//            
-//            if(shadowMap[i][j] == true){
-//                clearanceMap[i][j] = 1;
-//                
-//                //see how large we can expand the square for clearance
-//                //start at 2 and then goooooo on
-//                for(int k = 2; k < 768; k ++){
-//                    //increments over the square size
-//                    if([self checkExpansionCmap:i :j :k] == true){
-//                        clearanceMap[i][j] = k;
-//                    }
-//                    //if there is not an expansion then it will break from the loop
-//                    else{
-//                        break;
-//                    }
-//                }
-//            }else{
-//                // NSLog(@"its a 0");
-//                clearanceMap[i][j] = 0;
-//            }//end else cMap i j
-//        }//end j for loop
-//    }//end i for loop
-//}
-//
-//
-////end test
-
 
 
 

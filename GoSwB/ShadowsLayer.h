@@ -7,7 +7,6 @@
 //
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "PathFinder.h"
 
 
 #define DEVICE_WIDTH 1024
@@ -26,7 +25,6 @@
     CCSprite* wormholeEntrance;
     CCSprite* wormholeExit;
     bool isExitFound;
-    PathFinder *pathFinder;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
