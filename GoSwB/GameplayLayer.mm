@@ -117,7 +117,7 @@
     
     
     //update the position of sprites accordingly
-    GameplayScene* scene = (GameplayScene*)self.parent;
+    GameplayScene* scene = [GameplayScene getCurrentScene];
     
     for (b2Body* body = physicsWorld->GetBodyList(); body; body = body->GetNext()) {
         if (body->GetUserData()) {
@@ -211,7 +211,7 @@
     [super onEnter];
     
     //tell the scene we are done with rendering all objects
-    GameplayScene* scene = (GameplayScene*)self.parent;
+    GameplayScene* scene = [GameplayScene getCurrentScene];
     CCArray* shadowVisibleChildren = [CCArray array];
     CCArray* ratios = [CCArray array];
     for (CCSprite* sprite in objectsContainer.children) {

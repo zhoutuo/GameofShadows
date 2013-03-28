@@ -63,6 +63,10 @@ static NSInteger tagSeed = 10000;
     return tagSeed++;
 }
 
++(GameplayScene*) getCurrentScene {
+    return (GameplayScene*)[[CCDirector sharedDirector] runningScene];
+}
+
 -(void) twoFingerSwipeRight {
     if(isPuzzleMode){
         isPuzzleMode = true;
