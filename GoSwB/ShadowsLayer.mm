@@ -40,8 +40,7 @@
         [shadowMonster setPosition: wormholeEntrance.position];
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
-
-        isExitFound = false;
+        //isMonsterMoving = false;
     }
     return self;
 }
@@ -72,7 +71,6 @@
     if (objects.count != ratios.count) {
         return;
     }
-    
     for (int i = 0; i < objects.count; ++i) {
         CCSprite* cur = (CCSprite*)[objects objectAtIndex:i];
         CCTexture2D* texture = cur.texture;
@@ -187,77 +185,12 @@
     }
 }
 
-//this method generate a clearance map from shadow map
-//this is mainly for a* algorithm to navigate in
-//a clearance map plz refer to http://aigamedev.com/open/article/clearance-based-pathfinding/
--(void) generateClearanceMap {
-    for (int i = 0; i < DEVICE_HEIGHT; ++i) {
-        for (int j = 0; j < DEVICE_WIDTH; ++j) {
-            if (shadowMap[i][j]) {
-                clearanceMap[i][j] = [self checkingClearanceSize:ccp(i, j)];
-            } else {
-                clearanceMap[i][j] = 0;
-            }
-        }
-    }
-}
 
-//The value on a point shows that how big a clearance squire it can have
-//ATTENTION: the point is the lower left corner of the clearance squire
--(int) checkingClearanceSize: (CGPoint) point {
-    int res = 1;
-    int x = (int)point.x;
-    int y = (int)point.y;
-    
-    int potential = 0;
-    //reuse the computed valuees from the 2d array
-    //the value for this pos will be at least as big as the value of neighbours - 1
-    if (x != 0 and y != 0) {
-        potential = MAX(clearanceMap[x - 1][y - 1],
-                  MAX(clearanceMap[x][y - 1], clearanceMap[x - 1][y])) - 1;
-    } else if(x == 0 xor y == 0) {
-        if (x == 0) {
-            potential = clearanceMap[x][y - 1] - 1;
-        } else {
-            potential = clearanceMap[x - 1][y] - 1;
-        }
-    }
-    
-    res = MAX(res, potential);
-    
-    //loop through the boudry of the potential size
-    while ((x + res < DEVICE_HEIGHT) and (y + res < DEVICE_WIDTH)) {
-        for (int delX = 0; delX <= res; ++delX) {
-            if (!shadowMap[x + delX][y + res]) {
-                return res;
-            }
-        }
-        
-        for (int delY = 0; delY <= res; ++delY) {
-            if (!shadowMap[x + res][y + delY]) {
-                return res;
-            }
-        }
-        
-        //keep increasing the size until we hit the size of the screen
-        //or hit non-shaow part
-        ++res;
-    }
-
-    return res;
-}
-
-
-
--(void)pathFinding: (CGPoint)end {
+-(void) pathFinding: (CGPoint)end {
     //get the distance to calculate the duration for the moving
     float distance = ccpDistance(shadowMonster.position, end);
     id actionMove = [CCMoveTo actionWithDuration:(distance / SHADOWMONSTER_SPEED) position:end];
-    //schedule terminal detection
-    if (CGRectContainsPoint([wormholeExit boundingBox], end)) {//if the end is inside the exit
-        isExitFound = true;
-        [self scheduleUpdate];
-    }
+    //isMonsterMoving = true;
     //stop the current moving if any
     [shadowMonster stopAllActions];
     //do the moving here
@@ -265,17 +198,46 @@
 }
 
 
-- (void)update:(ccTime)delta {
-    if (isExitFound) {
-        
-        if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
-            CCLOG(@"CONG");
+-(CCArray*) getCornersOfMonster {
+    CCArray* arr = [CCArray array];
+    //get boundingbox of shadow monster
+    CGRect rect = [shadowMonster boundingBox];
+    //get leftupper corner
+    CGPoint upperLeft = ccpAdd(rect.origin, ccp(0, rect.size.height));
+    //get rightupper corner
+    CGPoint upperRight = ccpAdd(rect.origin, ccp(rect.size.width, rect.size.height));
+    //get lowerleft corner
+    CGPoint lowerLeft = rect.origin;
+    //get lowerRight corner
+    CGPoint lowerRight = ccpAdd(rect.origin, ccp(rect.size.width, 0));
+    [arr addObject: [NSValue valueWithCGPoint:upperLeft]];
+    [arr addObject: [NSValue valueWithCGPoint:upperRight]];
+    [arr addObject: [NSValue valueWithCGPoint:lowerLeft]];
+    [arr addObject: [NSValue valueWithCGPoint:lowerRight]];
+    return arr;
+    
+}
+
+
+-(void) update:(ccTime)delta {
+    CCArray* corners = [self getCornersOfMonster];
+    for (NSValue* value in corners) {
+        CGPoint tmp = value.CGPointValue;
+        int x = tmp.x;
+        int y = tmp.y;
+        if (shadowMap[y][x] == false) {
             GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
-            //game accomplish event triggered
-            [scene shadowMonterRescued];
-            //unschedule the udpate fucntion
-            [self unscheduleUpdate];
+            [scene shadowMonsterDead];
+            return;
         }
+    }
+    
+    
+    if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
+        CCLOG(@"CONG");
+        GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
+        //game accomplish event triggered
+        [scene shadowMonterRescued];
     }
 }
 
@@ -286,32 +248,18 @@
 //SHADOW LAYER EVENTS
 -(void) startActionMode {
     [self generateShadowMap];
-    [self generateClearanceMap];
+    //[self generateClearanceMap];
     self.isTouchEnabled = YES;
     [shadowMonster setVisible:YES];
-    
+    [self scheduleUpdate];
     CCLOG(@"Enter Action Mode");
-    
-    //check whether the shadow monster
-    //is inside the shadow or not
-    
-    CGPoint pos = shadowMonster.position;
-
-    CCLOG(@"%@", NSStringFromCGPoint(pos));
-    if (clearanceMap[(int)pos.y][(int)pos.x] < SHADOWMONSTER_SIZE) {
-        GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
-        [scene shadowMonsterDead];
-        CCLOG(@"died");
-        CCLOG(@"%d", clearanceMap[(int)pos.y][(int)pos.x]);
-    }
-    
-    
-    
 }
 
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
     [shadowMonster setVisible:NO];
+    //unschedule the udpate fucntion
+    [self unscheduleUpdate];
     CCLOG(@"Leave Action Mode");
 }
 
