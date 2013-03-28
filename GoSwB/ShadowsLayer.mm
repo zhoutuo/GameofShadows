@@ -31,7 +31,9 @@
         [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
         
         NSArray* endPortalData = [portals objectAtIndex:1];
-        wormholeExit = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [endPortalData objectAtIndex:0]]];
+        wormholeExit = [CCSprite spriteWithFile:
+                        [NSString stringWithFormat:@"%@.png",
+                         [endPortalData objectAtIndex:0]]];
         [wormholeExit setPosition:CGPointMake([[endPortalData objectAtIndex:1] floatValue], [[endPortalData objectAtIndex:2] floatValue])];
         [self addChild:wormholeExit z:WORMHOLE_DEPTH];
         
@@ -40,7 +42,7 @@
         [shadowMonster setPosition: wormholeEntrance.position];
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
-        //isMonsterMoving = false;
+        isMonsterMoving = true; //this is a fake value here to validate the spawn position againt the light
     }
     return self;
 }
@@ -190,11 +192,18 @@
     //get the distance to calculate the duration for the moving
     float distance = ccpDistance(shadowMonster.position, end);
     id actionMove = [CCMoveTo actionWithDuration:(distance / SHADOWMONSTER_SPEED) position:end];
-    //isMonsterMoving = true;
+    //create callback function which turn the moving off when the moving is done
+    id actionCallback = [CCCallFunc actionWithTarget:self selector:@selector(monsterStopsMoving)];
+    isMonsterMoving = true;
     //stop the current moving if any
     [shadowMonster stopAllActions];
     //do the moving here
-    [shadowMonster runAction:actionMove];
+    id actionSeq = [CCSequence actions:actionMove, actionCallback, nil];
+    [shadowMonster runAction:actionSeq];
+}
+
+-(void) monsterStopsMoving {
+    isMonsterMoving = false;
 }
 
 
@@ -220,25 +229,28 @@
 
 
 -(void) update:(ccTime)delta {
-    CCArray* corners = [self getCornersOfMonster];
-    for (NSValue* value in corners) {
-        CGPoint tmp = value.CGPointValue;
-        int x = tmp.x;
-        int y = tmp.y;
-        if (shadowMap[y][x] == false) {
+    if (isMonsterMoving) {
+        CCArray* corners = [self getCornersOfMonster];
+        for (NSValue* value in corners) {
+            CGPoint tmp = value.CGPointValue;
+            int x = tmp.x;
+            int y = tmp.y;
+            if (shadowMap[y][x] == false) {
+                GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
+                [scene shadowMonsterDead];
+                return;
+            }
+        }
+        
+        
+        if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
+            CCLOG(@"CONG");
             GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
-            [scene shadowMonsterDead];
-            return;
+            //game accomplish event triggered
+            [scene shadowMonterRescued];
         }
     }
-    
-    
-    if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
-        CCLOG(@"CONG");
-        GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
-        //game accomplish event triggered
-        [scene shadowMonterRescued];
-    }
+
 }
 
 

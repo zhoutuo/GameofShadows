@@ -24,7 +24,7 @@
     CCSprite* shadowMonster;
     CCSprite* wormholeEntrance;
     CCSprite* wormholeExit;
-    //bool isMonsterMoving;
+    bool isMonsterMoving;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
