@@ -114,7 +114,7 @@
 
 -(void) generateShadowMap {
     
-    GameplayScene* curScene = [GameplayScene getCurrentScene];
+    GameplayScene* curScene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
     
     for (int i = 0; i < DEVICE_HEIGHT; ++i) {
         for (int j = 0; j < DEVICE_WIDTH; ++j) {
@@ -231,12 +231,12 @@
 -(void) update:(ccTime)delta {
     if (isMonsterMoving) {
         CCArray* corners = [self getCornersOfMonster];
-        GameplayScene* scene = [GameplayScene getCurrentScene];
         for (NSValue* value in corners) {
             CGPoint tmp = value.CGPointValue;
             int x = tmp.x;
             int y = tmp.y;
             if (shadowMap[y][x] == false) {
+                GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
                 [scene shadowMonsterDead];
                 return;
             }
@@ -245,6 +245,7 @@
         
         if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
             CCLOG(@"CONG");
+            GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
             //game accomplish event triggered
             [scene shadowMonterRescued];
         }

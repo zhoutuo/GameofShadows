@@ -17,6 +17,7 @@
     ShadowsLayer* shadowLayer;
     GameplayLayer* gameplayLayer;
     ShadowDisruptionLayer* shadowDisruptionLayer;
+    
     GameStats* gamestats;
 
     //Mode
@@ -30,7 +31,6 @@
 }
 
 +(NSInteger) TagGenerater;
-+(GameplayScene*) getCurrentScene;
 -(void) finishObjectsCreation: (CCArray*) objects withRatios:(CCArray*) ratios;
 -(void) finishMovingOneObject: (NSInteger) objectTag withRatio:(CGPoint) ratio;
 -(void) finishRotatingOneObject: (NSInteger) objectTag withAngle:(float) angle;
