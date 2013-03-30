@@ -13,6 +13,7 @@
 #define DEVICE_HEIGHT 768
 #define SHADOW_SPRITE_DEPTH 1
 #define WORMHOLE_DEPTH 2
+#define DYNAMIC_LIGHTNING_DEPTH 50
 #define SHADOW_MONESTER_DEPTH 100
 
 @interface ShadowsLayer : CCLayer {
@@ -24,7 +25,9 @@
     CCSprite* shadowMonster;
     CCSprite* wormholeEntrance;
     CCSprite* wormholeExit;
-    bool isMonsterMoving;
+    
+    //test object
+    CCSprite* sun;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;

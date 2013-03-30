@@ -20,7 +20,6 @@
         shadowWidthFactor = 2.0f;
         objShadowTable = [[NSMutableDictionary alloc] init];
         
-        
         NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
         NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
         NSArray* portals = [[levelObjects objectForKey: level] objectForKey:@"Portals"];
@@ -36,13 +35,19 @@
                          [endPortalData objectAtIndex:0]]];
         [wormholeExit setPosition:CGPointMake([[endPortalData objectAtIndex:1] floatValue], [[endPortalData objectAtIndex:2] floatValue])];
         [self addChild:wormholeExit z:WORMHOLE_DEPTH];
-        
-        
         shadowMonster = [CCSprite spriteWithFile:@"squirtle.png"];
         [shadowMonster setPosition: wormholeEntrance.position];
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
-        isMonsterMoving = true; //this is a fake value here to validate the spawn position againt the light
+        
+        
+        //add testing dynamic moving object here
+        sun = [CCSprite spriteWithFile:@"Sun.png"];
+        [sun setPosition:ccp(100, 300)];
+        [self addChild:sun z:DYNAMIC_LIGHTNING_DEPTH];
+        id go_right = [CCMoveBy actionWithDuration:2 position:ccp(200, 0)];
+        id go_left = [CCMoveBy actionWithDuration:2 position:ccp(-200, 0)];
+        [sun runAction:[CCRepeatForever actionWithAction:[CCSequence actions:go_right, go_left, nil]]];
     }
     return self;
 }
@@ -112,102 +117,20 @@
     }
 }
 
--(void) generateShadowMap {
-    
-    GameplayScene* curScene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
-    
-    for (int i = 0; i < DEVICE_HEIGHT; ++i) {
-        for (int j = 0; j < DEVICE_WIDTH; ++j) {
-            shadowMap[i][j] = false;
-        }
-    }
-    
-    
-        
-    for (CCSprite* cur in self.children) {
-        
-        if (cur.zOrder != SHADOW_SPRITE_DEPTH) {
-            continue;
-        }
-        
-        CGRect boundingBox = cur.boundingBox;
-        CGRect textureRect = cur.textureRect;
-        
-        CCLOG(@"%f", fabsf(cur.rotation));
-        
-        
-        //if there is no rotation, just scan all points of boundingBox
-        if (fabsf(cur.rotation) < ROTATIONTHRESHOLD) {
-            CGPoint origin = boundingBox.origin;
-            
-            for (int i = 0; i < boundingBox.size.height; ++i) {
-                for (int j = 0; j < boundingBox.size.width; ++j) {
-                    int newX = j + (int)origin.x;
-                    int newY = i + (int)origin.y;
-                    newX = MAX(0, newX);
-                    newX = MIN(newX, DEVICE_WIDTH);
-                    
-                    newY = MAX(0, newY);
-                    newY = MIN(newY, DEVICE_HEIGHT);
-                    if([curScene checkLightSourceCoordinates :newY : newX]){
-                        shadowMap[newY][newX] = false;
-                    }else{
-                        shadowMap[newY][newX] = true;
-                    }
-                    
-                }
-            }
-        } else {
-            //if there is big rotation
-            int count = 0;
-            CGPoint origin = boundingBox.origin;
-            for (int i = 0; i < boundingBox.size.height; ++i) {
-                for (int j = 0; j < boundingBox.size.width; ++j) {
-                    CGPoint pointInBoundingBox = ccpAdd(origin, ccp(j, i));
-                    if (CGRectContainsPoint(textureRect, [cur convertToNodeSpace:pointInBoundingBox])) {
-                        int newX = (int)pointInBoundingBox.x;
-                        int newY = (int)pointInBoundingBox.y;
-                        newX = MAX(0, newX);
-                        newX = MIN(newX, DEVICE_WIDTH);
-                        
-                        newY = MAX(0, newY);
-                        newY = MIN(newY, DEVICE_HEIGHT);
-                        ++count;
-                        
-                        if([curScene checkLightSourceCoordinates :newY : newX]){
-                            shadowMap[newY][newX] = false;
-                        } else {
-                            shadowMap[newY][newX] = true;
-                        }
-                    }
-                }
-            }
-            
-        }
-    }
-}
-
-
 -(void) pathFinding: (CGPoint)end {
     //get the distance to calculate the duration for the moving
     float distance = ccpDistance(shadowMonster.position, end);
     id actionMove = [CCMoveTo actionWithDuration:(distance / SHADOWMONSTER_SPEED) position:end];
-    //create callback function which turn the moving off when the moving is done
-    id actionCallback = [CCCallFunc actionWithTarget:self selector:@selector(monsterStopsMoving)];
-    isMonsterMoving = true;
     //stop the current moving if any
     [shadowMonster stopAllActions];
     //do the moving here
-    id actionSeq = [CCSequence actions:actionMove, actionCallback, nil];
-    [shadowMonster runAction:actionSeq];
-}
-
--(void) monsterStopsMoving {
-    isMonsterMoving = false;
+    [shadowMonster runAction:actionMove];
 }
 
 
--(CCArray*) getCornersOfMonster {
+
+
+-(CCArray*) getcornorsOfMonster {
     CCArray* arr = [CCArray array];
     //get boundingbox of shadow monster
     CGRect rect = [shadowMonster boundingBox];
@@ -229,31 +152,117 @@
 
 
 -(void) update:(ccTime)delta {
-    if (isMonsterMoving) {
-        CCArray* corners = [self getCornersOfMonster];
-        for (NSValue* value in corners) {
-            CGPoint tmp = value.CGPointValue;
-            int x = tmp.x;
-            int y = tmp.y;
-            if (shadowMap[y][x] == false) {
-                GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
-                [scene shadowMonsterDead];
-                return;
-            }
+    CCArray* cornors = [self getcornorsOfMonster];
+    GameplayScene* scene = (GameplayScene*)self.parent;
+    for (NSValue* value in cornors) {
+        CGPoint tmp = value.CGPointValue;
+        int x = tmp.x;
+        int y = tmp.y;
+        if ([self getShadowMap:x :y] == false) {
+            [scene shadowMonsterDead];
+            return;
         }
-        
-        
-        if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
-            CCLOG(@"CONG");
-            GameplayScene* scene = (GameplayScene*)[[CCDirector sharedDirector] runningScene];
-            //game accomplish event triggered
-            [scene shadowMonterRescued];
-        }
+    }
+    
+    
+    if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
+        CCLOG(@"CONG");
+        //game accomplish event triggered
+        [scene shadowMonterRescued];
     }
 
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// SHADOW MAP METHOD
+-(void) generateShadowMap {
+    
+    GameplayScene* curScene = (GameplayScene*)self.parent;
+    for (int i = 0; i < DEVICE_WIDTH; ++i) {
+        for (int j = 0; j < DEVICE_HEIGHT; ++j) {
+            [self setShadowMap:i :j :false];
+        }
+    }
+    
+    for (CCSprite* cur in self.children) {
+        if (cur.zOrder != SHADOW_SPRITE_DEPTH) {
+            continue;
+        }
+        
+        CGRect boundingBox = cur.boundingBox;
+        CGRect textureRect = cur.textureRect;
+        CCLOG(@"%f", fabsf(cur.rotation));
+        
+        //if there is no rotation, just scan all points of boundingBox
+        if (fabsf(cur.rotation) < ROTATIONTHRESHOLD) {
+            CGPoint origin = boundingBox.origin;
+            
+            for (int i = 0; i < boundingBox.size.height; ++i) {
+                for (int j = 0; j < boundingBox.size.width; ++j) {
+                    int newX = j + (int)origin.x;
+                    int newY = i + (int)origin.y;
+                    newX = MAX(0, newX);
+                    newX = MIN(newX, DEVICE_WIDTH);
+                    
+                    newY = MAX(0, newY);
+                    newY = MIN(newY, DEVICE_HEIGHT);
+                    if([curScene checkLightSourceCoordinates :newY : newX]){
+                        [self setShadowMap:newX :newY :false];
+                    }else{
+                        [self setShadowMap:newX :newY :true];
+                    }
+                }
+            }
+        } else {
+            //if there is big rotation
+            int count = 0;
+            CGPoint origin = boundingBox.origin;
+            for (int i = 0; i < boundingBox.size.height; ++i) {
+                for (int j = 0; j < boundingBox.size.width; ++j) {
+                    CGPoint pointInBoundingBox = ccpAdd(origin, ccp(j, i));
+                    if (CGRectContainsPoint(textureRect, [cur convertToNodeSpace:pointInBoundingBox])) {
+                        int newX = (int)pointInBoundingBox.x;
+                        int newY = (int)pointInBoundingBox.y;
+                        newX = MAX(0, newX);
+                        newX = MIN(newX, DEVICE_WIDTH);
+                        
+                        newY = MAX(0, newY);
+                        newY = MIN(newY, DEVICE_HEIGHT);
+                        ++count;
+                        
+                        if([curScene checkLightSourceCoordinates :newY : newX]){
+                            [self setShadowMap:newX :newY :false];
+                        } else {
+                            [self setShadowMap:newX :newY :true];
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+}
 
+
+-(bool) getShadowMap:(int)x :(int)y {
+    bool val = shadowMap[y][x];
+    if (val == false) { //if it is already light in the shadow map, just return true
+        return false;
+    } else { //if it is dark, now checking dynamic disruption events
+             //by interating all dynamic items whether they contain this point or not
+             //so that we know it is dark or not
+        if (CGRectContainsPoint([sun boundingBox], ccp(x, y))) {
+            val = false;
+        }
+        return val;
+    }
+}
+
+
+-(void) setShadowMap:(int)x :(int)y :(bool) value {
+    shadowMap[y][x] = value;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
