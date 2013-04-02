@@ -23,7 +23,7 @@
     CCMenuItem *button = (CCMenuItem*) sender;
     switch (button.tag) {
         case PLAY_BUTTON_TAG:
-            currentLevel = 1;
+            currentLevel = 5;
            [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[GameplayScene node]]];
             break;
         case OPTIONS_BUTTON_TAG:

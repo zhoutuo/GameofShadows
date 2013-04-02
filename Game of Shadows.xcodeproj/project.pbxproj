@@ -269,6 +269,8 @@
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
+		946EF649170B957C00AE6DE7 /* Room layout texture extra wide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946EF648170B957C00AE6DE7 /* Room layout texture extra wide@2x.png */; };
+		946EF64B170B962900AE6DE7 /* Room layout texture extra wide.png in Resources */ = {isa = PBXBuildFile; fileRef = 946EF64A170B962900AE6DE7 /* Room layout texture extra wide.png */; };
 		94AE3A0916EFDCCA00B00B94 /* grahh.png in Resources */ = {isa = PBXBuildFile; fileRef = 94AE3A0716EFDCCA00B00B94 /* grahh.png */; };
 		94AE3A0A16EFDCCA00B00B94 /* grahh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94AE3A0816EFDCCA00B00B94 /* grahh@2x.png */; };
 		C043966B16EE838600FCD095 /* ArmChair.png in Resources */ = {isa = PBXBuildFile; fileRef = C043966116EE838600FCD095 /* ArmChair.png */; };
@@ -762,6 +764,8 @@
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
 		82EAD1FE16DCA460002F736F /* Room layout small window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window.png"; sourceTree = "<group>"; };
+		946EF648170B957C00AE6DE7 /* Room layout texture extra wide@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout texture extra wide@2x.png"; sourceTree = "<group>"; };
+		946EF64A170B962900AE6DE7 /* Room layout texture extra wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout texture extra wide.png"; sourceTree = "<group>"; };
 		94AE3A0716EFDCCA00B00B94 /* grahh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grahh.png; sourceTree = "<group>"; };
 		94AE3A0816EFDCCA00B00B94 /* grahh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grahh@2x.png"; sourceTree = "<group>"; };
 		C043966116EE838600FCD095 /* ArmChair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArmChair.png; sourceTree = "<group>"; };
@@ -922,6 +926,8 @@
 				8290A2A616EFCF2900AC6664 /* shadow-monster@2x.png */,
 				C0EBE2F116E5522E00673C22 /* Table.png */,
 				C0EBE2F216E5522E00673C22 /* Table@2x.png */,
+				946EF648170B957C00AE6DE7 /* Room layout texture extra wide@2x.png */,
+				946EF64A170B962900AE6DE7 /* Room layout texture extra wide.png */,
 				82EAD1FE16DCA460002F736F /* Room layout small window.png */,
 				C0915FC516DE8B0E00C967ED /* Room layout small window@2x.png */,
 				C0915FC916DE8FB100C967ED /* Room layout texture.png */,
@@ -1718,6 +1724,8 @@
 				8290A2AF16F0146E00AC6664 /* squirtle@2x.png in Resources */,
 				280BB2FC1707A5A50043C4CA /* Sun@2x.png in Resources */,
 				280BB2FD1707A5A50043C4CA /* Sun.png in Resources */,
+				946EF649170B957C00AE6DE7 /* Room layout texture extra wide@2x.png in Resources */,
+				946EF64B170B962900AE6DE7 /* Room layout texture extra wide.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
