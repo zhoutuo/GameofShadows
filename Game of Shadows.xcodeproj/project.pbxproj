@@ -774,6 +774,7 @@
 		C043966A16EE838600FCD095 /* FootRest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FootRest@2x.png"; sourceTree = "<group>"; };
 		C043967516EE8C9D00FCD095 /* Couch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Couch.png; sourceTree = "<group>"; };
 		C043967616EE8C9D00FCD095 /* Couch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Couch@2x.png"; sourceTree = "<group>"; };
+		C0654628170B800F00A2C19F /* items.pes */ = {isa = PBXFileReference; lastKnownFileType = file; path = items.pes; sourceTree = "<group>"; };
 		C07A02BB16DD846900D71044 /* Barrel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Barrel.png; sourceTree = "<group>"; };
 		C07A02BC16DD846900D71044 /* Surfboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Surfboard.png; sourceTree = "<group>"; };
 		C07A02C016DD85B000D71044 /* items.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = items.plist; sourceTree = "<group>"; };
@@ -925,6 +926,7 @@
 				C0915FC516DE8B0E00C967ED /* Room layout small window@2x.png */,
 				C0915FC916DE8FB100C967ED /* Room layout texture.png */,
 				C0915FCA16DE8FB100C967ED /* Room layout texture@2x.png */,
+				C0654628170B800F00A2C19F /* items.pes */,
 				C07A02C016DD85B000D71044 /* items.plist */,
 				C07A02BB16DD846900D71044 /* Barrel.png */,
 				C07A02BC16DD846900D71044 /* Surfboard.png */,
