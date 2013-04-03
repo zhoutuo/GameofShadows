@@ -27,10 +27,9 @@ static NSInteger tagSeed = 10000;
         
         gameplayLayer = [GameplayLayer node];
         [self addChild:gameplayLayer z:3];
-        
         [self initSwipeGestures];
         isPuzzleMode = true; //setting modes.
-        
+        [gameplayLayer startPuzzleMode];
         gamestats.isMonsterDead = false;
         gamestats.timeUsed = 0.0f;
         
@@ -100,25 +99,21 @@ static NSInteger tagSeed = 10000;
     swipeRight = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeRight)]autorelease];
     [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
     [swipeRight setNumberOfTouchesRequired:2];
-    swipeRight.cancelsTouchesInView = NO;
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeRight];
     
     swipeLeft = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeLeft)]autorelease];
     [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
     [swipeLeft setNumberOfTouchesRequired:2];
-    swipeLeft.cancelsTouchesInView  = NO;
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeLeft];
     
     swipeUp = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeUp)]autorelease];
     [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
-    [swipeUp setNumberOfTouchesRequired:2];
-    swipeUp.cancelsTouchesInView  =NO;
+    [swipeUp setNumberOfTouchesRequired:1];
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeUp];
     
     swipeDown = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeDown)]autorelease];
     [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
-    [swipeDown setNumberOfTouchesRequired:2];
-    swipeDown.cancelsTouchesInView  = NO;
+    [swipeDown setNumberOfTouchesRequired:1];
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeDown];
     
 }

@@ -49,9 +49,6 @@
         // Physics section.
         [self initPhysics];
         [self setupObjects];
-        [self scheduleUpdate];
-        [self startPuzzleMode];
-        
     }
     
     return self;
@@ -410,7 +407,7 @@
     [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
     [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
     self.isTouchEnabled = YES;
-    
+    [self scheduleUpdate];
     CCLOG(@"Enter Puzzle Mode");
 }
 
@@ -420,7 +417,7 @@
     [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
     [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
     self.isTouchEnabled = NO;
-    
+    [self unscheduleUpdate];
     CCLOG(@"Leave Puzzle Mode");
 }
 
