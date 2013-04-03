@@ -73,6 +73,31 @@
 		1EF73BDB16E54FAD00BF4959 /* PauseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1EF73BDA16E54FAD00BF4959 /* PauseLayer.mm */; };
 		1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1EF73BE116E5574B00BF4959 /* Globals.mm */; };
 		2804A3DF16EE695A00C4638D /* GameStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 2804A3DE16EE695A00C4638D /* GameStats.m */; };
+		28077018170CF1DC006B3297 /* timMonster.png in Resources */ = {isa = PBXBuildFile; fileRef = 28076FFF170CF166006B3297 /* timMonster.png */; };
+		28077019170CF1DC006B3297 /* Couch.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077000170CF169006B3297 /* Couch.png */; };
+		2807701A170CF1DC006B3297 /* Couch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077001170CF16F006B3297 /* Couch@2x.png */; };
+		2807701B170CF1DC006B3297 /* ArmChair.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077002170CF174006B3297 /* ArmChair.png */; };
+		2807701C170CF1DC006B3297 /* ArmChair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077003170CF179006B3297 /* ArmChair@2x.png */; };
+		2807701D170CF1DC006B3297 /* Door.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077004170CF17D006B3297 /* Door.png */; };
+		2807701E170CF1DC006B3297 /* Door@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077005170CF182006B3297 /* Door@2x.png */; };
+		2807701F170CF1DC006B3297 /* Dresser.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077006170CF188006B3297 /* Dresser.png */; };
+		28077020170CF1DC006B3297 /* Dresser@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077007170CF18D006B3297 /* Dresser@2x.png */; };
+		28077021170CF1DC006B3297 /* FootRest.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077008170CF192006B3297 /* FootRest.png */; };
+		28077022170CF1DC006B3297 /* FootRest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077009170CF197006B3297 /* FootRest@2x.png */; };
+		28077023170CF1DC006B3297 /* Room layout texture@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2807700A170CF19C006B3297 /* Room layout texture@2x.jpg */; };
+		28077024170CF1DC006B3297 /* grahh.png in Resources */ = {isa = PBXBuildFile; fileRef = 2807700B170CF1A2006B3297 /* grahh.png */; };
+		28077025170CF1DC006B3297 /* grahh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2807700C170CF1A6006B3297 /* grahh@2x.png */; };
+		28077026170CF1DC006B3297 /* Table.png in Resources */ = {isa = PBXBuildFile; fileRef = 2807700D170CF1AC006B3297 /* Table.png */; };
+		28077027170CF1DC006B3297 /* Table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2807700E170CF1B0006B3297 /* Table@2x.png */; };
+		28077028170CF1DC006B3297 /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 2807700F170CF1B6006B3297 /* Room layout small window.png */; };
+		28077029170CF1DC006B3297 /* Room layout small window@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077010170CF1BA006B3297 /* Room layout small window@2x.png */; };
+		2807702A170CF1DC006B3297 /* Room layout texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077011170CF1BF006B3297 /* Room layout texture.png */; };
+		2807702B170CF1DC006B3297 /* Room layout texture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077012170CF1C3006B3297 /* Room layout texture@2x.png */; };
+		2807702C170CF1DC006B3297 /* Barrel.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077013170CF1C7006B3297 /* Barrel.png */; };
+		2807702D170CF1DC006B3297 /* Barrel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28077014170CF1CB006B3297 /* Barrel@2x.png */; };
+		2807702E170CF1DC006B3297 /* levelObjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28077015170CF1CE006B3297 /* levelObjects.plist */; };
+		2807702F170CF1DC006B3297 /* items.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28077016170CF1D5006B3297 /* items.plist */; };
+		28077030170CF1DC006B3297 /* items.pes in Resources */ = {isa = PBXBuildFile; fileRef = 28077017170CF1D9006B3297 /* items.pes */; };
 		285DDA11170B888E00DE5CE2 /* LightSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 285DDA10170B888E00DE5CE2 /* LightSource.mm */; };
 		285DDA13170BC27D00DE5CE2 /* lightSource2.png in Resources */ = {isa = PBXBuildFile; fileRef = 285DDA12170BC27D00DE5CE2 /* lightSource2.png */; };
 		2864C93116E82E8300A9D1D7 /* WormholeEntrance.png in Resources */ = {isa = PBXBuildFile; fileRef = 2864C92F16E82E8300A9D1D7 /* WormholeEntrance.png */; };
@@ -369,6 +394,31 @@
 		1EF73BE116E5574B00BF4959 /* Globals.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Globals.mm; sourceTree = "<group>"; };
 		2804A3DD16EE695A00C4638D /* GameStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStats.h; sourceTree = "<group>"; };
 		2804A3DE16EE695A00C4638D /* GameStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameStats.m; sourceTree = "<group>"; };
+		28076FFF170CF166006B3297 /* timMonster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = timMonster.png; path = Resources/timMonster.png; sourceTree = "<group>"; };
+		28077000170CF169006B3297 /* Couch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Couch.png; path = Resources/Couch.png; sourceTree = "<group>"; };
+		28077001170CF16F006B3297 /* Couch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Couch@2x.png"; path = "Resources/Couch@2x.png"; sourceTree = "<group>"; };
+		28077002170CF174006B3297 /* ArmChair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ArmChair.png; path = Resources/ArmChair.png; sourceTree = "<group>"; };
+		28077003170CF179006B3297 /* ArmChair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ArmChair@2x.png"; path = "Resources/ArmChair@2x.png"; sourceTree = "<group>"; };
+		28077004170CF17D006B3297 /* Door.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Door.png; path = Resources/Door.png; sourceTree = "<group>"; };
+		28077005170CF182006B3297 /* Door@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Door@2x.png"; path = "Resources/Door@2x.png"; sourceTree = "<group>"; };
+		28077006170CF188006B3297 /* Dresser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dresser.png; path = Resources/Dresser.png; sourceTree = "<group>"; };
+		28077007170CF18D006B3297 /* Dresser@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Dresser@2x.png"; path = "Resources/Dresser@2x.png"; sourceTree = "<group>"; };
+		28077008170CF192006B3297 /* FootRest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FootRest.png; path = Resources/FootRest.png; sourceTree = "<group>"; };
+		28077009170CF197006B3297 /* FootRest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "FootRest@2x.png"; path = "Resources/FootRest@2x.png"; sourceTree = "<group>"; };
+		2807700A170CF19C006B3297 /* Room layout texture@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Room layout texture@2x.jpg"; path = "Resources/Room layout texture@2x.jpg"; sourceTree = "<group>"; };
+		2807700B170CF1A2006B3297 /* grahh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grahh.png; path = Resources/grahh.png; sourceTree = "<group>"; };
+		2807700C170CF1A6006B3297 /* grahh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grahh@2x.png"; path = "Resources/grahh@2x.png"; sourceTree = "<group>"; };
+		2807700D170CF1AC006B3297 /* Table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Table.png; path = Resources/Table.png; sourceTree = "<group>"; };
+		2807700E170CF1B0006B3297 /* Table@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Table@2x.png"; path = "Resources/Table@2x.png"; sourceTree = "<group>"; };
+		2807700F170CF1B6006B3297 /* Room layout small window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Room layout small window.png"; path = "Resources/Room layout small window.png"; sourceTree = "<group>"; };
+		28077010170CF1BA006B3297 /* Room layout small window@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Room layout small window@2x.png"; path = "Resources/Room layout small window@2x.png"; sourceTree = "<group>"; };
+		28077011170CF1BF006B3297 /* Room layout texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Room layout texture.png"; path = "Resources/Room layout texture.png"; sourceTree = "<group>"; };
+		28077012170CF1C3006B3297 /* Room layout texture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Room layout texture@2x.png"; path = "Resources/Room layout texture@2x.png"; sourceTree = "<group>"; };
+		28077013170CF1C7006B3297 /* Barrel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Barrel.png; path = Resources/Barrel.png; sourceTree = "<group>"; };
+		28077014170CF1CB006B3297 /* Barrel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Barrel@2x.png"; path = "Resources/Barrel@2x.png"; sourceTree = "<group>"; };
+		28077015170CF1CE006B3297 /* levelObjects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = levelObjects.plist; path = Resources/levelObjects.plist; sourceTree = "<group>"; };
+		28077016170CF1D5006B3297 /* items.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = items.plist; path = Resources/items.plist; sourceTree = "<group>"; };
+		28077017170CF1D9006B3297 /* items.pes */ = {isa = PBXFileReference; lastKnownFileType = file; name = items.pes; path = Resources/items.pes; sourceTree = "<group>"; };
 		285DDA0F170B888E00DE5CE2 /* LightSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSource.h; sourceTree = "<group>"; };
 		285DDA10170B888E00DE5CE2 /* LightSource.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = LightSource.mm; sourceTree = "<group>"; };
 		285DDA12170BC27D00DE5CE2 /* lightSource2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightSource2.png; path = Resources/lightSource2.png; sourceTree = "<group>"; };
@@ -876,6 +926,31 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				28076FFF170CF166006B3297 /* timMonster.png */,
+				28077000170CF169006B3297 /* Couch.png */,
+				28077001170CF16F006B3297 /* Couch@2x.png */,
+				28077002170CF174006B3297 /* ArmChair.png */,
+				28077003170CF179006B3297 /* ArmChair@2x.png */,
+				28077004170CF17D006B3297 /* Door.png */,
+				28077005170CF182006B3297 /* Door@2x.png */,
+				28077006170CF188006B3297 /* Dresser.png */,
+				28077007170CF18D006B3297 /* Dresser@2x.png */,
+				28077008170CF192006B3297 /* FootRest.png */,
+				28077009170CF197006B3297 /* FootRest@2x.png */,
+				2807700A170CF19C006B3297 /* Room layout texture@2x.jpg */,
+				2807700B170CF1A2006B3297 /* grahh.png */,
+				2807700C170CF1A6006B3297 /* grahh@2x.png */,
+				2807700D170CF1AC006B3297 /* Table.png */,
+				2807700E170CF1B0006B3297 /* Table@2x.png */,
+				2807700F170CF1B6006B3297 /* Room layout small window.png */,
+				28077010170CF1BA006B3297 /* Room layout small window@2x.png */,
+				28077011170CF1BF006B3297 /* Room layout texture.png */,
+				28077012170CF1C3006B3297 /* Room layout texture@2x.png */,
+				28077013170CF1C7006B3297 /* Barrel.png */,
+				28077014170CF1CB006B3297 /* Barrel@2x.png */,
+				28077015170CF1CE006B3297 /* levelObjects.plist */,
+				28077016170CF1D5006B3297 /* items.plist */,
+				28077017170CF1D9006B3297 /* items.pes */,
 				285DDA12170BC27D00DE5CE2 /* lightSource2.png */,
 				8290A2AC16F0146D00AC6664 /* squirtle.png */,
 				8290A2AD16F0146E00AC6664 /* squirtle@2x.png */,
@@ -1687,6 +1762,31 @@
 				8290A2AE16F0146E00AC6664 /* squirtle.png in Resources */,
 				8290A2AF16F0146E00AC6664 /* squirtle@2x.png in Resources */,
 				285DDA13170BC27D00DE5CE2 /* lightSource2.png in Resources */,
+				28077018170CF1DC006B3297 /* timMonster.png in Resources */,
+				28077019170CF1DC006B3297 /* Couch.png in Resources */,
+				2807701A170CF1DC006B3297 /* Couch@2x.png in Resources */,
+				2807701B170CF1DC006B3297 /* ArmChair.png in Resources */,
+				2807701C170CF1DC006B3297 /* ArmChair@2x.png in Resources */,
+				2807701D170CF1DC006B3297 /* Door.png in Resources */,
+				2807701E170CF1DC006B3297 /* Door@2x.png in Resources */,
+				2807701F170CF1DC006B3297 /* Dresser.png in Resources */,
+				28077020170CF1DC006B3297 /* Dresser@2x.png in Resources */,
+				28077021170CF1DC006B3297 /* FootRest.png in Resources */,
+				28077022170CF1DC006B3297 /* FootRest@2x.png in Resources */,
+				28077023170CF1DC006B3297 /* Room layout texture@2x.jpg in Resources */,
+				28077024170CF1DC006B3297 /* grahh.png in Resources */,
+				28077025170CF1DC006B3297 /* grahh@2x.png in Resources */,
+				28077026170CF1DC006B3297 /* Table.png in Resources */,
+				28077027170CF1DC006B3297 /* Table@2x.png in Resources */,
+				28077028170CF1DC006B3297 /* Room layout small window.png in Resources */,
+				28077029170CF1DC006B3297 /* Room layout small window@2x.png in Resources */,
+				2807702A170CF1DC006B3297 /* Room layout texture.png in Resources */,
+				2807702B170CF1DC006B3297 /* Room layout texture@2x.png in Resources */,
+				2807702C170CF1DC006B3297 /* Barrel.png in Resources */,
+				2807702D170CF1DC006B3297 /* Barrel@2x.png in Resources */,
+				2807702E170CF1DC006B3297 /* levelObjects.plist in Resources */,
+				2807702F170CF1DC006B3297 /* items.plist in Resources */,
+				28077030170CF1DC006B3297 /* items.pes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
