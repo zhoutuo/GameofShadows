@@ -14,53 +14,45 @@
 
 -(id)init{
     if (self = [super init]) {
-        [self initializeMap];
+        //load the light source information from plist
+        NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
+        //get the current level
+        NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
+        //get the lights
+        NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+        for(NSDictionary* lightSource in lights){
+            //get the on_filename
+            NSString* on_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"on_filename"]];
+            //get the off_name
+            NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
+            //get the on and off_duration
+            float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
+            float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
+            LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration] autorelease];
+            //get the initial position
+            [source setPosition:ccp([[lightSource objectForKey:@"origin_x"] floatValue],
+                                               [[lightSource objectForKey:@"origin_y"] floatValue])];
+            [self addChild:source];
+            //execute actions of light source
+            [source execActions];
+            
+        }
     }
-    
-    NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
-    NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
-    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
-    for(NSArray* lightSources in lights){
-        
-        CCSprite* lightSourceSprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [lightSources objectAtIndex:0]]];
-        [lightSourceSprite setAnchorPoint:ccp(0,0)];
-        [lightSourceSprite setPosition:CGPointMake([[lightSources objectAtIndex:1] floatValue], [[lightSources objectAtIndex:2] floatValue])];
-        [self addLightSource:lightSourceSprite];
-    }
-    
-    /*
-    CCSprite* lightSourceSprite = [CCSprite spriteWithFile:@"lightSource.png"];
-    [lightSourceSprite setAnchorPoint:ccp(0, 0)];
-    [lightSourceSprite setPosition:ccp(500, 300)];
-    [self addLightSource:lightSourceSprite];*/
     return self;
 }
 
--(void) addLightSource:(CCSprite *)lightSource{
-    CGPoint origin = [lightSource boundingBox].origin;
-    CGSize size = [lightSource boundingBox].size;
-    
-    //adding light source to map using bounding box
-    for(int i = 0 ; i < size.height; i++){
-        for(int j = 0 ; j < size.width; j++){
-            lightSourceMap[(int)origin.y + i][(int)origin.x + j] = true;
-        }
-    }
-    
-    //adding light source sprite to layer
-    [self addChild:lightSource z:5];
-}
 
 -(bool) checkIfInLight:(int)ycoor :(int)xcoor{
-    return lightSourceMap[ycoor][xcoor];
-}
-
--(void) initializeMap{
-    for(int i = 0 ; i < DEVICE_HEIGHT; i++){
-        for(int j = 0; j < DEVICE_WIDTH; j++){
-            lightSourceMap[i][j] = false;
+    CGPoint point = ccp(xcoor, ycoor);
+    //iterate all elements of the light sources
+    for (LightSource* cur in self.children) {
+        if ([cur isOn] and CGRectContainsPoint(cur.boundingBox, point)) {
+            return true;
         }
     }
+    return false;
 }
+
+
 
 @end

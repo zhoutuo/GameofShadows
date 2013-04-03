@@ -40,15 +40,7 @@
         [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
-        
-        //add testing dynamic moving object here
-        sun = [CCSprite spriteWithFile:@"Sun.png"];
-        [sun setPosition:ccp(100, 300)];
-        [self addChild:sun z:DYNAMIC_LIGHTNING_DEPTH];
-        id go_right = [CCMoveBy actionWithDuration:2 position:ccp(200, 0)];
-        id go_left = [CCMoveBy actionWithDuration:2 position:ccp(-200, 0)];
-        [sun runAction:[CCRepeatForever actionWithAction:[CCSequence actions:go_right, go_left, nil]]];
-    }
+        }
     return self;
 }
 
@@ -134,14 +126,14 @@
     CCArray* arr = [CCArray array];
     //get boundingbox of shadow monster
     CGRect rect = [shadowMonster boundingBox];
-    //get leftupper corner
-    CGPoint upperLeft = ccpAdd(rect.origin, ccp(0, rect.size.height));
-    //get rightupper corner
-    CGPoint upperRight = ccpAdd(rect.origin, ccp(rect.size.width, rect.size.height));
     //get lowerleft corner
-    CGPoint lowerLeft = rect.origin;
+    CGPoint lowerLeft = ccpAdd(rect.origin, ccp(rect.size.width / 4, rect.size.height / 4));
+    //get leftupper corner
+    CGPoint upperLeft = ccpAdd(lowerLeft, ccp(0, rect.size.height / 2));
+    //get rightupper corner
+    CGPoint upperRight = ccpAdd(lowerLeft, ccp(rect.size.width / 2, rect.size.height / 2));
     //get lowerRight corner
-    CGPoint lowerRight = ccpAdd(rect.origin, ccp(rect.size.width, 0));
+    CGPoint lowerRight = ccpAdd(lowerLeft, ccp(rect.size.width / 2, 0));
     [arr addObject: [NSValue valueWithCGPoint:upperLeft]];
     [arr addObject: [NSValue valueWithCGPoint:upperRight]];
     [arr addObject: [NSValue valueWithCGPoint:lowerLeft]];
@@ -207,11 +199,7 @@
                     
                     newY = MAX(0, newY);
                     newY = MIN(newY, DEVICE_HEIGHT);
-                    if([curScene checkLightSourceCoordinates :newY : newX]){
-                        [self setShadowMap:newX :newY :false];
-                    }else{
-                        [self setShadowMap:newX :newY :true];
-                    }
+                    [self setShadowMap:newX :newY :true];
                 }
             }
         } else {
@@ -226,16 +214,11 @@
                         int newY = (int)pointInBoundingBox.y;
                         newX = MAX(0, newX);
                         newX = MIN(newX, DEVICE_WIDTH);
-                        
+
                         newY = MAX(0, newY);
                         newY = MIN(newY, DEVICE_HEIGHT);
                         ++count;
-                        
-                        if([curScene checkLightSourceCoordinates :newY : newX]){
-                            [self setShadowMap:newX :newY :false];
-                        } else {
-                            [self setShadowMap:newX :newY :true];
-                        }
+                        [self setShadowMap:newX :newY :true];
                     }
                 }
             }
@@ -252,7 +235,8 @@
     } else { //if it is dark, now checking dynamic disruption events
              //by interating all dynamic items whether they contain this point or not
              //so that we know it is dark or not
-        if (CGRectContainsPoint([sun boundingBox], ccp(x, y))) {
+        GameplayScene* curScene = (GameplayScene*) self.parent;
+        if ([curScene checkLightSourceCoordinates:y :x]) {
             val = false;
         }
         return val;

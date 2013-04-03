@@ -27,7 +27,7 @@
     CCSprite* wormholeExit;
     
     //test object
-    CCSprite* sun;
+    //CCSprite* sun;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;

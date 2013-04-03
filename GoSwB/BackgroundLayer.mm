@@ -18,15 +18,9 @@
         CGSize wins = [[CCDirector sharedDirector] winSize];
         CCSprite* background = [CCSprite spriteWithFile:@"Room layout texture.png"];
         
-        
-        
-        
-        
         background.position = ccp(wins.width / 2, wins.height / 2);
         [self addChild:background];
-        
-        //UIView* glView = (UIView*) [[CCDirector sharedDirector] view];
-        
+                
         CCMenuItem *pauseMenuItem = [CCMenuItemImage
                                     itemWithNormalImage:@"Pause.png" selectedImage:@"Pause.png"
                                     target:self selector:@selector(pauseButtonMenu:)];

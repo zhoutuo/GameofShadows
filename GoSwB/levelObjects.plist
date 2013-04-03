@@ -91,11 +91,20 @@
 		</array>
 		<key>Lights</key>
 		<array>
-			<array>
+			<dict>
+				<key>on_filename</key>
 				<string>lightSource1</string>
+				<key>off_filename</key>
+				<string>lightSource2</string>
+				<key>origin_x</key>
 				<integer>400</integer>
+				<key>origin_y</key>
 				<integer>45</integer>
-			</array>
+				<key>on_duration</key>
+				<integer>2</integer>
+				<key>off_duration</key>
+				<integer>2</integer>
+			</dict>
 		</array>
 		<key>Portals</key>
 		<array>
@@ -110,6 +119,8 @@
 				<integer>100</integer>
 			</array>
 		</array>
+		<key>New item</key>
+		<string></string>
 	</dict>
 	<key>Level 4</key>
 	<dict>
@@ -132,13 +143,7 @@
 			</array>
 		</array>
 		<key>Lights</key>
-		<array>
-			<array>
-				<string>lightSource1</string>
-				<integer>400</integer>
-				<integer>45</integer>
-			</array>
-		</array>
+		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
