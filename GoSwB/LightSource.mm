@@ -16,6 +16,7 @@
         off_filename = [[NSString alloc] initWithString:off_name];
         on_duration = on_dur;
         off_duration = off_dur;
+
     }
     return self;
 }
@@ -53,6 +54,16 @@
 
 -(bool) isOn {
     return isOn;
+}
+
+-(CGRect) getInnerBoundingBox {
+    CGRect innerBoundingBox;
+    //init the inner bouding box
+    innerBoundingBox.size.width = self.boundingBox.size.width / 2;
+    innerBoundingBox.size.height = self.boundingBox.size.height / 2;
+    innerBoundingBox.origin = ccpAdd(self.boundingBox.origin,
+                                     ccp(self.boundingBox.size.width / 4, self.boundingBox.size.height / 4));
+    return innerBoundingBox;
 }
 
 

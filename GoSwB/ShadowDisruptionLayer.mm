@@ -42,11 +42,11 @@
 }
 
 
--(bool) checkIfInLight:(int)ycoor :(int)xcoor{
+-(bool) checkIfInLight:(int)ycoor :(int)xcoor {
     CGPoint point = ccp(xcoor, ycoor);
     //iterate all elements of the light sources
     for (LightSource* cur in self.children) {
-        if ([cur isOn] and CGRectContainsPoint(cur.boundingBox, point)) {
+        if ([cur isOn] and CGRectContainsPoint([cur getInnerBoundingBox], point)) {
             return true;
         }
     }

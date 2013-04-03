@@ -18,7 +18,9 @@
     bool isOn;
 }
 
+
 -(id) initWithProperties: (NSString*)on_name :(NSString*)off_name :(float)on_dur :(float) off_dur;
 -(bool) isOn;
 -(void) execActions;
+-(CGRect) getInnerBoundingBox;
 @end
