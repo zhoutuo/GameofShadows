@@ -27,7 +27,6 @@ typedef enum {
     CGRect* containerBox;
     
     CCSprite* rotationCircle;
-    PhysicsSprite* droid1;
     CCArray* touchArray;
     Phase touchOperation;
     
@@ -42,8 +41,6 @@ typedef enum {
     
     NSMutableArray* objectSpriteArray;
     NSMutableArray* objectBodyArray;
-    
-
 }
 
 

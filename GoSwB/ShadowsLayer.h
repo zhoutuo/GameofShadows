@@ -21,13 +21,8 @@
     float shadowWidthFactor;
     NSMutableDictionary* objShadowTable;
     bool shadowMap[DEVICE_HEIGHT][DEVICE_WIDTH];
-    int clearanceMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     CCSprite* shadowMonster;
-    //CCSprite* wormholeEntrance;
     CCSprite* wormholeExit;
-    
-    //test object
-    //CCSprite* sun;
     
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;

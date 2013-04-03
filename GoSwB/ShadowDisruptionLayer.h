@@ -10,6 +10,7 @@
 #import "LightSource.h"
 
 @interface ShadowDisruptionLayer : CCLayer {
+    
 }
 -(bool) checkIfInLight: (int)xcoor :(int) ycoor;
 @end

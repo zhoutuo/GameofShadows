@@ -251,7 +251,6 @@
 //SHADOW LAYER EVENTS
 -(void) startActionMode {
     [self generateShadowMap];
-    //[self generateClearanceMap];
     self.isTouchEnabled = YES;
     [self scheduleUpdate];
     CCLOG(@"Enter Action Mode");
