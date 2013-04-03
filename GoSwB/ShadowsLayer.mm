@@ -11,7 +11,7 @@
 
 #define ROTATIONTHRESHOLD 3.0f
 #define SHADOWMONSTER_SIZE 50
-#define SHADOWMONSTER_SPEED 80.0f
+#define SHADOWMONSTER_SPEED 120.0f
 @implementation ShadowsLayer
 
 -(id) init {
@@ -25,9 +25,8 @@
         NSArray* portals = [[levelObjects objectForKey: level] objectForKey:@"Portals"];
         
         NSArray* startPortalData = [portals objectAtIndex:0];        
-        wormholeEntrance = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
+        CCSprite* wormholeEntrance = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
         [wormholeEntrance setPosition:CGPointMake([[startPortalData objectAtIndex:1] floatValue], [[startPortalData objectAtIndex:2] floatValue])];
-        [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
         
         NSArray* endPortalData = [portals objectAtIndex:1];
         wormholeExit = [CCSprite spriteWithFile:
@@ -37,7 +36,6 @@
         [self addChild:wormholeExit z:WORMHOLE_DEPTH];
         shadowMonster = [CCSprite spriteWithFile:@"squirtle.png"];
         [shadowMonster setPosition: wormholeEntrance.position];
-        [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
         }
@@ -170,7 +168,7 @@
 // SHADOW MAP METHOD
 -(void) generateShadowMap {
     
-    GameplayScene* curScene = (GameplayScene*)self.parent;
+//    GameplayScene* curScene = (GameplayScene*)self.parent;
     for (int i = 0; i < DEVICE_WIDTH; ++i) {
         for (int j = 0; j < DEVICE_HEIGHT; ++j) {
             [self setShadowMap:i :j :false];
@@ -255,14 +253,12 @@
     [self generateShadowMap];
     //[self generateClearanceMap];
     self.isTouchEnabled = YES;
-    [shadowMonster setVisible:YES];
     [self scheduleUpdate];
     CCLOG(@"Enter Action Mode");
 }
 
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
-    [shadowMonster setVisible:NO];
     //unschedule the udpate fucntion
     [self unscheduleUpdate];
     CCLOG(@"Leave Action Mode");

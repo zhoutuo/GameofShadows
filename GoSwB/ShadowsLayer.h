@@ -23,7 +23,7 @@
     bool shadowMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     int clearanceMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     CCSprite* shadowMonster;
-    CCSprite* wormholeEntrance;
+    //CCSprite* wormholeEntrance;
     CCSprite* wormholeExit;
     
     //test object
