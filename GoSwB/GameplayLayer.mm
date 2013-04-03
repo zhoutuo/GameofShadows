@@ -18,6 +18,7 @@
 #define NOTAG -1
 #define BACKGROUND_DEPTH 1
 #define OBJECT_DEPTH -1
+#define OMS_MOVEMENT_SPEED 0.2
 
 -(id) init {
     if (self = [super init]) {
@@ -25,9 +26,7 @@
         touchOperation = NONE;
         touchArray = [CCArray array];  //this is the array used for recording touches
         [touchArray retain];  //since this is a autorelease object, retain it
-        
-        omsMovementSpeed = 0.2;
-        
+                
         //by making background sprite center on lower left corner will make it
         //easier to contain all the children
         objectsContainer = [CCSprite spriteWithFile:@"play_bg.png"];
@@ -37,10 +36,6 @@
         
         //background of the OMS. Shows the room.
         omsBackground = [CCSprite spriteWithFile: @"Room layout small window.png"];
-        //CGSize omsBackgroundSize = [omsBackground boundingBox].size;
-        //CGSize containerSize = [objectsContainer boundingBox].size;
-        //[omsBackground setScaleX:containerSize.width/omsBackgroundSize.width];
-        //[omsBackground setScaleY:containerSize.height/omsBackgroundSize.height];
         [omsBackground setOpacity: 150];
         [omsBackground setAnchorPoint:ccp(0,0)];
         [omsBackground setPosition:[objectsContainer position]];
@@ -398,22 +393,22 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //GAMEPLAY LAYER EVENTS
 -(void) moveOMStoLeft {
-    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(0,0)], nil]];
-    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(0,0)], nil]];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(0,0)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(0,0)], nil]];
 }
 
 -(void) moveOMStoRight {
     CGFloat winWidth = [CCDirector sharedDirector].winSize.width;
     CGFloat width = [objectsContainer boundingBox].size.width;
-    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(winWidth - width,0)], nil]];
-    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(winWidth - width,0)], nil]];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(winWidth - width,0)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(winWidth - width,0)], nil]];
 
 }
 
 -(void) startPuzzleMode {
     CGFloat currentX = objectsContainer.position.x;
-    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,0)], nil]];
-    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,0)], nil]];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
     self.isTouchEnabled = YES;
     
     CCLOG(@"Enter Puzzle Mode");
@@ -422,8 +417,8 @@
 -(void) finishPuzzleMode {
     CGFloat height = [objectsContainer boundingBox].size.height;
     CGFloat currentX = objectsContainer.position.x;
-    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,-height)], nil]];
-    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,-height)], nil]];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
     self.isTouchEnabled = NO;
     
     CCLOG(@"Leave Puzzle Mode");
