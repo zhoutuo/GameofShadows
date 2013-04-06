@@ -98,6 +98,8 @@
 		2807702E170CF1DC006B3297 /* levelObjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28077015170CF1CE006B3297 /* levelObjects.plist */; };
 		2807702F170CF1DC006B3297 /* items.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28077016170CF1D5006B3297 /* items.plist */; };
 		28077030170CF1DC006B3297 /* items.pes in Resources */ = {isa = PBXBuildFile; fileRef = 28077017170CF1D9006B3297 /* items.pes */; };
+		28358C611710D70C00744869 /* bulb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28358C5F1710D70C00744869 /* bulb@2x.png */; };
+		28358C621710D70C00744869 /* bulb.png in Resources */ = {isa = PBXBuildFile; fileRef = 28358C601710D70C00744869 /* bulb.png */; };
 		285DDA11170B888E00DE5CE2 /* LightSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 285DDA10170B888E00DE5CE2 /* LightSource.mm */; };
 		285DDA13170BC27D00DE5CE2 /* lightSource2.png in Resources */ = {isa = PBXBuildFile; fileRef = 285DDA12170BC27D00DE5CE2 /* lightSource2.png */; };
 		2864C93116E82E8300A9D1D7 /* WormholeEntrance.png in Resources */ = {isa = PBXBuildFile; fileRef = 2864C92F16E82E8300A9D1D7 /* WormholeEntrance.png */; };
@@ -419,6 +421,8 @@
 		28077015170CF1CE006B3297 /* levelObjects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = levelObjects.plist; path = Resources/levelObjects.plist; sourceTree = "<group>"; };
 		28077016170CF1D5006B3297 /* items.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = items.plist; path = Resources/items.plist; sourceTree = "<group>"; };
 		28077017170CF1D9006B3297 /* items.pes */ = {isa = PBXFileReference; lastKnownFileType = file; name = items.pes; path = Resources/items.pes; sourceTree = "<group>"; };
+		28358C5F1710D70C00744869 /* bulb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bulb@2x.png"; path = "Resources/bulb@2x.png"; sourceTree = "<group>"; };
+		28358C601710D70C00744869 /* bulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bulb.png; path = Resources/bulb.png; sourceTree = "<group>"; };
 		285DDA0F170B888E00DE5CE2 /* LightSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSource.h; sourceTree = "<group>"; };
 		285DDA10170B888E00DE5CE2 /* LightSource.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = LightSource.mm; sourceTree = "<group>"; };
 		285DDA12170BC27D00DE5CE2 /* lightSource2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightSource2.png; path = Resources/lightSource2.png; sourceTree = "<group>"; };
@@ -926,6 +930,8 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				28358C5F1710D70C00744869 /* bulb@2x.png */,
+				28358C601710D70C00744869 /* bulb.png */,
 				28076FFF170CF166006B3297 /* timMonster.png */,
 				28077000170CF169006B3297 /* Couch.png */,
 				28077001170CF16F006B3297 /* Couch@2x.png */,
@@ -1787,6 +1793,8 @@
 				2807702E170CF1DC006B3297 /* levelObjects.plist in Resources */,
 				2807702F170CF1DC006B3297 /* items.plist in Resources */,
 				28077030170CF1DC006B3297 /* items.pes in Resources */,
+				28358C611710D70C00744869 /* bulb@2x.png in Resources */,
+				28358C621710D70C00744869 /* bulb.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
