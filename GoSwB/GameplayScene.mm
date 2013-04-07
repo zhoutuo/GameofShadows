@@ -100,6 +100,7 @@ static NSInteger tagSeed = 10000;
     [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
     [swipeRight setNumberOfTouchesRequired:2];
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeRight];
+//    swipeRight cancelsTouchesInView
     
     swipeLeft = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeLeft)]autorelease];
     [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
@@ -108,12 +109,13 @@ static NSInteger tagSeed = 10000;
     
     swipeUp = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeUp)]autorelease];
     [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
-    [swipeUp setNumberOfTouchesRequired:1];
+    [swipeUp setNumberOfTouchesRequired:2];
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeUp];
+    swipeUp.cancelsTouchesInView = TRUE;
     
     swipeDown = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeDown)]autorelease];
     [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
-    [swipeDown setNumberOfTouchesRequired:1];
+    [swipeDown setNumberOfTouchesRequired:2];
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeDown];
     
 }
