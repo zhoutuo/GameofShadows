@@ -77,6 +77,12 @@ static NSInteger tagSeed = 10000;
 -(void) twoFingerSwipeUp{
     if (!isPuzzleMode) {
         isPuzzleMode = true;
+        //cancel touches: make sure shadow monster does not move when swiping up
+        swipeUp.cancelsTouchesInView = YES;
+        swipeDown.cancelsTouchesInView = YES;
+        swipeLeft.cancelsTouchesInView = YES;
+        swipeRight.cancelsTouchesInView = YES;
+
         [shadowLayer finishActionMode];
         [gameplayLayer startPuzzleMode];
     }
@@ -86,6 +92,12 @@ static NSInteger tagSeed = 10000;
 -(void) twoFingerSwipeDown {
     if (isPuzzleMode) {
         isPuzzleMode = false;
+        //do not cancel touches: make sure that OMS operations are normal, no hang in the air
+        swipeUp.cancelsTouchesInView = NO;
+        swipeDown.cancelsTouchesInView = NO;
+        swipeLeft.cancelsTouchesInView = NO;
+        swipeRight.cancelsTouchesInView = NO;
+        
         [gameplayLayer finishPuzzleMode];
         [shadowLayer startActionMode];
     }
@@ -100,18 +112,17 @@ static NSInteger tagSeed = 10000;
     [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
     [swipeRight setNumberOfTouchesRequired:2];
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeRight];
-//    swipeRight cancelsTouchesInView
     
     swipeLeft = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeLeft)]autorelease];
     [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
     [swipeLeft setNumberOfTouchesRequired:2];
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeLeft];
+
     
     swipeUp = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeUp)]autorelease];
     [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
     [swipeUp setNumberOfTouchesRequired:2];
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeUp];
-    swipeUp.cancelsTouchesInView = TRUE;
     
     swipeDown = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeDown)]autorelease];
     [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];

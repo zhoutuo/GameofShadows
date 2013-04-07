@@ -11,8 +11,10 @@
 
 #define ROTATIONTHRESHOLD 3.0f
 #define SHADOWMONSTER_SIZE 50
-#define SHADOWMONSTER_SPEED 120.0f
+#define SHADOWMONSTER_SPEED 150.0f
 @implementation ShadowsLayer
+
+int count_swipe_down = 0;
 
 -(id) init {
     if (self = [super init]) {
@@ -258,6 +260,8 @@
 
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
+    //reset the count
+    count_swipe_down = 0;
     //unschedule the udpate fucntion
     [self unscheduleUpdate];
     CCLOG(@"Leave Action Mode");
@@ -266,10 +270,16 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
--(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (count_swipe_down++ == 0) {
+        return;
+    }
+    
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
+    
+    
     [self pathFinding :location];
 
 }
