@@ -287,6 +287,8 @@
 		8290A2AE16F0146E00AC6664 /* squirtle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2AC16F0146D00AC6664 /* squirtle.png */; };
 		8290A2AF16F0146E00AC6664 /* squirtle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2AD16F0146E00AC6664 /* squirtle@2x.png */; };
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
+		C07E84C41710F2D700174D5E /* Chandelier.png in Resources */ = {isa = PBXBuildFile; fileRef = C07E84C21710F2D700174D5E /* Chandelier.png */; };
+		C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C07E84C31710F2D700174D5E /* Chandelier@2x.png */; };
 		C0915FC416DE8A6800C967ED /* play_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC316DE8A6800C967ED /* play_bg@2x.png */; };
 		C0915FCE16DE931400C967ED /* rotate_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FCD16DE931400C967ED /* rotate_circle@2x.png */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
@@ -777,6 +779,8 @@
 		8290A2AD16F0146E00AC6664 /* squirtle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "squirtle@2x.png"; path = "Resources/squirtle@2x.png"; sourceTree = "<group>"; };
 		82A0235316DC28BD00886573 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GB2ShapeCache.h; sourceTree = "<group>"; };
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
+		C07E84C21710F2D700174D5E /* Chandelier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Chandelier.png; path = Resources/Chandelier.png; sourceTree = "<group>"; };
+		C07E84C31710F2D700174D5E /* Chandelier@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Chandelier@2x.png"; path = "Resources/Chandelier@2x.png"; sourceTree = "<group>"; };
 		C0915FC316DE8A6800C967ED /* play_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_bg@2x.png"; path = "Resources/play_bg@2x.png"; sourceTree = "<group>"; };
 		C0915FCD16DE931400C967ED /* rotate_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rotate_circle@2x.png"; path = "Resources/rotate_circle@2x.png"; sourceTree = "<group>"; };
 		C0C1795D16D072580060BAD4 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
@@ -885,6 +889,8 @@
 			children = (
 				28358C5F1710D70C00744869 /* bulb@2x.png */,
 				28358C601710D70C00744869 /* bulb.png */,
+				C07E84C21710F2D700174D5E /* Chandelier.png */,
+				C07E84C31710F2D700174D5E /* Chandelier@2x.png */,
 				28076FFF170CF166006B3297 /* timMonster.png */,
 				28077000170CF169006B3297 /* Couch.png */,
 				28077001170CF16F006B3297 /* Couch@2x.png */,
@@ -1701,6 +1707,8 @@
 				28077030170CF1DC006B3297 /* items.pes in Resources */,
 				28358C611710D70C00744869 /* bulb@2x.png in Resources */,
 				28358C621710D70C00744869 /* bulb.png in Resources */,
+				C07E84C41710F2D700174D5E /* Chandelier.png in Resources */,
+				C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
