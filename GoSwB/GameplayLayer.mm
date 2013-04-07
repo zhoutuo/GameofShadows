@@ -75,6 +75,22 @@
         [objectSprite setPhysicsBody:objectBody];
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
     }
+    PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:@"Chandelier.png"];
+    lightSprite.position = CGPointMake(320, 384);
+    b2BodyDef lightBodyDef;
+    lightBodyDef.type = b2_dynamicBody;
+    lightBodyDef.position.Set(lightSprite.position.x / PTM_RATIO, lightSprite.position.y / PTM_RATIO);
+    lightBodyDef.userData = lightSprite;
+    b2Body* lightBody = physicsWorld -> CreateBody(&lightBodyDef);
+    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightBody forShapeName:@"Chandelier"];
+    [lightSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"Chandelier"]];
+    [lightSprite setPhysicsBody:lightBody];
+    [objectsContainer addChild:lightSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+    b2RevoluteJointDef jointDef;
+    jointDef.Initialize(physicsGroundBody, lightBody, [self toMeters:CGPointMake(320, 384)]);//, lightBody -> GetPosition());
+    b2RevoluteJoint* joint = (b2RevoluteJoint*)physicsWorld -> CreateJoint(&jointDef);
+    lightBody -> SetAngularDamping(0.2f);
+    lightBody -> SetLinearDamping(0.2f);
 }
 
 // Physics section
