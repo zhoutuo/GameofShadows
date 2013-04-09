@@ -293,6 +293,14 @@
 		C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C07E84C31710F2D700174D5E /* Chandelier@2x.png */; };
 		C0915FC416DE8A6800C967ED /* play_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC316DE8A6800C967ED /* play_bg@2x.png */; };
 		C0915FCE16DE931400C967ED /* rotate_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FCD16DE931400C967ED /* rotate_circle@2x.png */; };
+		C0C158B41714A4A3003CF157 /* rope.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C158B31714A4A3003CF157 /* rope.png */; };
+		C0C158B61714A4B7003CF157 /* rope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C158B51714A4B7003CF157 /* rope@2x.png */; };
+		C0C158B91714ACD0003CF157 /* LongRope.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C158B71714ACD0003CF157 /* LongRope.png */; };
+		C0C158BA1714ACD0003CF157 /* LongRope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C158B81714ACD0003CF157 /* LongRope@2x.png */; };
+		C0C158BD1714AE0D003CF157 /* ThickRope.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C158BB1714AE0D003CF157 /* ThickRope.png */; };
+		C0C158BE1714AE0D003CF157 /* ThickRope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C158BC1714AE0D003CF157 /* ThickRope@2x.png */; };
+		C0C158C11714B06C003CF157 /* ThinRope.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C158BF1714B06C003CF157 /* ThinRope.png */; };
+		C0C158C21714B06C003CF157 /* ThinRope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C158C01714B06C003CF157 /* ThinRope@2x.png */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
 /* End PBXBuildFile section */
 
@@ -787,6 +795,14 @@
 		C07E84C31710F2D700174D5E /* Chandelier@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Chandelier@2x.png"; path = "Resources/Chandelier@2x.png"; sourceTree = "<group>"; };
 		C0915FC316DE8A6800C967ED /* play_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_bg@2x.png"; path = "Resources/play_bg@2x.png"; sourceTree = "<group>"; };
 		C0915FCD16DE931400C967ED /* rotate_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rotate_circle@2x.png"; path = "Resources/rotate_circle@2x.png"; sourceTree = "<group>"; };
+		C0C158B31714A4A3003CF157 /* rope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rope.png; path = Resources/rope.png; sourceTree = "<group>"; };
+		C0C158B51714A4B7003CF157 /* rope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rope@2x.png"; path = "Resources/rope@2x.png"; sourceTree = "<group>"; };
+		C0C158B71714ACD0003CF157 /* LongRope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LongRope.png; path = Resources/LongRope.png; sourceTree = "<group>"; };
+		C0C158B81714ACD0003CF157 /* LongRope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LongRope@2x.png"; path = "Resources/LongRope@2x.png"; sourceTree = "<group>"; };
+		C0C158BB1714AE0D003CF157 /* ThickRope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ThickRope.png; path = Resources/ThickRope.png; sourceTree = "<group>"; };
+		C0C158BC1714AE0D003CF157 /* ThickRope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ThickRope@2x.png"; path = "Resources/ThickRope@2x.png"; sourceTree = "<group>"; };
+		C0C158BF1714B06C003CF157 /* ThinRope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ThinRope.png; path = Resources/ThinRope.png; sourceTree = "<group>"; };
+		C0C158C01714B06C003CF157 /* ThinRope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ThinRope@2x.png"; path = "Resources/ThinRope@2x.png"; sourceTree = "<group>"; };
 		C0C1795D16D072580060BAD4 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -895,11 +911,19 @@
 				284504111714A3C600A8888B /* floor_lamp@2x.png */,
 				28358C5F1710D70C00744869 /* bulb@2x.png */,
 				28358C601710D70C00744869 /* bulb.png */,
+				C0C158B31714A4A3003CF157 /* rope.png */,
+				C0C158B51714A4B7003CF157 /* rope@2x.png */,
 				C07E84C21710F2D700174D5E /* Chandelier.png */,
 				C07E84C31710F2D700174D5E /* Chandelier@2x.png */,
 				28076FFF170CF166006B3297 /* timMonster.png */,
 				28077000170CF169006B3297 /* Couch.png */,
 				28077001170CF16F006B3297 /* Couch@2x.png */,
+				C0C158B71714ACD0003CF157 /* LongRope.png */,
+				C0C158B81714ACD0003CF157 /* LongRope@2x.png */,
+				C0C158BB1714AE0D003CF157 /* ThickRope.png */,
+				C0C158BC1714AE0D003CF157 /* ThickRope@2x.png */,
+				C0C158BF1714B06C003CF157 /* ThinRope.png */,
+				C0C158C01714B06C003CF157 /* ThinRope@2x.png */,
 				28077002170CF174006B3297 /* ArmChair.png */,
 				28077003170CF179006B3297 /* ArmChair@2x.png */,
 				28077004170CF17D006B3297 /* Door.png */,
@@ -1715,8 +1739,19 @@
 				28358C621710D70C00744869 /* bulb.png in Resources */,
 				C07E84C41710F2D700174D5E /* Chandelier.png in Resources */,
 				C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */,
+<<<<<<< HEAD
 				284504121714A3C600A8888B /* floor_lamp.png in Resources */,
 				284504131714A3C600A8888B /* floor_lamp@2x.png in Resources */,
+=======
+				C0C158B41714A4A3003CF157 /* rope.png in Resources */,
+				C0C158B61714A4B7003CF157 /* rope@2x.png in Resources */,
+				C0C158B91714ACD0003CF157 /* LongRope.png in Resources */,
+				C0C158BA1714ACD0003CF157 /* LongRope@2x.png in Resources */,
+				C0C158BD1714AE0D003CF157 /* ThickRope.png in Resources */,
+				C0C158BE1714AE0D003CF157 /* ThickRope@2x.png in Resources */,
+				C0C158C11714B06C003CF157 /* ThinRope.png in Resources */,
+				C0C158C21714B06C003CF157 /* ThinRope@2x.png in Resources */,
+>>>>>>> 95677ce0f0816ef09517966829bbe9f9bae817d7
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
