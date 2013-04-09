@@ -293,6 +293,14 @@
 		C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C07E84C31710F2D700174D5E /* Chandelier@2x.png */; };
 		C0915FC416DE8A6800C967ED /* play_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FC316DE8A6800C967ED /* play_bg@2x.png */; };
 		C0915FCE16DE931400C967ED /* rotate_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0915FCD16DE931400C967ED /* rotate_circle@2x.png */; };
+		C09488C81714C6A700367A62 /* LongRope.png in Resources */ = {isa = PBXBuildFile; fileRef = C09488C01714C6A700367A62 /* LongRope.png */; };
+		C09488C91714C6A700367A62 /* LongRope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C09488C11714C6A700367A62 /* LongRope@2x.png */; };
+		C09488CA1714C6A700367A62 /* rope.png in Resources */ = {isa = PBXBuildFile; fileRef = C09488C21714C6A700367A62 /* rope.png */; };
+		C09488CB1714C6A700367A62 /* rope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C09488C31714C6A700367A62 /* rope@2x.png */; };
+		C09488CC1714C6A700367A62 /* ThickRope.png in Resources */ = {isa = PBXBuildFile; fileRef = C09488C41714C6A700367A62 /* ThickRope.png */; };
+		C09488CD1714C6A700367A62 /* ThickRope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C09488C51714C6A700367A62 /* ThickRope@2x.png */; };
+		C09488CE1714C6A700367A62 /* ThinRope.png in Resources */ = {isa = PBXBuildFile; fileRef = C09488C61714C6A700367A62 /* ThinRope.png */; };
+		C09488CF1714C6A700367A62 /* ThinRope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C09488C71714C6A700367A62 /* ThinRope@2x.png */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
 /* End PBXBuildFile section */
 
@@ -787,6 +795,14 @@
 		C07E84C31710F2D700174D5E /* Chandelier@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Chandelier@2x.png"; path = "Resources/Chandelier@2x.png"; sourceTree = "<group>"; };
 		C0915FC316DE8A6800C967ED /* play_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_bg@2x.png"; path = "Resources/play_bg@2x.png"; sourceTree = "<group>"; };
 		C0915FCD16DE931400C967ED /* rotate_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rotate_circle@2x.png"; path = "Resources/rotate_circle@2x.png"; sourceTree = "<group>"; };
+		C09488C01714C6A700367A62 /* LongRope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LongRope.png; path = Resources/LongRope.png; sourceTree = "<group>"; };
+		C09488C11714C6A700367A62 /* LongRope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LongRope@2x.png"; path = "Resources/LongRope@2x.png"; sourceTree = "<group>"; };
+		C09488C21714C6A700367A62 /* rope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rope.png; path = Resources/rope.png; sourceTree = "<group>"; };
+		C09488C31714C6A700367A62 /* rope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rope@2x.png"; path = "Resources/rope@2x.png"; sourceTree = "<group>"; };
+		C09488C41714C6A700367A62 /* ThickRope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ThickRope.png; path = Resources/ThickRope.png; sourceTree = "<group>"; };
+		C09488C51714C6A700367A62 /* ThickRope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ThickRope@2x.png"; path = "Resources/ThickRope@2x.png"; sourceTree = "<group>"; };
+		C09488C61714C6A700367A62 /* ThinRope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ThinRope.png; path = Resources/ThinRope.png; sourceTree = "<group>"; };
+		C09488C71714C6A700367A62 /* ThinRope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ThinRope@2x.png"; path = "Resources/ThinRope@2x.png"; sourceTree = "<group>"; };
 		C0C1795D16D072580060BAD4 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -891,6 +907,14 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C09488C01714C6A700367A62 /* LongRope.png */,
+				C09488C11714C6A700367A62 /* LongRope@2x.png */,
+				C09488C21714C6A700367A62 /* rope.png */,
+				C09488C31714C6A700367A62 /* rope@2x.png */,
+				C09488C41714C6A700367A62 /* ThickRope.png */,
+				C09488C51714C6A700367A62 /* ThickRope@2x.png */,
+				C09488C61714C6A700367A62 /* ThinRope.png */,
+				C09488C71714C6A700367A62 /* ThinRope@2x.png */,
 				284504101714A3C600A8888B /* floor_lamp.png */,
 				284504111714A3C600A8888B /* floor_lamp@2x.png */,
 				28358C5F1710D70C00744869 /* bulb@2x.png */,
@@ -1717,6 +1741,14 @@
 				C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */,
 				284504121714A3C600A8888B /* floor_lamp.png in Resources */,
 				284504131714A3C600A8888B /* floor_lamp@2x.png in Resources */,
+				C09488C81714C6A700367A62 /* LongRope.png in Resources */,
+				C09488C91714C6A700367A62 /* LongRope@2x.png in Resources */,
+				C09488CA1714C6A700367A62 /* rope.png in Resources */,
+				C09488CB1714C6A700367A62 /* rope@2x.png in Resources */,
+				C09488CC1714C6A700367A62 /* ThickRope.png in Resources */,
+				C09488CD1714C6A700367A62 /* ThickRope@2x.png in Resources */,
+				C09488CE1714C6A700367A62 /* ThinRope.png in Resources */,
+				C09488CF1714C6A700367A62 /* ThinRope@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
