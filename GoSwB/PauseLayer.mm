@@ -19,8 +19,10 @@
         self.isTouchEnabled=YES;
         
         //Add menu items
-        CCMenuItem *menuItem1 = [CCMenuItemFont itemWithString:@"Resume" target:self selector:@selector(resume:)];
-        CCMenuItem *menuItem2 = [CCMenuItemFont itemWithString:@"Home" target:self selector:@selector(goHome:)];
+        CCMenuItem *menuItem1 = [CCMenuItemImage
+                                 itemWithNormalImage:@"Resume_Text.png" selectedImage:@"Resume_Text.png" target:self selector:@selector(resume:)];
+        CCMenuItem *menuItem2 = [CCMenuItemImage
+                                 itemWithNormalImage:@"Home_Text.png" selectedImage:@"Home_Text.png" target:self selector:@selector(goHome:)];
         
         CCMenu *menu = [CCMenu menuWithItems:menuItem1, menuItem2, nil];
         [menu alignItemsVertically];
