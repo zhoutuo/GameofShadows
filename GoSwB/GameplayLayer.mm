@@ -18,14 +18,13 @@
 #define NOTAG -1
 #define BACKGROUND_DEPTH 1
 #define OBJECT_DEPTH -1
+#define LIGHT_DEPTH -2
 #define OMS_MOVEMENT_SPEED 0.2
 
 -(id) init {
     if (self = [super init]) {
         touchedObjectTag = NOTAG;              //the tag for the sprite being touched right now
         touchOperation = NONE;
-        touchArray = [CCArray array];  //this is the array used for recording touches
-        [touchArray retain];  //since this is a autorelease object, retain it
                 
         //by making background sprite center on lower left corner will make it
         //easier to contain all the children
@@ -64,7 +63,8 @@
     for (NSArray* objectData in objects)
     {
         PhysicsSprite* objectSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [objectData objectAtIndex:0]]];
-        objectSprite.position = CGPointMake([[objectData objectAtIndex:1] floatValue], [[objectData objectAtIndex:2] floatValue]);
+        objectSprite.position = ccp([[objectData objectAtIndex:1] floatValue],
+                                    [[objectData objectAtIndex:2] floatValue]);
         b2BodyDef objectBodyDef;
         objectBodyDef.type = b2_dynamicBody;
         objectBodyDef.position.Set(objectSprite.position.x / PTM_RATIO, objectSprite.position.y / PTM_RATIO);
@@ -194,7 +194,6 @@
 
 
 -(void) dealloc {
-    [touchArray release]; //remove array since we retain it in the init function
     [rotationCircle release];
     
     // Physics cleanup section.
@@ -208,10 +207,6 @@
     physicsWorldBottom = NULL;
     physicsWorldLeft = NULL;
     physicsWorldRight = NULL;
-    
-    // Release object arrays.
-    [objectSpriteArray release];
-    [objectBodyArray release];
     
     [super dealloc];
 }
@@ -289,7 +284,6 @@
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
-    [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
         
     if (touchOperation == NONE) {
@@ -338,7 +332,6 @@
 -(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
-    [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
     location = [[CCDirector sharedDirector] convertToGL:location];
         
@@ -417,8 +410,6 @@
         
     }
     
-    //clear the touch array
-    [touchArray removeAllObjects];
 }
 
 -(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event{

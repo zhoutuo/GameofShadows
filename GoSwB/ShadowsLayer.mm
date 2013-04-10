@@ -12,25 +12,26 @@
 #define ROTATIONTHRESHOLD 3.0f
 #define SHADOWMONSTER_SIZE 50
 #define SHADOWMONSTER_SPEED 150.0f
+#define SHADOW_HEIGHT_FACTOR 2.0f
+#define SHADOW_WIDTH_FACTOR 2.0f
 @implementation ShadowsLayer
 
 int count_swipe_down = 0;
 
 -(id) init {
     if (self = [super init]) {
-        shadowHeightFactor = 2.0f;
-        shadowWidthFactor = 2.0f;
         objShadowTable = [[NSMutableDictionary alloc] init];
         
+        //load data from plist
         NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
         NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
         NSArray* portals = [[levelObjects objectForKey: level] objectForKey:@"Portals"];
         
-        NSArray* startPortalData = [portals objectAtIndex:0];        
+        NSArray* startPortalData = [portals objectAtIndex:0];
         CCSprite* wormholeEntrance = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
         [wormholeEntrance setPosition:CGPointMake([[startPortalData objectAtIndex:1] floatValue], [[startPortalData objectAtIndex:2] floatValue])];
-        
         NSArray* endPortalData = [portals objectAtIndex:1];
+        //load position of wormholes, entrance and exit
         wormholeExit = [CCSprite spriteWithFile:
                         [NSString stringWithFormat:@"%@.png",
                          [endPortalData objectAtIndex:0]]];
@@ -40,7 +41,7 @@ int count_swipe_down = 0;
         [shadowMonster setPosition: wormholeEntrance.position];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
-        }
+    }
     return self;
 }
 
@@ -76,8 +77,8 @@ int count_swipe_down = 0;
         
         CCSprite* shadow = [CCSprite spriteWithTexture:texture];
         [shadow setColor:ccc3(0, 0, 0)];
-        [shadow setScaleY:shadowHeightFactor];
-        [shadow setScaleX:shadowWidthFactor];
+        [shadow setScaleY:SHADOW_HEIGHT_FACTOR];
+        [shadow setScaleX:SHADOW_WIDTH_FACTOR];
         
         shadow.tag = [GameplayScene TagGenerater];
         
@@ -162,7 +163,7 @@ int count_swipe_down = 0;
         //game accomplish event triggered
         [scene shadowMonterRescued];
     }
-
+    
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +171,7 @@ int count_swipe_down = 0;
 // SHADOW MAP METHOD
 -(void) generateShadowMap {
     
-//    GameplayScene* curScene = (GameplayScene*)self.parent;
+    //    GameplayScene* curScene = (GameplayScene*)self.parent;
     for (int i = 0; i < DEVICE_WIDTH; ++i) {
         for (int j = 0; j < DEVICE_HEIGHT; ++j) {
             [self setShadowMap:i :j :false];
@@ -214,7 +215,7 @@ int count_swipe_down = 0;
                         int newY = (int)pointInBoundingBox.y;
                         newX = MAX(0, newX);
                         newX = MIN(newX, DEVICE_WIDTH);
-
+                        
                         newY = MAX(0, newY);
                         newY = MIN(newY, DEVICE_HEIGHT);
                         ++count;
@@ -281,7 +282,7 @@ int count_swipe_down = 0;
     
     
     [self pathFinding :location];
-
+    
 }
 
 @end
