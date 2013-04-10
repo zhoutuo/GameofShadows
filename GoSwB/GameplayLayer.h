@@ -38,6 +38,7 @@ typedef enum {
     b2Fixture* physicsWorldBottom;
     b2Fixture* physicsWorldLeft;
     b2Fixture* physicsWorldRight;
+    b2MouseJoint* mouseJoint;
     
     NSMutableArray* objectSpriteArray;
     NSMutableArray* objectBodyArray;

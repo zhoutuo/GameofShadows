@@ -74,8 +74,9 @@
         [objectSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:[objectData objectAtIndex:0]]];
         [objectSprite setPhysicsBody:objectBody];
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+        
     }
-    PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:@"Chandelier.png"];
+    /*PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:@"Chandelier.png"];
     lightSprite.position = CGPointMake(320, 384);
     b2BodyDef lightBodyDef;
     lightBodyDef.type = b2_dynamicBody;
@@ -90,7 +91,8 @@
     jointDef.Initialize(physicsGroundBody, lightBody, [self toMeters:CGPointMake(320, 384)]);//, lightBody -> GetPosition());
     b2RevoluteJoint* joint = (b2RevoluteJoint*)physicsWorld -> CreateJoint(&jointDef);
     lightBody -> SetAngularDamping(0.2f);
-    lightBody -> SetLinearDamping(0.2f);
+    lightBody -> SetLinearDamping(0.2f);*/
+    
 }
 
 // Physics section
@@ -105,7 +107,6 @@
     
     // Define the ground body.
     b2BodyDef physicsGroundBodyDef;
-    //physicsGroundBodyDef.type = b2_dynamicBody;
     physicsGroundBody = physicsWorld -> CreateBody(&physicsGroundBodyDef);
     
     physicsWorldTop = NULL;
@@ -139,7 +140,7 @@
             [scene finishMovingOneObject:sprite.tag withRatio:[self getSpriteRelativePos:sprite]];
             
             //rotation
-            float angel = CC_RADIANS_TO_DEGREES(body->GetAngle());
+            float angel = -1 * CC_RADIANS_TO_DEGREES(body->GetAngle());
             sprite.rotation = angel;
             [scene finishRotatingOneObject:sprite.tag withAngle:angel];
 
@@ -188,6 +189,7 @@
     // Ground Box Right.
     physicsGroundBox.Set(b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
     physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+    
 }
 
 
@@ -300,8 +302,19 @@
                     touchOperation = TAP;
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
-                    body->SetAwake(false);
-                    body->SetActive(false);
+                   // body->SetAwake(false);
+                    //body->SetActive(false);
+                    
+                    b2Vec2 centerOfMass = body -> GetWorldCenter();
+                    
+                    b2MouseJointDef md;
+                    md.bodyB = body;
+                    md.bodyA = physicsGroundBody;
+                    b2Vec2 locationWorld =  centerOfMass;//[self toMeters:location];
+                    md.target = locationWorld;
+                    md.collideConnected = true;
+                    md.maxForce = body->GetMass() * 100.0f;
+                    mouseJoint = (b2MouseJoint *) physicsWorld->CreateJoint(&md);
                     break;
                 }
             }
@@ -313,12 +326,10 @@
         //cancel the rotating
         if (!CGRectContainsPoint(rotationCircle.boundingBox, location)) {
             [self toggleRotationCircle:NO];
-            PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-            b2Body* body = [cur getPhysicsBody];
-            body->SetActive(true);
-            body->SetAwake(true);
             touchedObjectTag = NOTAG;
             touchOperation = NONE;
+            physicsWorld -> DestroyJoint(mouseJoint);
+            mouseJoint = NULL;
         }
     }
         
@@ -338,22 +349,34 @@
 
         //try to check whether the touched sprite is the objects container or not
         CCSprite* touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-        CGRect rect = objectsContainer.boundingBox;
+        //CGRect rect = objectsContainer.boundingBox;
 
         //since we did not change the anchor point of the children sprites
         //we do not need to change the position of locaiton
         //but we need to make sure that the location is inside the touch rect
+        
         location = [self fromLayerCoord2Container:location];
         
-        CGSize spriteBox = [touched boundingBox].size;
-        location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
+        //CGSize spriteBox = [touched boundingBox].size;
+        //location.x = location.x -spriteBox.width/2;
+        //location.y = location.y - spriteBox.height/2;
+        
+       /* location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
         location.x = MAX(location.x, spriteBox.width / 2);
         location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
         location.y = MAX(location.y, spriteBox.height / 2);
+        
+        location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
+        location.x = MAX(location.x, spriteBox.width / 2);
+        location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
+        location.y = MAX(location.y, spriteBox.height / 2);*/
+        
         touched.position = location;
         //moving the physical body as well
         b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
-        body->SetTransform([self toMeters:location], body->GetAngle());
+        body -> SetAngularVelocity(0);
+        //body->SetTransform([self toMeters:location], body->GetAngle());
+        mouseJoint -> SetTarget([self toMeters:location]);
         
     } else if(touchOperation == ROTATING) {
         PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
@@ -366,7 +389,7 @@
         if (location.x < rotatePoint.x) {
             angle = -angle;
         }
-        angle = CC_RADIANS_TO_DEGREES(angle);
+        angle = -1* CC_RADIANS_TO_DEGREES(angle);
         rotated.rotation = angle;
         //rotate the physical body as well
         b2Body* body = [rotated getPhysicsBody];
@@ -386,13 +409,11 @@
         [self toggleRotationCircle:NO];
         //when finished with rotating object
         //wake physical calculation
-        PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-        b2Body* body = [cur getPhysicsBody];
-        body->SetActive(true);
-        body->SetAwake(true);
         //clean
         touchOperation = NONE;
         touchedObjectTag = NOTAG;
+        physicsWorld -> DestroyJoint(mouseJoint);
+        mouseJoint = NULL;
         
     }
     
@@ -400,6 +421,12 @@
     [touchArray removeAllObjects];
 }
 
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event{
+    if(mouseJoint != NULL){
+        physicsWorld -> DestroyJoint(mouseJoint);
+        mouseJoint = NULL;
+    }
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
