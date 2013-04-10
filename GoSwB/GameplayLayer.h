@@ -27,7 +27,6 @@ typedef enum {
     CGRect* containerBox;
     
     CCSprite* rotationCircle;
-    CCArray* touchArray;
     Phase touchOperation;
     
     // Physics section.
@@ -38,9 +37,6 @@ typedef enum {
     b2Fixture* physicsWorldBottom;
     b2Fixture* physicsWorldLeft;
     b2Fixture* physicsWorldRight;
-    
-    NSMutableArray* objectSpriteArray;
-    NSMutableArray* objectBodyArray;
 }
 
 
