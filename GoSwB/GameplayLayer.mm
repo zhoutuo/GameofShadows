@@ -76,7 +76,32 @@
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
         
     }
-    /*PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:@"Chandelier.png"];
+    /*
+    float height = 384;
+    b2Body* previousConnector = physicsGroundBody;
+    for (int i = 0; i < 5; i++)
+    {
+        PhysicsSprite* ropeSprite = [PhysicsSprite spriteWithFile:@"ThinRope.png"];
+        ropeSprite.position = CGPointMake(320, height);
+        b2BodyDef ropeBodyDef;
+        ropeBodyDef.type = b2_dynamicBody;
+        ropeBodyDef.position.Set(ropeSprite.position.x / PTM_RATIO, ropeSprite.position.y / PTM_RATIO);
+        ropeBodyDef.userData = ropeSprite;
+        b2Body* ropeBody = physicsWorld -> CreateBody(&ropeBodyDef);
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:ropeBody forShapeName:@"ThinRope"];
+        [ropeSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"ThinRope"]];
+        [ropeSprite setPhysicsBody:ropeBody];
+        [objectsContainer addChild:ropeSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+        b2RevoluteJointDef jointDef;
+        jointDef.Initialize(previousConnector, ropeBody, [self toMeters:CGPointMake(320, height)]);
+        physicsWorld -> CreateJoint(&jointDef);
+        ropeBody -> SetAngularDamping(0.2f);
+        ropeBody -> SetLinearDamping(1.0f);
+        previousConnector = ropeBody;
+        height -= ropeSprite.boundingBox.size.height;
+    }
+    */
+   /* PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:@"Chandelier.png"];
     lightSprite.position = CGPointMake(320, 384);
     b2BodyDef lightBodyDef;
     lightBodyDef.type = b2_dynamicBody;
