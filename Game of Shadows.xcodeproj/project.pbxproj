@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E08F92C1713CE51004A59BF /* Home_Text.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E08F9281713CE51004A59BF /* Home_Text.png */; };
+		1E08F92D1713CE51004A59BF /* Home_Text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E08F9291713CE51004A59BF /* Home_Text@2x.png */; };
+		1E08F92E1713CE51004A59BF /* Resume_Text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E08F92A1713CE51004A59BF /* Resume_Text@2x.png */; };
+		1E08F92F1713CE51004A59BF /* Resume_Text.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E08F92B1713CE51004A59BF /* Resume_Text.png */; };
 		1E67DB8816D473F600BEF7CB /* LevelSelectScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1E67DB6D16D473F600BEF7CB /* LevelSelectScene.ccbi */; };
 		1E67DB8916D473F600BEF7CB /* MainMenuOptionsScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1E67DB6E16D473F600BEF7CB /* MainMenuOptionsScene.ccbi */; };
 		1E67DB8A16D473F600BEF7CB /* MainMenuScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1E67DB6F16D473F600BEF7CB /* MainMenuScene.ccbi */; };
@@ -295,6 +299,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E08F9281713CE51004A59BF /* Home_Text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Home_Text.png; path = Resources/Home_Text.png; sourceTree = "<group>"; };
+		1E08F9291713CE51004A59BF /* Home_Text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Home_Text@2x.png"; path = "Resources/Home_Text@2x.png"; sourceTree = "<group>"; };
+		1E08F92A1713CE51004A59BF /* Resume_Text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Resume_Text@2x.png"; path = "Resources/Resume_Text@2x.png"; sourceTree = "<group>"; };
+		1E08F92B1713CE51004A59BF /* Resume_Text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Resume_Text.png; path = Resources/Resume_Text.png; sourceTree = "<group>"; };
 		1E67DB6D16D473F600BEF7CB /* LevelSelectScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = LevelSelectScene.ccbi; path = Resources/LevelSelectScene.ccbi; sourceTree = "<group>"; };
 		1E67DB6E16D473F600BEF7CB /* MainMenuOptionsScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = MainMenuOptionsScene.ccbi; path = Resources/MainMenuOptionsScene.ccbi; sourceTree = "<group>"; };
 		1E67DB6F16D473F600BEF7CB /* MainMenuScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = MainMenuScene.ccbi; path = Resources/MainMenuScene.ccbi; sourceTree = "<group>"; };
@@ -890,6 +898,10 @@
 				28358C5F1710D70C00744869 /* bulb@2x.png */,
 				28358C601710D70C00744869 /* bulb.png */,
 				C07E84C21710F2D700174D5E /* Chandelier.png */,
+				1E08F9281713CE51004A59BF /* Home_Text.png */,
+				1E08F9291713CE51004A59BF /* Home_Text@2x.png */,
+				1E08F92A1713CE51004A59BF /* Resume_Text@2x.png */,
+				1E08F92B1713CE51004A59BF /* Resume_Text.png */,
 				C07E84C31710F2D700174D5E /* Chandelier@2x.png */,
 				28076FFF170CF166006B3297 /* timMonster.png */,
 				28077000170CF169006B3297 /* Couch.png */,
@@ -1709,6 +1721,10 @@
 				28358C621710D70C00744869 /* bulb.png in Resources */,
 				C07E84C41710F2D700174D5E /* Chandelier.png in Resources */,
 				C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */,
+				1E08F92C1713CE51004A59BF /* Home_Text.png in Resources */,
+				1E08F92D1713CE51004A59BF /* Home_Text@2x.png in Resources */,
+				1E08F92E1713CE51004A59BF /* Resume_Text@2x.png in Resources */,
+				1E08F92F1713CE51004A59BF /* Resume_Text.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
