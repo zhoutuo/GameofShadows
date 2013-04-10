@@ -9,38 +9,23 @@
 #import "GameplayLayer.h"
 #import "ShadowDisruptionLayer.h"
 #import "Globals.h"
-
+#import "GameplayScene.h"
 @implementation ShadowDisruptionLayer
+
+#define LIGHT_HEIGHT_FACTOR 2.0f
+#define LIGHT_WIDTH_FACTOR 2.0f
 
 -(id)init{
     if (self = [super init]) {
-        //load the light source information from plist
-        NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
-        //get the current level
-        NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
-        //get the lights
-        NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
-        for(NSDictionary* lightSource in lights){
-            //get the on_filename
-            NSString* on_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"on_filename"]];
-            //get the off_name
-            NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
-            //get the on and off_duration
-            float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
-            float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
-            LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration] autorelease];
-            //get the initial position
-            [source setPosition:ccp([[lightSource objectForKey:@"origin_x"] floatValue],
-                                               [[lightSource objectForKey:@"origin_y"] floatValue])];
-            [self addChild:source];
-            //execute actions of light source
-            [source execActions];
-            
-        }
+        objLightTable = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
+-(void) dealloc {
+    [objLightTable release];
+    [super dealloc];
+}
 
 -(bool) checkIfInLight:(int)ycoor :(int)xcoor {
     CGPoint point = ccp(xcoor, ycoor);
@@ -53,6 +38,52 @@
     return false;
 }
 
+-(void) castLightFrom:(CCArray*)objects withRatios:(CCArray *)ratios {
+    
+    if (objects.count != ratios.count) {
+        return;
+    }
+    for (int i = 0; i < objects.count; ++i) {
+        CCSprite* cur = (CCSprite*)[objects objectAtIndex:i];
+        CCTexture2D* texture = cur.texture;
+        CCSprite* light = [CCSprite spriteWithTexture:texture];
+        [light setColor:ccc3(255, 255, 255)];
+        [light setScaleY:LIGHT_HEIGHT_FACTOR];
+        [light setScaleX:LIGHT_WIDTH_FACTOR];
+        
+        light.tag = [GameplayScene TagGenerater];
+        
+        [objLightTable
+         setObject:[NSNumber numberWithInteger:light.tag]
+         forKey:[NSNumber numberWithInteger:cur.tag]];
+        
+        [self addChild:light];
+        CGPoint ratio = [[ratios objectAtIndex:i] CGPointValue];
+        [self updateLightPos:cur.tag withRelativePos: ratio];
+    }
+}
+
+-(void) updateLightPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint)relativePos {
+    CCSprite* child = [self getLightSpriteFromTag:objectSpriteTag];
+    if (child != nil) {
+        child.position = [self calculateLightPos: relativePos];
+    }
+
+}
+
+-(CCSprite*) getLightSpriteFromTag: (NSInteger) objectSpriteTag {
+    NSNumber* tag = (NSNumber*)[objLightTable objectForKey:[NSNumber numberWithInteger:objectSpriteTag]];
+    NSInteger tagInteger = [tag unsignedIntegerValue];
+    CCSprite* child = (CCSprite*)[self getChildByTag:tagInteger];
+    return child;
+}
+
+-(CGPoint) calculateLightPos:(CGPoint)objectRelativePos {
+    CGSize wins = [[CCDirector sharedDirector] winSize];
+    NSInteger posY = wins.height * objectRelativePos.y;
+    NSInteger posX = wins.width * objectRelativePos.x;
+    return ccp(posX, posY);
+}
 
 
 @end

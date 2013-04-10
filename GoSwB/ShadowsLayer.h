@@ -17,8 +17,6 @@
 #define SHADOW_MONESTER_DEPTH 100
 
 @interface ShadowsLayer : CCLayer {
-    float shadowHeightFactor;
-    float shadowWidthFactor;
     NSMutableDictionary* objShadowTable;
     bool shadowMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     CCSprite* shadowMonster;

@@ -10,7 +10,9 @@
 #import "LightSource.h"
 
 @interface ShadowDisruptionLayer : CCLayer {
-    
+    NSMutableDictionary* objLightTable;
 }
 -(bool) checkIfInLight: (int)xcoor :(int) ycoor;
+-(void) castLightFrom:(CCArray*)objects withRatios:(CCArray *)ratios;
+-(void) updateLightPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint) relativePos;
 @end
