@@ -10,13 +10,14 @@
 
 @implementation LightSource
 
--(id) initWithProperties: (NSString*)on_name :(NSString*)off_name :(float)on_dur :(float) off_dur {
-    if(self = [super initWithFile:off_name]) {
+-(id) initWithProperties: (NSString*)on_name :(NSString*)off_name :(float)on_dur :(float) off_dur :(float)vertical_per {
+    if(self = [super initWithFile:on_name]) {
         on_filename = [[NSString alloc] initWithString:on_name];
         off_filename = [[NSString alloc] initWithString:off_name];
         on_duration = on_dur;
         off_duration = off_dur;
-
+        vertical_percentage = vertical_per;
+        turn_on_texture = [[CCSprite alloc] initWithFile:off_name];
     }
     return self;
 }
@@ -24,6 +25,7 @@
 
 -(void) dealloc {
     [super dealloc];
+    [turn_on_texture release];
     [on_filename release];
     [off_filename release];
 }
@@ -42,14 +44,12 @@
 
 -(void) turnOn {
     isOn = true;
-    CCTexture2D* tex = [[CCTextureCache sharedTextureCache] addImage:on_filename];
-    [self setTexture: tex];
+    [self addChild:turn_on_texture];
 }
 
 -(void) turnOff {
     isOn = false;
-    CCTexture2D* tex = [[CCTextureCache sharedTextureCache] addImage:off_filename];
-    [self setTexture: tex];
+    [self addChild:turn_on_texture];
 }
 
 -(bool) isOn {

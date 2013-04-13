@@ -76,48 +76,55 @@
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
         
     }
-    /*
-    float height = 384;
-    b2Body* previousConnector = physicsGroundBody;
-    for (int i = 0; i < 5; i++)
-    {
-        PhysicsSprite* ropeSprite = [PhysicsSprite spriteWithFile:@"ThinRope.png"];
-        ropeSprite.position = CGPointMake(320, height);
-        b2BodyDef ropeBodyDef;
-        ropeBodyDef.type = b2_dynamicBody;
-        ropeBodyDef.position.Set(ropeSprite.position.x / PTM_RATIO, ropeSprite.position.y / PTM_RATIO);
-        ropeBodyDef.userData = ropeSprite;
-        b2Body* ropeBody = physicsWorld -> CreateBody(&ropeBodyDef);
-        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:ropeBody forShapeName:@"ThinRope"];
-        [ropeSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"ThinRope"]];
-        [ropeSprite setPhysicsBody:ropeBody];
-        [objectsContainer addChild:ropeSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-        b2RevoluteJointDef jointDef;
-        jointDef.Initialize(previousConnector, ropeBody, [self toMeters:CGPointMake(320, height)]);
-        physicsWorld -> CreateJoint(&jointDef);
-        ropeBody -> SetAngularDamping(0.2f);
-        ropeBody -> SetLinearDamping(1.0f);
-        previousConnector = ropeBody;
-        height -= ropeSprite.boundingBox.size.height;
-    }
-    */
-   /* PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:@"Chandelier.png"];
-    lightSprite.position = CGPointMake(320, 384);
-    b2BodyDef lightBodyDef;
-    lightBodyDef.type = b2_dynamicBody;
-    lightBodyDef.position.Set(lightSprite.position.x / PTM_RATIO, lightSprite.position.y / PTM_RATIO);
-    lightBodyDef.userData = lightSprite;
-    b2Body* lightBody = physicsWorld -> CreateBody(&lightBodyDef);
-    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightBody forShapeName:@"Chandelier"];
-    [lightSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"Chandelier"]];
-    [lightSprite setPhysicsBody:lightBody];
-    [objectsContainer addChild:lightSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-    b2RevoluteJointDef jointDef;
-    jointDef.Initialize(physicsGroundBody, lightBody, [self toMeters:CGPointMake(320, 384)]);//, lightBody -> GetPosition());
-    b2RevoluteJoint* joint = (b2RevoluteJoint*)physicsWorld -> CreateJoint(&jointDef);
-    lightBody -> SetAngularDamping(0.2f);
-    lightBody -> SetLinearDamping(0.2f);*/
+
     
+    //get the lights
+    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    for(NSDictionary* lightSource in lights){
+        //get sprite name
+        NSString* name = [lightSource objectForKey:@"on_filename"];
+        //get the on_filename
+        NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
+        //get the off_name
+        NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
+        //get the on and off_duration
+        float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
+        float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
+        //get the vertical percentage
+        float vertical_per = [[lightSource objectForKey:@"vertical_percentage"] floatValue];
+        LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration :vertical_per] autorelease];
+        //get the initial position
+        [source setPosition:ccp([[lightSource objectForKey:@"origin_x"] floatValue],
+                                [[lightSource objectForKey:@"origin_y"] floatValue])];
+        b2BodyDef lightSourceBodyDef;
+        lightSourceBodyDef.type = b2_dynamicBody;
+        lightSourceBodyDef.position.Set(source.position.x / PTM_RATIO, source.position.y / PTM_RATIO);
+        lightSourceBodyDef.userData = source;
+        b2Body* lightSourceBody = physicsWorld->CreateBody(&lightSourceBodyDef);
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightSourceBody forShapeName:name];
+        [source setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
+        [source setPhysicsBody:lightSourceBody];
+        [objectsContainer addChild:source z:LIGHT_DEPTH tag:[GameplayScene TagGenerater]];
+    }
+
+    
+    
+//    PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:@"Chandelier.png"];
+//    lightSprite.position = CGPointMake(320, 384);
+//    b2BodyDef lightBodyDef;
+//    lightBodyDef.type = b2_dynamicBody;
+//    lightBodyDef.position.Set(lightSprite.position.x / PTM_RATIO, lightSprite.position.y / PTM_RATIO);
+//    lightBodyDef.userData = lightSprite;
+//    b2Body* lightBody = physicsWorld -> CreateBody(&lightBodyDef);
+//    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightBody forShapeName:@"Chandelier"];
+//    [lightSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"Chandelier"]];
+//    [lightSprite setPhysicsBody:lightBody];
+//    [objectsContainer addChild:lightSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+//    b2RevoluteJointDef jointDef;
+//    jointDef.Initialize(physicsGroundBody, lightBody, [self toMeters:CGPointMake(320, 384)]);
+//    b2RevoluteJoint* joint = (b2RevoluteJoint*)physicsWorld -> CreateJoint(&jointDef);
+//    lightBody -> SetAngularDamping(0.2f);
+//    lightBody -> SetLinearDamping(0.2f);
 }
 
 // Physics section
@@ -245,8 +252,8 @@
     CCArray* shadowVisibleChildren = [CCArray array];
     CCArray* ratios = [CCArray array];
     for (CCSprite* sprite in objectsContainer.children) {
-        
-        if (sprite.zOrder == OBJECT_DEPTH) {
+        //filter out all children except object and light source
+        if (sprite.zOrder == OBJECT_DEPTH or sprite.zOrder == LIGHT_DEPTH) {
             [shadowVisibleChildren addObject:sprite];
             CGPoint ratio = [self getSpriteRelativePos:sprite];
             [ratios addObject:[NSValue valueWithCGPoint:ratio]];
