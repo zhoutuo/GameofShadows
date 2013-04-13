@@ -285,7 +285,6 @@
 		28E4794016CD9C14007B3A2A /* GameplayLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28E4793B16CD9C14007B3A2A /* GameplayLayer.mm */; };
 		28E4794F16CD9C7F007B3A2A /* play_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794716CD9C7F007B3A2A /* play_bg.png */; };
 		28E4795016CD9C7F007B3A2A /* rotate_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E4794816CD9C7F007B3A2A /* rotate_circle.png */; };
-		8290A2A116EAB5F600AC6664 /* ShadowDisruptionLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */; };
 		8290A2A316EACFD800AC6664 /* lightSource1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2A216EACFD800AC6664 /* lightSource1.png */; };
 		8290A2A516EAD31700AC6664 /* lightSource1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2A416EAD31700AC6664 /* lightSource1@2x.png */; };
 		8290A2A916EFCF7300AC6664 /* WormholeEntrance@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2A816EFCF7200AC6664 /* WormholeEntrance@2x.png */; };
@@ -789,8 +788,6 @@
 		28E4793B16CD9C14007B3A2A /* GameplayLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameplayLayer.mm; sourceTree = "<group>"; };
 		28E4794716CD9C7F007B3A2A /* play_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_bg.png; path = Resources/play_bg.png; sourceTree = "<group>"; };
 		28E4794816CD9C7F007B3A2A /* rotate_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rotate_circle.png; path = Resources/rotate_circle.png; sourceTree = "<group>"; };
-		8290A29F16EAB5F500AC6664 /* ShadowDisruptionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowDisruptionLayer.h; sourceTree = "<group>"; };
-		8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShadowDisruptionLayer.mm; sourceTree = "<group>"; };
 		8290A2A216EACFD800AC6664 /* lightSource1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightSource1.png; path = Resources/lightSource1.png; sourceTree = "<group>"; };
 		8290A2A416EAD31700AC6664 /* lightSource1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightSource1@2x.png"; path = "Resources/lightSource1@2x.png"; sourceTree = "<group>"; };
 		8290A2A816EFCF7200AC6664 /* WormholeEntrance@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WormholeEntrance@2x.png"; path = "Resources/WormholeEntrance@2x.png"; sourceTree = "<group>"; };
@@ -1554,8 +1551,6 @@
 				28E079B916D41B8C007011F2 /* GameplayScene.mm */,
 				28E4793416CD9C14007B3A2A /* BackgroundLayer.h */,
 				28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */,
-				8290A29F16EAB5F500AC6664 /* ShadowDisruptionLayer.h */,
-				8290A2A016EAB5F500AC6664 /* ShadowDisruptionLayer.mm */,
 				2804A3DD16EE695A00C4638D /* GameStats.h */,
 				2804A3DE16EE695A00C4638D /* GameStats.m */,
 				285DDA0F170B888E00DE5CE2 /* LightSource.h */,
@@ -1939,7 +1934,6 @@
 				82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */,
 				1EF73BDB16E54FAD00BF4959 /* PauseLayer.mm in Sources */,
 				1EF73BE216E5574B00BF4959 /* Globals.mm in Sources */,
-				8290A2A116EAB5F600AC6664 /* ShadowDisruptionLayer.mm in Sources */,
 				2804A3DF16EE695A00C4638D /* GameStats.m in Sources */,
 				1EE102D816EEF81500EDB8FC /* LossScene.mm in Sources */,
 				1EE102DE16EFC77600EDB8FC /* WinScene.mm in Sources */,

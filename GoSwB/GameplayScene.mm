@@ -22,9 +22,6 @@ static NSInteger tagSeed = 10000;
         shadowLayer = [ShadowsLayer node];
         [self addChild:shadowLayer z:1];
         
-        shadowDisruptionLayer = [ShadowDisruptionLayer node];
-        [self addChild:shadowDisruptionLayer z:2];
-        
         gameplayLayer = [GameplayLayer node];
         [self addChild:gameplayLayer z:3];
         [self initSwipeGestures];
@@ -57,6 +54,14 @@ static NSInteger tagSeed = 10000;
     [shadowLayer updateShadowRot:objectTag withAngle:angle];
 }
 
+
+-(void) finishLightsCreation:(CCArray *)lights withRatios:(CCArray *)ratios {
+    [shadowLayer castLightFrom:lights withRatios:ratios];
+}
+
+-(void) finishMovingOneLight:(NSInteger)lightTag withRatio:(CGPoint)ratio {
+    
+}
 
 +(NSInteger) TagGenerater {
     return tagSeed++;
@@ -138,9 +143,6 @@ static NSInteger tagSeed = 10000;
     [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeRight];
 }
 
--(bool) checkLightSourceCoordinates:(int)ycoor :(int)xcoor{
-    return [shadowDisruptionLayer checkIfInLight:ycoor : xcoor];
-}
 
 -(void) shadowMonsterDead {
     gamestats.isMonsterDead = true;

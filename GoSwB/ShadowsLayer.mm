@@ -7,6 +7,7 @@
 //
 #import "GameplayScene.h"
 #import "ShadowsLayer.h"
+#import "LightSource.h"
 #import "Globals.h"
 
 #define ROTATIONTHRESHOLD 3.0f
@@ -66,6 +67,47 @@ int count_swipe_down = 0;
 }
 
 
+-(void) castLightFrom:(CCArray *)lights withRatios:(CCArray *)ratios {
+    NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
+    NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
+    NSArray* lights_info = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    
+    if (lights.count != lights_info.count) {
+        return;
+    }
+    
+    for(int i = 0; i < lights_info.count ;++i){
+        NSDictionary* lightSource = (NSDictionary*) [lights_info objectAtIndex:i];
+        CCSprite* lightObject = (CCSprite*) [lights objectAtIndex:i];
+        //get sprite name
+        NSString* name = [lightSource objectForKey:@"on_filename"];
+        //get the on_filename
+        NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
+        //get the off_name
+        NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
+        //get the on and off_duration
+        float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
+        float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
+        //get the vertical percentage
+        float vertical_per = [[lightSource objectForKey:@"vertical_percentage"] floatValue];
+        LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration :vertical_per] autorelease];
+        [source setColor:ccc3(0, 0, 0)];
+        [source setScaleY:SHADOW_HEIGHT_FACTOR];
+        [source setScaleX:SHADOW_WIDTH_FACTOR];
+        
+        source.tag = [GameplayScene TagGenerater];
+        [objShadowTable
+         setObject:[NSNumber numberWithInteger:source.tag]
+         forKey:[NSNumber numberWithInteger:lightObject.tag]];
+        
+        [self addChild:source z:LIGHT_SPRITE_DEPTH];
+        CGPoint ratio = [[ratios objectAtIndex:i] CGPointValue];
+        [self updateShadowPos:lightObject.tag withRelativePos: ratio];
+        
+    }
+}
+
+
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray *)ratios {
     
     if (objects.count != ratios.count) {
@@ -121,7 +163,15 @@ int count_swipe_down = 0;
 }
 
 
-
+-(CCArray*) getLightChildren {
+    CCArray* children = [CCArray array];
+    for (CCSprite* sprite in self.children) {
+        if (sprite.zOrder == LIGHT_SPRITE_DEPTH) {
+            [children addObject:sprite];
+        }
+    }
+    return children;
+}
 
 -(CCArray*) getcornorsOfMonster {
     CCArray* arr = [CCArray array];
@@ -236,9 +286,15 @@ int count_swipe_down = 0;
     } else { //if it is dark, now checking dynamic disruption events
              //by interating all dynamic items whether they contain this point or not
              //so that we know it is dark or not
-        GameplayScene* curScene = (GameplayScene*) self.parent;
-        if ([curScene checkLightSourceCoordinates:y :x]) {
-            val = false;
+        for (CCSprite* sprite in self.children) {
+            if (sprite.zOrder == LIGHT_SPRITE_DEPTH) {
+                LightSource* lightSprite = (LightSource*) sprite;
+                if ([lightSprite lightSourceContains:ccp(x, y)]) {
+                    val = false;
+                    break;
+                }
+                
+            }
         }
         return val;
     }
@@ -249,6 +305,17 @@ int count_swipe_down = 0;
     shadowMap[y][x] = value;
 }
 
+
+-(void) toggleLightSourceActions:(bool) value {
+    for (LightSource* source in [self getLightChildren]) {
+        if (value) {
+            [source execActions];
+        } else {
+            [source stopAllActions];
+        }
+    }
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADOW LAYER EVENTS
@@ -256,6 +323,7 @@ int count_swipe_down = 0;
     [self generateShadowMap];
     self.isTouchEnabled = YES;
     [self scheduleUpdate];
+    [self toggleLightSourceActions:true];
     CCLOG(@"Enter Action Mode");
 }
 
@@ -265,6 +333,7 @@ int count_swipe_down = 0;
     count_swipe_down = 0;
     //unschedule the udpate fucntion
     [self unscheduleUpdate];
+    [self toggleLightSourceActions:false];
     CCLOG(@"Leave Action Mode");
 }
 

@@ -10,13 +10,17 @@
 
 @implementation LightSource
 
--(id) initWithProperties: (NSString*)on_name :(NSString*)off_name :(float)on_dur :(float) off_dur {
-    if(self = [super initWithFile:off_name]) {
+-(id) initWithProperties: (NSString*)on_name :(NSString*)off_name :(float)on_dur :(float) off_dur :(float)vertical_per {
+    if(self = [super initWithFile:on_name]) {
         on_filename = [[NSString alloc] initWithString:on_name];
         off_filename = [[NSString alloc] initWithString:off_name];
         on_duration = on_dur;
         off_duration = off_dur;
-
+        vertical_percentage = vertical_per;
+        turn_on_texture = [CCSprite spriteWithFile:off_filename];
+        turn_on_texture.visible = NO;
+        turn_on_texture.position = ccp(self.boundingBox.size.width / 2, self.boundingBox.size.height * vertical_per);
+        [self addChild:turn_on_texture];
     }
     return self;
 }
@@ -40,16 +44,16 @@
     }
 }
 
+
+
 -(void) turnOn {
     isOn = true;
-    CCTexture2D* tex = [[CCTextureCache sharedTextureCache] addImage:on_filename];
-    [self setTexture: tex];
+    turn_on_texture.visible = YES;
 }
 
 -(void) turnOff {
     isOn = false;
-    CCTexture2D* tex = [[CCTextureCache sharedTextureCache] addImage:off_filename];
-    [self setTexture: tex];
+    turn_on_texture.visible = NO;
 }
 
 -(bool) isOn {
@@ -59,11 +63,20 @@
 -(CGRect) getInnerBoundingBox {
     CGRect innerBoundingBox;
     //init the inner bouding box
-    innerBoundingBox.size.width = self.boundingBox.size.width / 2;
-    innerBoundingBox.size.height = self.boundingBox.size.height / 2;
-    innerBoundingBox.origin = ccpAdd(self.boundingBox.origin,
-                                     ccp(self.boundingBox.size.width / 4, self.boundingBox.size.height / 4));
+    innerBoundingBox.size.width = turn_on_texture.boundingBox.size.width / 2;
+    innerBoundingBox.size.height = turn_on_texture.boundingBox.size.height / 2;
+    innerBoundingBox.origin = ccpAdd(turn_on_texture.boundingBox.origin,
+                                     ccp(turn_on_texture.boundingBox.size.width / 4, turn_on_texture.boundingBox.size.height / 4));
     return innerBoundingBox;
+}
+
+-(bool) lightSourceContains:(CGPoint)point {
+    CGPoint innerPoint = [self convertToNodeSpace:point];
+    if (isOn) {
+        return CGRectContainsPoint([self getInnerBoundingBox], innerPoint);
+    } else {
+        return false;
+    }
 }
 
 
