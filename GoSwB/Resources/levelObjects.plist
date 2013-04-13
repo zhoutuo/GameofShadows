@@ -4,25 +4,6 @@
 <dict>
 	<key>Level 1</key>
 	<dict>
-		<key>Lights</key>
-		<array>
-			<dict>
-				<key>on_filename</key>
-				<string>floor_lamp</string>
-				<key>off_filename</key>
-				<string>lightSource1</string>
-				<key>origin_x</key>
-				<integer>400</integer>
-				<key>origin_y</key>
-				<integer>200</integer>
-				<key>vertical_percentage</key>
-				<real>0.8</real>
-				<key>on_duration</key>
-				<integer>2</integer>
-				<key>off_duration</key>
-				<real>2.5</real>
-			</dict>
-		</array>
 		<key>Objects</key>
 		<array>
 			<array>
@@ -31,6 +12,8 @@
 				<integer>300</integer>
 			</array>
 		</array>
+		<key>Lights</key>
+		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -105,6 +88,23 @@
 				<integer>200</integer>
 				<integer>300</integer>
 			</array>
+		</array>
+		<key>Lights</key>
+		<array>
+			<dict>
+				<key>on_filename</key>
+				<string>lightSource1</string>
+				<key>off_filename</key>
+				<string>lightSource2</string>
+				<key>origin_x</key>
+				<integer>500</integer>
+				<key>origin_y</key>
+				<integer>50</integer>
+				<key>on_duration</key>
+				<integer>2</integer>
+				<key>off_duration</key>
+				<real>2.5</real>
+			</dict>
 		</array>
 		<key>Portals</key>
 		<array>

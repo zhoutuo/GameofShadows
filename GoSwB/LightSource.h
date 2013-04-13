@@ -8,21 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "PhysicsSprite.h"
 
-@interface LightSource : PhysicsSprite {
+@interface LightSource : CCSprite {
     @private
     NSString* on_filename;
     NSString* off_filename;
     float on_duration;
     float off_duration;
     bool isOn;
-    float vertical_percentage;
-    CCSprite* turn_on_texture;
 }
 
 
--(id) initWithProperties: (NSString*)on_name :(NSString*)off_name :(float)on_dur :(float)off_dur :(float)vertical_per;
+-(id) initWithProperties: (NSString*)on_name :(NSString*)off_name :(float)on_dur :(float) off_dur;
 -(bool) isOn;
 -(void) execActions;
 -(CGRect) getInnerBoundingBox;
