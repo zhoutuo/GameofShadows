@@ -9,7 +9,6 @@
 #import "cocos2d.h"
 #import "BackgroundLayer.h"
 #import "ShadowsLayer.h"
-#import "ShadowDisruptionLayer.h"
 #import "GameplayLayer.h"
 #import "GameStats.h"
 #import "GameplayMenuLayer.h"
@@ -35,9 +34,10 @@
 
 +(NSInteger) TagGenerater;
 -(void) finishObjectsCreation: (CCArray*) objects withRatios:(CCArray*) ratios;
+-(void) finishLightsCreation: (CCArray*) lights withRatios:(CCArray*) ratios;
 -(void) finishMovingOneObject: (NSInteger) objectTag withRatio:(CGPoint) ratio;
+-(void) finishMovingOneLight: (NSInteger) lightTag withRatio:(CGPoint) ratio;
 -(void) finishRotatingOneObject: (NSInteger) objectTag withAngle:(float) angle;
--(bool) checkLightSourceCoordinates: (int) ycoor : (int) xcoor;
 -(void) shadowMonsterDead;
 -(void) shadowMonterRescued;
 -(void) shadowMonsterTransition;

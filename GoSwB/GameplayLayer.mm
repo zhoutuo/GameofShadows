@@ -8,6 +8,7 @@
 
 #import "GameplayLayer.h"
 #import "GameplayScene.h"
+#import "LightSource.h"
 #import "GB2ShapeCache.h"
 #import "CCDrawingPrimitives.h"
 #import "Globals.h"
@@ -17,16 +18,14 @@
 #define NOTAG -1
 #define BACKGROUND_DEPTH 1
 #define OBJECT_DEPTH -1
+#define LIGHT_DEPTH -2
+#define OMS_MOVEMENT_SPEED 0.2
 
 -(id) init {
     if (self = [super init]) {
         touchedObjectTag = NOTAG;              //the tag for the sprite being touched right now
         touchOperation = NONE;
-        touchArray = [CCArray array];  //this is the array used for recording touches
-        [touchArray retain];  //since this is a autorelease object, retain it
-        
-        omsMovementSpeed = 0.2;
-        
+                
         //by making background sprite center on lower left corner will make it
         //easier to contain all the children
         objectsContainer = [CCSprite spriteWithFile:@"play_bg.png"];
@@ -36,10 +35,6 @@
         
         //background of the OMS. Shows the room.
         omsBackground = [CCSprite spriteWithFile: @"Room layout small window.png"];
-        //CGSize omsBackgroundSize = [omsBackground boundingBox].size;
-        //CGSize containerSize = [objectsContainer boundingBox].size;
-        //[omsBackground setScaleX:containerSize.width/omsBackgroundSize.width];
-        //[omsBackground setScaleY:containerSize.height/omsBackgroundSize.height];
         [omsBackground setOpacity: 150];
         [omsBackground setAnchorPoint:ccp(0,0)];
         [omsBackground setPosition:[objectsContainer position]];
@@ -53,9 +48,6 @@
         // Physics section.
         [self initPhysics];
         [self setupObjects];
-        [self scheduleUpdate];
-        [self startPuzzleMode];
-        
     }
     
     return self;
@@ -71,7 +63,8 @@
     for (NSArray* objectData in objects)
     {
         PhysicsSprite* objectSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [objectData objectAtIndex:0]]];
-        objectSprite.position = CGPointMake([[objectData objectAtIndex:1] floatValue], [[objectData objectAtIndex:2] floatValue]);
+        objectSprite.position = ccp([[objectData objectAtIndex:1] floatValue],
+                                    [[objectData objectAtIndex:2] floatValue]);
         b2BodyDef objectBodyDef;
         objectBodyDef.type = b2_dynamicBody;
         objectBodyDef.position.Set(objectSprite.position.x / PTM_RATIO, objectSprite.position.y / PTM_RATIO);
@@ -81,6 +74,31 @@
         [objectSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:[objectData objectAtIndex:0]]];
         [objectSprite setPhysicsBody:objectBody];
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+        
+    }
+
+    
+    //get the lights
+    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    for(NSDictionary* lightSource in lights){
+        //get sprite name
+        NSString* name = [lightSource objectForKey:@"on_filename"];
+        //get the on_filename
+        NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
+        
+        PhysicsSprite* source = [PhysicsSprite spriteWithFile:on_name];
+        //get the initial position
+        [source setPosition:ccp([[lightSource objectForKey:@"origin_x"] floatValue],
+                                [[lightSource objectForKey:@"origin_y"] floatValue])];
+        b2BodyDef lightSourceBodyDef;
+        lightSourceBodyDef.type = b2_dynamicBody;
+        lightSourceBodyDef.position.Set(source.position.x / PTM_RATIO, source.position.y / PTM_RATIO);
+        lightSourceBodyDef.userData = source;
+        b2Body* lightSourceBody = physicsWorld->CreateBody(&lightSourceBodyDef);
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightSourceBody forShapeName:name];
+        [source setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
+        [source setPhysicsBody:lightSourceBody];
+        [objectsContainer addChild:source z:LIGHT_DEPTH tag:[GameplayScene TagGenerater]];
     }
 }
 
@@ -96,7 +114,6 @@
     
     // Define the ground body.
     b2BodyDef physicsGroundBodyDef;
-    //physicsGroundBodyDef.type = b2_dynamicBody;
     physicsGroundBody = physicsWorld -> CreateBody(&physicsGroundBodyDef);
     
     physicsWorldTop = NULL;
@@ -129,7 +146,7 @@
             [scene finishMovingOneObject:sprite.tag withRatio:[self getSpriteRelativePos:sprite]];
             
             //rotation
-            float angel = CC_RADIANS_TO_DEGREES(body->GetAngle());
+            float angel = -1 * CC_RADIANS_TO_DEGREES(body->GetAngle());
             sprite.rotation = angel;
             [scene finishRotatingOneObject:sprite.tag withAngle:angel];
 
@@ -179,11 +196,11 @@
     // Ground Box Right.
     physicsGroundBox.Set(b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
     physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+    
 }
 
 
 -(void) dealloc {
-    [touchArray release]; //remove array since we retain it in the init function
     [rotationCircle release];
     
     // Physics cleanup section.
@@ -198,10 +215,6 @@
     physicsWorldLeft = NULL;
     physicsWorldRight = NULL;
     
-    // Release object arrays.
-    [objectSpriteArray release];
-    [objectBodyArray release];
-    
     [super dealloc];
 }
 
@@ -213,17 +226,30 @@
     GameplayScene* scene = (GameplayScene*)self.parent;
     CCArray* shadowVisibleChildren = [CCArray array];
     CCArray* ratios = [CCArray array];
+    
+    //tell the scene all light sources
+    CCArray* lightChildren = [CCArray array];
+    CCArray* lightRatios = [CCArray array];
+    
     for (CCSprite* sprite in objectsContainer.children) {
-        
+        //filter out all children except object and light source
+        CGPoint ratio = [self getSpriteRelativePos:sprite];
         if (sprite.zOrder == OBJECT_DEPTH) {
             [shadowVisibleChildren addObject:sprite];
-            CGPoint ratio = [self getSpriteRelativePos:sprite];
             [ratios addObject:[NSValue valueWithCGPoint:ratio]];
+        }
+        
+        if (sprite.zOrder == LIGHT_DEPTH) {
+            [lightChildren addObject:sprite];
+            [lightRatios addObject:[NSValue valueWithCGPoint:ratio]];
         }
         
     }
     
     [scene finishObjectsCreation:shadowVisibleChildren withRatios:ratios];
+    [scene finishLightsCreation:lightChildren withRatios:lightRatios];
+
+
 }
 
 
@@ -288,7 +314,6 @@
     //end testing
     
     location = [[CCDirector sharedDirector] convertToGL:location];
-    [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
         
     if (touchOperation == NONE) {
@@ -301,8 +326,19 @@
                     touchOperation = TAP;
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
-                    body->SetAwake(false);
-                    body->SetActive(false);
+                   // body->SetAwake(false);
+                    //body->SetActive(false);
+                    
+                    b2Vec2 centerOfMass = body -> GetWorldCenter();
+                    
+                    b2MouseJointDef md;
+                    md.bodyB = body;
+                    md.bodyA = physicsGroundBody;
+                    b2Vec2 locationWorld =  centerOfMass;//[self toMeters:location];
+                    md.target = locationWorld;
+                    md.collideConnected = true;
+                    md.maxForce = body->GetMass() * 100.0f;
+                    mouseJoint = (b2MouseJoint *) physicsWorld->CreateJoint(&md);
                     break;
                 }
             }
@@ -314,12 +350,10 @@
         //cancel the rotating
         if (!CGRectContainsPoint(rotationCircle.boundingBox, location)) {
             [self toggleRotationCircle:NO];
-            PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-            b2Body* body = [cur getPhysicsBody];
-            body->SetActive(true);
-            body->SetAwake(true);
             touchedObjectTag = NOTAG;
             touchOperation = NONE;
+            physicsWorld -> DestroyJoint(mouseJoint);
+            mouseJoint = NULL;
         }
     }
         
@@ -328,7 +362,6 @@
 -(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
-    [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
     location = [[CCDirector sharedDirector] convertToGL:location];
     
@@ -348,22 +381,34 @@
 
         //try to check whether the touched sprite is the objects container or not
         CCSprite* touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-        CGRect rect = objectsContainer.boundingBox;
+        //CGRect rect = objectsContainer.boundingBox;
 
         //since we did not change the anchor point of the children sprites
         //we do not need to change the position of locaiton
         //but we need to make sure that the location is inside the touch rect
+        
         location = [self fromLayerCoord2Container:location];
         
-        CGSize spriteBox = [touched boundingBox].size;
-        location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
+        //CGSize spriteBox = [touched boundingBox].size;
+        //location.x = location.x -spriteBox.width/2;
+        //location.y = location.y - spriteBox.height/2;
+        
+       /* location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
         location.x = MAX(location.x, spriteBox.width / 2);
         location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
         location.y = MAX(location.y, spriteBox.height / 2);
+        
+        location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
+        location.x = MAX(location.x, spriteBox.width / 2);
+        location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
+        location.y = MAX(location.y, spriteBox.height / 2);*/
+        
         touched.position = location;
         //moving the physical body as well
         b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
-        body->SetTransform([self toMeters:location], body->GetAngle());
+        body -> SetAngularVelocity(0);
+        //body->SetTransform([self toMeters:location], body->GetAngle());
+        mouseJoint -> SetTarget([self toMeters:location]);
         
     } else if(touchOperation == ROTATING) {
         PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
@@ -376,7 +421,7 @@
         if (location.x < rotatePoint.x) {
             angle = -angle;
         }
-        angle = CC_RADIANS_TO_DEGREES(angle);
+        angle = -1* CC_RADIANS_TO_DEGREES(angle);
         rotated.rotation = angle;
         //rotate the physical body as well
         b2Body* body = [rotated getPhysicsBody];
@@ -396,54 +441,56 @@
         [self toggleRotationCircle:NO];
         //when finished with rotating object
         //wake physical calculation
-        PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-        b2Body* body = [cur getPhysicsBody];
-        body->SetActive(true);
-        body->SetAwake(true);
         //clean
         touchOperation = NONE;
         touchedObjectTag = NOTAG;
+        physicsWorld -> DestroyJoint(mouseJoint);
+        mouseJoint = NULL;
         
     }
     
-    //clear the touch array
-    [touchArray removeAllObjects];
 }
 
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event{
+    if(mouseJoint != NULL){
+        physicsWorld -> DestroyJoint(mouseJoint);
+        mouseJoint = NULL;
+    }
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //GAMEPLAY LAYER EVENTS
 -(void) moveOMStoLeft {
-    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(0,0)], nil]];
-    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(0,0)], nil]];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(0,0)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(0,0)], nil]];
 }
 
 -(void) moveOMStoRight {
     CGFloat winWidth = [CCDirector sharedDirector].winSize.width;
     CGFloat width = [objectsContainer boundingBox].size.width;
-    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(winWidth - width,0)], nil]];
-    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(winWidth - width,0)], nil]];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(winWidth - width,0)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(winWidth - width,0)], nil]];
 
 }
 
 -(void) startPuzzleMode {
     CGFloat currentX = objectsContainer.position.x;
-    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,0)], nil]];
-    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,0)], nil]];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
     self.isTouchEnabled = YES;
-    
+    [self scheduleUpdate];
     CCLOG(@"Enter Puzzle Mode");
 }
 
 -(void) finishPuzzleMode {
     CGFloat height = [objectsContainer boundingBox].size.height;
     CGFloat currentX = objectsContainer.position.x;
-    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,-height)], nil]];
-    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:omsMovementSpeed position:ccp(currentX,-height)], nil]];
+    [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
+    [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
     self.isTouchEnabled = NO;
-    
+    [self unscheduleUpdate];
     CCLOG(@"Leave Puzzle Mode");
 }
 

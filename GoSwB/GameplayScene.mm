@@ -22,9 +22,6 @@ static NSInteger tagSeed = 10000;
         shadowLayer = [ShadowsLayer node];
         [self addChild:shadowLayer z:1];
         
-        shadowDisruptionLayer = [ShadowDisruptionLayer node];
-        [self addChild:shadowDisruptionLayer z:2];
-        
         gameplayLayer = [GameplayLayer node];
         [self addChild:gameplayLayer z:3];
         
@@ -34,7 +31,7 @@ static NSInteger tagSeed = 10000;
         
         [self initSwipeGestures];
         isPuzzleMode = true; //setting modes.
-        
+        [gameplayLayer startPuzzleMode];
         gamestats.isMonsterDead = false;
         gamestats.timeUsed = 0.0f;
         
@@ -66,6 +63,14 @@ static NSInteger tagSeed = 10000;
 }
 
 
+-(void) finishLightsCreation:(CCArray *)lights withRatios:(CCArray *)ratios {
+    [shadowLayer castLightFrom:lights withRatios:ratios];
+}
+
+-(void) finishMovingOneLight:(NSInteger)lightTag withRatio:(CGPoint)ratio {
+    
+}
+
 +(NSInteger) TagGenerater {
     return tagSeed++;
 }
@@ -85,6 +90,12 @@ static NSInteger tagSeed = 10000;
 -(void) twoFingerSwipeUp{
     if (!isPuzzleMode) {
         isPuzzleMode = true;
+        //cancel touches: make sure shadow monster does not move when swiping up
+        swipeUp.cancelsTouchesInView = YES;
+        swipeDown.cancelsTouchesInView = YES;
+        swipeLeft.cancelsTouchesInView = YES;
+        swipeRight.cancelsTouchesInView = YES;
+
         [shadowLayer finishActionMode];
         [gameplayLayer startPuzzleMode];
     }
@@ -94,6 +105,12 @@ static NSInteger tagSeed = 10000;
 -(void) twoFingerSwipeDown {
     if (isPuzzleMode) {
         isPuzzleMode = false;
+        //do not cancel touches: make sure that OMS operations are normal, no hang in the air
+        swipeUp.cancelsTouchesInView = NO;
+        swipeDown.cancelsTouchesInView = NO;
+        swipeLeft.cancelsTouchesInView = NO;
+        swipeRight.cancelsTouchesInView = NO;
+        
         [gameplayLayer finishPuzzleMode];
         [shadowLayer startActionMode];
     }
@@ -107,25 +124,22 @@ static NSInteger tagSeed = 10000;
     swipeRight = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeRight)]autorelease];
     [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
     [swipeRight setNumberOfTouchesRequired:2];
-    swipeRight.cancelsTouchesInView = NO;
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeRight];
     
     swipeLeft = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeLeft)]autorelease];
     [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
     [swipeLeft setNumberOfTouchesRequired:2];
-    swipeLeft.cancelsTouchesInView  = NO;
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeLeft];
+
     
     swipeUp = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeUp)]autorelease];
     [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
     [swipeUp setNumberOfTouchesRequired:2];
-    swipeUp.cancelsTouchesInView  =NO;
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeUp];
     
     swipeDown = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipeDown)]autorelease];
     [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
     [swipeDown setNumberOfTouchesRequired:2];
-    swipeDown.cancelsTouchesInView  = NO;
     [[[CCDirector sharedDirector] view] addGestureRecognizer:swipeDown];
     
 }
@@ -137,9 +151,6 @@ static NSInteger tagSeed = 10000;
     [[[CCDirector sharedDirector] view] removeGestureRecognizer:swipeRight];
 }
 
--(bool) checkLightSourceCoordinates:(int)ycoor :(int)xcoor{
-    return [shadowDisruptionLayer checkIfInLight:ycoor : xcoor];
-}
 
 -(void) shadowMonsterDead {
     gamestats.isMonsterDead = true;

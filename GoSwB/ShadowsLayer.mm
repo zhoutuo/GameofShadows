@@ -7,31 +7,36 @@
 //
 #import "GameplayScene.h"
 #import "ShadowsLayer.h"
+#import "LightSource.h"
 #import "Globals.h"
 
 #define ROTATIONTHRESHOLD 3.0f
 #define SHADOWMONSTER_SIZE 50
-#define SHADOWMONSTER_SPEED 80.0f
+#define SHADOWMONSTER_SPEED 150.0f
+#define SHADOW_HEIGHT_FACTOR 2.0f
+#define SHADOW_WIDTH_FACTOR 2.0f
 @implementation ShadowsLayer
+
+int count_swipe_down = 0;
 
 -(id) init {
     if (self = [super init]) {
-        shadowHeightFactor = 2.0f;
-        shadowWidthFactor = 2.0f;
         objShadowTable = [[NSMutableDictionary alloc] init];
         
+        //load data from plist
         NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
         NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
         NSArray* portals = [[levelObjects objectForKey: level] objectForKey:@"Portals"];
         
-        NSArray* startPortalData = [portals objectAtIndex:0];        
-        wormholeEntrance = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
+        NSArray* startPortalData = [portals objectAtIndex:0];
+        CCSprite* wormholeEntrance = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
         [wormholeEntrance setPosition:CGPointMake([[startPortalData objectAtIndex:1] floatValue], [[startPortalData objectAtIndex:2] floatValue])];
         [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
         
         goHere = false;
         
         NSArray* endPortalData = [portals objectAtIndex:1];
+        //load position of wormholes, entrance and exit
         wormholeExit = [CCSprite spriteWithFile:
                         [NSString stringWithFormat:@"%@.png",
                          [endPortalData objectAtIndex:0]]];
@@ -42,17 +47,8 @@
         [self addChild:wormholeExit z:WORMHOLE_DEPTH];
         shadowMonster = [CCSprite spriteWithFile:@"squirtle.png"];
         [shadowMonster setPosition: wormholeEntrance.position];
-        [shadowMonster setVisible:NO];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
-        
-        //add testing dynamic moving object here
-        sun = [CCSprite spriteWithFile:@"Sun.png"];
-        [sun setPosition:ccp(100, 300)];
-        [self addChild:sun z:DYNAMIC_LIGHTNING_DEPTH];
-        id go_right = [CCMoveBy actionWithDuration:2 position:ccp(200, 0)];
-        id go_left = [CCMoveBy actionWithDuration:2 position:ccp(-200, 0)];
-        [sun runAction:[CCRepeatForever actionWithAction:[CCSequence actions:go_right, go_left, nil]]];
     }
     return self;
 }
@@ -78,6 +74,47 @@
 }
 
 
+-(void) castLightFrom:(CCArray *)lights withRatios:(CCArray *)ratios {
+    NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
+    NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
+    NSArray* lights_info = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    
+    if (lights.count != lights_info.count) {
+        return;
+    }
+    
+    for(int i = 0; i < lights_info.count ;++i){
+        NSDictionary* lightSource = (NSDictionary*) [lights_info objectAtIndex:i];
+        CCSprite* lightObject = (CCSprite*) [lights objectAtIndex:i];
+        //get sprite name
+        NSString* name = [lightSource objectForKey:@"on_filename"];
+        //get the on_filename
+        NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
+        //get the off_name
+        NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
+        //get the on and off_duration
+        float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
+        float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
+        //get the vertical percentage
+        float vertical_per = [[lightSource objectForKey:@"vertical_percentage"] floatValue];
+        LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration :vertical_per] autorelease];
+        [source setColor:ccc3(0, 0, 0)];
+        [source setScaleY:SHADOW_HEIGHT_FACTOR];
+        [source setScaleX:SHADOW_WIDTH_FACTOR];
+        
+        source.tag = [GameplayScene TagGenerater];
+        [objShadowTable
+         setObject:[NSNumber numberWithInteger:source.tag]
+         forKey:[NSNumber numberWithInteger:lightObject.tag]];
+        
+        [self addChild:source z:LIGHT_SPRITE_DEPTH];
+        CGPoint ratio = [[ratios objectAtIndex:i] CGPointValue];
+        [self updateShadowPos:lightObject.tag withRelativePos: ratio];
+        
+    }
+}
+
+
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray *)ratios {
     
     if (objects.count != ratios.count) {
@@ -89,8 +126,8 @@
         
         CCSprite* shadow = [CCSprite spriteWithTexture:texture];
         [shadow setColor:ccc3(0, 0, 0)];
-        [shadow setScaleY:shadowHeightFactor];
-        [shadow setScaleX:shadowWidthFactor];
+        [shadow setScaleY:SHADOW_HEIGHT_FACTOR];
+        [shadow setScaleX:SHADOW_WIDTH_FACTOR];
         
         shadow.tag = [GameplayScene TagGenerater];
         
@@ -133,20 +170,28 @@
 }
 
 
-
+-(CCArray*) getLightChildren {
+    CCArray* children = [CCArray array];
+    for (CCSprite* sprite in self.children) {
+        if (sprite.zOrder == LIGHT_SPRITE_DEPTH) {
+            [children addObject:sprite];
+        }
+    }
+    return children;
+}
 
 -(CCArray*) getcornorsOfMonster {
     CCArray* arr = [CCArray array];
     //get boundingbox of shadow monster
     CGRect rect = [shadowMonster boundingBox];
-    //get leftupper corner
-    CGPoint upperLeft = ccpAdd(rect.origin, ccp(0, rect.size.height));
-    //get rightupper corner
-    CGPoint upperRight = ccpAdd(rect.origin, ccp(rect.size.width, rect.size.height));
     //get lowerleft corner
-    CGPoint lowerLeft = rect.origin;
+    CGPoint lowerLeft = ccpAdd(rect.origin, ccp(rect.size.width / 4, rect.size.height / 4));
+    //get leftupper corner
+    CGPoint upperLeft = ccpAdd(lowerLeft, ccp(0, rect.size.height / 2));
+    //get rightupper corner
+    CGPoint upperRight = ccpAdd(lowerLeft, ccp(rect.size.width / 2, rect.size.height / 2));
     //get lowerRight corner
-    CGPoint lowerRight = ccpAdd(rect.origin, ccp(rect.size.width, 0));
+    CGPoint lowerRight = ccpAdd(lowerLeft, ccp(rect.size.width / 2, 0));
     [arr addObject: [NSValue valueWithCGPoint:upperLeft]];
     [arr addObject: [NSValue valueWithCGPoint:upperRight]];
     [arr addObject: [NSValue valueWithCGPoint:lowerLeft]];
@@ -246,7 +291,7 @@
 // SHADOW MAP METHOD
 -(void) generateShadowMap {
     
-    GameplayScene* curScene = (GameplayScene*)self.parent;
+    //    GameplayScene* curScene = (GameplayScene*)self.parent;
     for (int i = 0; i < DEVICE_WIDTH; ++i) {
         for (int j = 0; j < DEVICE_HEIGHT; ++j) {
             [self setShadowMap:i :j :false];
@@ -275,11 +320,7 @@
                     
                     newY = MAX(0, newY);
                     newY = MIN(newY, DEVICE_HEIGHT);
-                    if([curScene checkLightSourceCoordinates :newY : newX]){
-                        [self setShadowMap:newX :newY :false];
-                    }else{
-                        [self setShadowMap:newX :newY :true];
-                    }
+                    [self setShadowMap:newX :newY :true];
                 }
             }
         } else {
@@ -298,12 +339,7 @@
                         newY = MAX(0, newY);
                         newY = MIN(newY, DEVICE_HEIGHT);
                         ++count;
-                        
-                        if([curScene checkLightSourceCoordinates :newY : newX]){
-                            [self setShadowMap:newX :newY :false];
-                        } else {
-                            [self setShadowMap:newX :newY :true];
-                        }
+                        [self setShadowMap:newX :newY :true];
                     }
                 }
             }
@@ -320,8 +356,15 @@
     } else { //if it is dark, now checking dynamic disruption events
              //by interating all dynamic items whether they contain this point or not
              //so that we know it is dark or not
-        if (CGRectContainsPoint([sun boundingBox], ccp(x, y))) {
-            val = false;
+        for (CCSprite* sprite in self.children) {
+            if (sprite.zOrder == LIGHT_SPRITE_DEPTH) {
+                LightSource* lightSprite = (LightSource*) sprite;
+                if ([lightSprite lightSourceContains:ccp(x, y)]) {
+                    val = false;
+                    break;
+                }
+                
+            }
         }
         return val;
     }
@@ -332,30 +375,46 @@
     shadowMap[y][x] = value;
 }
 
+
+-(void) toggleLightSourceActions:(bool) value {
+    for (LightSource* source in [self getLightChildren]) {
+        if (value) {
+            [source execActions];
+        } else {
+            [source stopAllActions];
+        }
+    }
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADOW LAYER EVENTS
 -(void) startActionMode {
     [self generateShadowMap];
-    //[self generateClearanceMap];
     self.isTouchEnabled = YES;
-    [shadowMonster setVisible:YES];
     [self scheduleUpdate];
+    [self toggleLightSourceActions:true];
     CCLOG(@"Enter Action Mode");
 }
 
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
-    [shadowMonster setVisible:NO];
+    //reset the count
+    count_swipe_down = 0;
     //unschedule the udpate fucntion
     [self unscheduleUpdate];
+    [self toggleLightSourceActions:false];
     CCLOG(@"Leave Action Mode");
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
--(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (count_swipe_down++ == 0) {
+        return;
+    }
+    
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
@@ -371,7 +430,7 @@
     //testing - end
     
     [self pathFinding :location];
-
+    
 }
 
 @end

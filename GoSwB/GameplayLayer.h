@@ -27,8 +27,6 @@ typedef enum {
     CGRect* containerBox;
     
     CCSprite* rotationCircle;
-    PhysicsSprite* droid1;
-    CCArray* touchArray;
     Phase touchOperation;
     
     // Physics section.
@@ -39,13 +37,10 @@ typedef enum {
     b2Fixture* physicsWorldBottom;
     b2Fixture* physicsWorldLeft;
     b2Fixture* physicsWorldRight;
+    b2MouseJoint* mouseJoint;
     
     NSMutableArray* objectSpriteArray;
     NSMutableArray* objectBodyArray;
-    
-    CGFloat omsMovementSpeed;
-    
-
 }
 
 
