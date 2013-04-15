@@ -12,10 +12,13 @@
 #import "ShadowDisruptionLayer.h"
 #import "GameplayLayer.h"
 #import "GameStats.h"
+#import "GameplayMenuLayer.h"
+
 @interface GameplayScene : CCScene {
     BackgroundLayer* backgroundLayer;
     ShadowsLayer* shadowLayer;
     GameplayLayer* gameplayLayer;
+    GameplayMenuLayer* gameplayMenuLayer;
     ShadowDisruptionLayer* shadowDisruptionLayer;
     
     GameStats* gamestats;
@@ -37,4 +40,6 @@
 -(bool) checkLightSourceCoordinates: (int) ycoor : (int) xcoor;
 -(void) shadowMonsterDead;
 -(void) shadowMonterRescued;
+-(void) shadowMonsterTransition;
+-(void) shift:(CGPoint) centerPoint;
 @end

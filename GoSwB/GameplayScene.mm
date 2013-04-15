@@ -28,6 +28,10 @@ static NSInteger tagSeed = 10000;
         gameplayLayer = [GameplayLayer node];
         [self addChild:gameplayLayer z:3];
         
+        gameplayMenuLayer = [GameplayMenuLayer node];
+        [self addChild:gameplayMenuLayer z:4];
+
+        
         [self initSwipeGestures];
         isPuzzleMode = true; //setting modes.
         
@@ -42,6 +46,9 @@ static NSInteger tagSeed = 10000;
 -(void) dealloc {
     [self removeSwipeGestures];
     [super dealloc];
+}
+-(void) shift:(CGPoint) centerPoint{
+    [backgroundLayer shift:centerPoint];
 }
 
 
@@ -149,6 +156,11 @@ static NSInteger tagSeed = 10000;
     //Ryan Ball TODO WinScene failing
     [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[CCBReader sceneWithNodeGraphFromFile:@"WinScene.ccbi"]]];
     CCLOG(@"WIN, STILL SUCK");
+}
+
+-(void) shadowMonsterTransition {
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionPageTurn transitionWithDuration:1 scene:[GameplayScene node]]];
+    CCLOG(@"TRANSITIONING, ZHOTO SUCKS");
 }
 
 @end

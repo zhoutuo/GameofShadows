@@ -11,7 +11,6 @@
 #import "GB2ShapeCache.h"
 #import "CCDrawingPrimitives.h"
 #import "Globals.h"
-
 @implementation GameplayLayer
 
 
@@ -115,7 +114,6 @@
     int32 positionIterations = 1;
     physicsWorld -> Step(delta, velocityIterations, positionIterations);
     
-    
     //update the position of sprites accordingly
     GameplayScene* scene = (GameplayScene*)self.parent;
     
@@ -138,6 +136,7 @@
         }
     }
 }
+
 
 // Helper methods for pixel-meter conversions for Box2D.
 - (b2Vec2)toMeters:(CGPoint)point
@@ -278,6 +277,16 @@
         
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
+    
+    //testing
+    
+    location.x += centerCameraX;
+    location.y += centerCameraY;
+    
+  //  CCLOG(@"x %f  y %f",location.x,location.y);
+    
+    //end testing
+    
     location = [[CCDirector sharedDirector] convertToGL:location];
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
@@ -322,7 +331,16 @@
     [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
     location = [[CCDirector sharedDirector] convertToGL:location];
-        
+    
+    
+    //testing
+    
+    location.x += centerCameraX;
+    location.y += centerCameraY;
+    
+    //end testing
+    
+    
     //all touch opeartions entering this method can only be tap/moving or rotation
     if (touchOperation == TAP || touchOperation == MOVING) {
         //since our touch is moving

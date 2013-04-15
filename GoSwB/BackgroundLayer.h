@@ -10,7 +10,10 @@
 
 @interface BackgroundLayer : CCLayer{
     
-       CCSprite* spook; 
+       CCSprite* spook;
+    CCSprite* background;
+    CCMenuItem *pauseMenuItem;
 }
 
+-(void) shift:(CGPoint) centerPoint;
 @end

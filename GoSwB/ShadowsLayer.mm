@@ -29,10 +29,15 @@
         [wormholeEntrance setPosition:CGPointMake([[startPortalData objectAtIndex:1] floatValue], [[startPortalData objectAtIndex:2] floatValue])];
         [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
         
+        goHere = false;
+        
         NSArray* endPortalData = [portals objectAtIndex:1];
         wormholeExit = [CCSprite spriteWithFile:
                         [NSString stringWithFormat:@"%@.png",
                          [endPortalData objectAtIndex:0]]];
+        
+        
+        
         [wormholeExit setPosition:CGPointMake([[endPortalData objectAtIndex:1] floatValue], [[endPortalData objectAtIndex:2] floatValue])];
         [self addChild:wormholeExit z:WORMHOLE_DEPTH];
         shadowMonster = [CCSprite spriteWithFile:@"squirtle.png"];
@@ -150,6 +155,43 @@
     
 }
 
+-(void) shiftToGoal:(CGPoint)goal{
+    float centerX, centerY, centerZ;
+	float eyeX, eyeY, eyeZ;
+	[self.camera centerX:&centerX centerY:&centerY centerZ:&centerZ];
+	[self.camera eyeX:&eyeX eyeY:&eyeY eyeZ:&eyeZ];
+    GameplayScene* temp = (GameplayScene*)self.parent;
+   // [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    
+    float slope = (centerY - goal.y) / (centerX - goal.x);
+    //y = mx + b
+    float b = goal.y - (slope * goal.x);
+    
+    if(fabs(centerX - goal.x) > 5){
+        if(centerX < goal.x){
+            centerX += 5;
+            centerY = (slope * centerX) + b;
+        }else{
+            centerX -=5;
+            centerY = (slope * centerX) + b;
+        }
+    }else{
+        centerX = goal.x;
+        centerY = goal.y;
+     //   [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+    }
+    
+    CGPoint backgroundPoint;
+    
+    backgroundPoint.x = centerX;
+    backgroundPoint.y = centerY;
+    [temp shift:backgroundPoint];
+    [self.camera setCenterX:centerX centerY:centerY centerZ:centerZ];
+    [self.camera setEyeX:centerX eyeY:centerY eyeZ:eyeZ];
+    
+}
+
 
 -(void) update:(ccTime)delta {
     CCArray* cornors = [self getcornorsOfMonster];
@@ -163,13 +205,39 @@
             return;
         }
     }
+    float centerX, centerY, centerZ;
+    [self.camera centerX:&centerX centerY:&centerY centerZ:&centerZ];
+    centerCameraX = centerX;
+    centerCameraY = centerY;
     
-    
-    if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
-        CCLOG(@"CONG");
-        //game accomplish event triggered
-        [scene shadowMonterRescued];
+   // bool goHere = false;
+    if(currentLevel == 5 && CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position) && goHere == false){
+        //do the Transition
+     //   CCLOG(@"yay transition");
+        //(1536,1120)
+      //  [self shift:3 :CGPointMake(900, 200)];
+        
+        
+        CGPoint goalPoint = CGPointMake(900, 101);
+        
+        if(centerX == goalPoint.x && centerY == goalPoint.y){
+            goHere = true;
+
+        }else{
+            [self shiftToGoal:goalPoint];
+        }
+        
+        
+      //  currentLevel = 1;
+      //  [scene shadowMonsterTransition];
+      //  goHere = true;
     }
+    
+   // else if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
+    //    CCLOG(@"CONG");
+        //game accomplish event triggered
+   //     [scene shadowMonterRescued];
+   // }
 
 }
 
@@ -291,6 +359,17 @@
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
+    
+    //testing
+    
+    float centerX, centerY, centerZ;
+	[self.camera centerX:&centerX centerY:&centerY centerZ:&centerZ];
+    location.x += centerX;
+    location.y += centerY;
+
+    
+    //testing - end
+    
     [self pathFinding :location];
 
 }

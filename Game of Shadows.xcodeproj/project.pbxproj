@@ -269,8 +269,13 @@
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
+		946458D61716368300F333B8 /* hugeBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946458D51716368300F333B8 /* hugeBackground@2x.png */; };
+		9468387E1717AF8D003F56BF /* hugeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 9468387D1717AF8D003F56BF /* hugeBackground.png */; };
+		94683881171B6825003F56BF /* GameplayMenuLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94683880171B6825003F56BF /* GameplayMenuLayer.mm */; };
 		946EF649170B957C00AE6DE7 /* Room layout texture extra wide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946EF648170B957C00AE6DE7 /* Room layout texture extra wide@2x.png */; };
 		946EF64B170B962900AE6DE7 /* Room layout texture extra wide.png in Resources */ = {isa = PBXBuildFile; fileRef = 946EF64A170B962900AE6DE7 /* Room layout texture extra wide.png */; };
+		946EF64E170B9CC500AE6DE7 /* WormholeTransition@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946EF64C170B9CC500AE6DE7 /* WormholeTransition@2x.png */; };
+		946EF64F170B9CC500AE6DE7 /* WormholeTransition.png in Resources */ = {isa = PBXBuildFile; fileRef = 946EF64D170B9CC500AE6DE7 /* WormholeTransition.png */; };
 		94AE3A0916EFDCCA00B00B94 /* grahh.png in Resources */ = {isa = PBXBuildFile; fileRef = 94AE3A0716EFDCCA00B00B94 /* grahh.png */; };
 		94AE3A0A16EFDCCA00B00B94 /* grahh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94AE3A0816EFDCCA00B00B94 /* grahh@2x.png */; };
 		C043966B16EE838600FCD095 /* ArmChair.png in Resources */ = {isa = PBXBuildFile; fileRef = C043966116EE838600FCD095 /* ArmChair.png */; };
@@ -764,8 +769,14 @@
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
 		82EAD1FE16DCA460002F736F /* Room layout small window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window.png"; sourceTree = "<group>"; };
+		946458D51716368300F333B8 /* hugeBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hugeBackground@2x.png"; sourceTree = "<group>"; };
+		9468387D1717AF8D003F56BF /* hugeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hugeBackground.png; sourceTree = "<group>"; };
+		9468387F171B6825003F56BF /* GameplayMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameplayMenuLayer.h; sourceTree = "<group>"; };
+		94683880171B6825003F56BF /* GameplayMenuLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameplayMenuLayer.mm; sourceTree = "<group>"; };
 		946EF648170B957C00AE6DE7 /* Room layout texture extra wide@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout texture extra wide@2x.png"; sourceTree = "<group>"; };
 		946EF64A170B962900AE6DE7 /* Room layout texture extra wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout texture extra wide.png"; sourceTree = "<group>"; };
+		946EF64C170B9CC500AE6DE7 /* WormholeTransition@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WormholeTransition@2x.png"; sourceTree = "<group>"; };
+		946EF64D170B9CC500AE6DE7 /* WormholeTransition.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WormholeTransition.png; sourceTree = "<group>"; };
 		94AE3A0716EFDCCA00B00B94 /* grahh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grahh.png; sourceTree = "<group>"; };
 		94AE3A0816EFDCCA00B00B94 /* grahh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grahh@2x.png"; sourceTree = "<group>"; };
 		C043966116EE838600FCD095 /* ArmChair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArmChair.png; sourceTree = "<group>"; };
@@ -917,6 +928,10 @@
 				8290A2A816EFCF7200AC6664 /* WormholeEntrance@2x.png */,
 				1EE102E116EFCD1F00EDB8FC /* Pause.png */,
 				1EE102E216EFCD1F00EDB8FC /* Pause@2x.png */,
+				9468387D1717AF8D003F56BF /* hugeBackground.png */,
+				946458D51716368300F333B8 /* hugeBackground@2x.png */,
+				946EF64C170B9CC500AE6DE7 /* WormholeTransition@2x.png */,
+				946EF64D170B9CC500AE6DE7 /* WormholeTransition.png */,
 				2864C93016E82E8300A9D1D7 /* WormholeExit.png */,
 				8290A2AA16EFCFB000AC6664 /* WormholeExit@2x.png */,
 				287B97F916E7D5BF0008C334 /* Room layout texture@2x.jpg */,
@@ -1524,6 +1539,8 @@
 				C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */,
 				28E079B816D41B8C007011F2 /* GameplayScene.h */,
 				28E079B916D41B8C007011F2 /* GameplayScene.mm */,
+				9468387F171B6825003F56BF /* GameplayMenuLayer.h */,
+				94683880171B6825003F56BF /* GameplayMenuLayer.mm */,
 				28E4793416CD9C14007B3A2A /* BackgroundLayer.h */,
 				28E4793516CD9C14007B3A2A /* BackgroundLayer.mm */,
 				8290A29F16EAB5F500AC6664 /* ShadowDisruptionLayer.h */,
@@ -1726,6 +1743,10 @@
 				280BB2FD1707A5A50043C4CA /* Sun.png in Resources */,
 				946EF649170B957C00AE6DE7 /* Room layout texture extra wide@2x.png in Resources */,
 				946EF64B170B962900AE6DE7 /* Room layout texture extra wide.png in Resources */,
+				946EF64E170B9CC500AE6DE7 /* WormholeTransition@2x.png in Resources */,
+				946EF64F170B9CC500AE6DE7 /* WormholeTransition.png in Resources */,
+				946458D61716368300F333B8 /* hugeBackground@2x.png in Resources */,
+				9468387E1717AF8D003F56BF /* hugeBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1904,6 +1925,7 @@
 				2804A3DF16EE695A00C4638D /* GameStats.m in Sources */,
 				1EE102D816EEF81500EDB8FC /* LossScene.mm in Sources */,
 				1EE102DE16EFC77600EDB8FC /* WinScene.mm in Sources */,
+				94683881171B6825003F56BF /* GameplayMenuLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

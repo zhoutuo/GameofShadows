@@ -178,7 +178,7 @@
 				<integer>150</integer>
 			</array>
 			<array>
-				<string>WormholeExit</string>
+				<string>WormholeTransition</string>
 				<integer>950</integer>
 				<integer>250</integer>
 			</array>
