@@ -311,7 +311,7 @@ int count_swipe_down = 0;
         if (value) {
             [source execActions];
         } else {
-            [source stopAllActions];
+            [source stopExecActions];
         }
     }
 }
