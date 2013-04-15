@@ -25,8 +25,6 @@ typedef enum {
     CCSprite* objectsContainer;
     CCSprite* omsBackground;
     CGRect* containerBox;
-    
-    CCSprite* rotationCircle;
     Phase touchOperation;
     
     // Physics section.
