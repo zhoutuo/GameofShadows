@@ -219,6 +219,46 @@ int count_swipe_down = 0;
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // SHADOW MAP METHOD
+-(void) generateShadowMap2{
+    
+    for (int i = 0; i < DEVICE_WIDTH; ++i) {
+        for (int j = 0; j < DEVICE_HEIGHT; ++j) {
+            [self setShadowMap:i :j :false];
+        }
+    }
+    
+    for (CCSprite* cur in self.children) {
+        if (cur.zOrder != SHADOW_SPRITE_DEPTH) {
+            continue;
+        }
+        
+        CGRect boundingBox = cur.boundingBox;
+        CGPoint origin = boundingBox.origin;
+        for (int i = 0; i < boundingBox.size.height; ++i) {
+            for (int j = 0; j < boundingBox.size.width; ++j) {
+                int newX = j + (int)origin.x;
+                int newY = i + (int)origin.y;
+                newX = MAX(0, newX);
+                newX = MIN(newX, DEVICE_WIDTH);
+                
+                newY = MAX(0, newY);
+                newY = MIN(newY, DEVICE_HEIGHT);
+                
+                float omsX = newX/2;
+                float omsY = newY/2;
+               // NSLog(@"converted shadow pos: (%f,%f)",omsX, omsY);
+                
+                b2Vec2 worldPoint = b2Vec2(omsX / PTM_RATIO, omsY / PTM_RATIO);
+                GameplayScene* scene = (GameplayScene*)[self parent];
+                if([scene checkIfPointInFixture:worldPoint]){
+                    [self setShadowMap:newX :newY :true];
+                }
+                
+            }
+        }
+    }
+}
+
 -(void) generateShadowMap {
     
     //    GameplayScene* curScene = (GameplayScene*)self.parent;
@@ -255,7 +295,6 @@ int count_swipe_down = 0;
             }
         } else {
             //if there is big rotation
-            int count = 0;
             CGPoint origin = boundingBox.origin;
             for (int i = 0; i < boundingBox.size.height; ++i) {
                 for (int j = 0; j < boundingBox.size.width; ++j) {
@@ -268,7 +307,6 @@ int count_swipe_down = 0;
                         
                         newY = MAX(0, newY);
                         newY = MIN(newY, DEVICE_HEIGHT);
-                        ++count;
                         [self setShadowMap:newX :newY :true];
                     }
                 }
@@ -320,7 +358,7 @@ int count_swipe_down = 0;
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADOW LAYER EVENTS
 -(void) startActionMode {
-    [self generateShadowMap];
+    [self generateShadowMap2];
     self.isTouchEnabled = YES;
     [self scheduleUpdate];
     [self toggleLightSourceActions:true];

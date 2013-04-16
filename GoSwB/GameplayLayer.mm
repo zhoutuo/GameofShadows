@@ -80,7 +80,7 @@
 
     
     //get the lights
-    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    /*NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
     for(NSDictionary* lightSource in lights){
         //get sprite name
         NSString* name = [lightSource objectForKey:@"on_filename"];
@@ -100,7 +100,8 @@
         [source setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
         [source setPhysicsBody:lightSourceBody];
         [objectsContainer addChild:source z:LIGHT_DEPTH tag:[GameplayScene TagGenerater]];
-    }
+    }*/
+
 }
 
 // Physics section
@@ -299,9 +300,23 @@
     return ccpSub(point, objectsContainer.boundingBox.origin);
 }
 
+-(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint{
+    b2Body* body = physicsWorld -> GetBodyList();
+    while(body != NULL){
+        b2Fixture* fixture = body -> GetFixtureList();
+        while (fixture != NULL){
+            fixture = fixture -> GetNext();
+        }
+        body = body -> GetNext();
+    }
+    
+    return false;
+}
+
+
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-        
+    
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];

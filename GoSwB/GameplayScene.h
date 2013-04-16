@@ -29,6 +29,7 @@
 }
 
 +(NSInteger) TagGenerater;
+-(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint;
 -(void) finishObjectsCreation: (CCArray*) objects withRatios:(CCArray*) ratios;
 -(void) finishLightsCreation: (CCArray*) lights withRatios:(CCArray*) ratios;
 -(void) finishMovingOneObject: (NSInteger) objectTag withRatio:(CGPoint) ratio;
