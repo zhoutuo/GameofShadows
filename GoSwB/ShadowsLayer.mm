@@ -226,7 +226,6 @@ int count_swipe_down = 0;
             [self setShadowMap:i :j :false];
         }
     }
-    
     for (CCSprite* cur in self.children) {
         if (cur.zOrder != SHADOW_SPRITE_DEPTH) {
             continue;
@@ -234,8 +233,9 @@ int count_swipe_down = 0;
         
         CGRect boundingBox = cur.boundingBox;
         CGPoint origin = boundingBox.origin;
-        for (int i = 0; i < boundingBox.size.height; ++i) {
-            for (int j = 0; j < boundingBox.size.width; ++j) {
+        
+        for (int i = 0; i < boundingBox.size.height; i+=SHADOW_BLOCK_SIZE) {
+            for (int j = 0; j < boundingBox.size.width; j+=SHADOW_BLOCK_SIZE) {
                 int newX = j + (int)origin.x;
                 int newY = i + (int)origin.y;
                 newX = MAX(0, newX);
@@ -246,14 +246,24 @@ int count_swipe_down = 0;
                 
                 float omsX = newX/2;
                 float omsY = newY/2;
-               // NSLog(@"converted shadow pos: (%f,%f)",omsX, omsY);
                 
                 b2Vec2 worldPoint = b2Vec2(omsX / PTM_RATIO, omsY / PTM_RATIO);
                 GameplayScene* scene = (GameplayScene*)[self parent];
-                if([scene checkIfPointInFixture:worldPoint]){
-                    [self setShadowMap:newX :newY :true];
+                if([scene checkIfPointInFixture:worldPoint :origin]){
+                    for(int newi = i; newi < i+SHADOW_BLOCK_SIZE; newi++){
+                        for(int newj = j; newj < j+SHADOW_BLOCK_SIZE; newj++){
+                            newX = newj + (int)origin.x;
+                            newY = newi + (int)origin.y;
+                            newX = MAX(0, newX);
+                            newX = MIN(newX, DEVICE_WIDTH);
+                            
+                            newY = MAX(0, newY);
+                            newY = MIN(newY, DEVICE_HEIGHT);
+                            
+                            [self setShadowMap:newX :newY :true];
+                        }
+                    }
                 }
-                
             }
         }
     }

@@ -81,7 +81,7 @@
 
     
     //get the lights
-    /*NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
     for(NSDictionary* lightSource in lights){
         //get sprite name
         NSString* name = [lightSource objectForKey:@"on_filename"];
@@ -106,7 +106,7 @@
         [source setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
         [source setPhysicsBody:lightSourceBody];
         [objectsContainer addChild:source z:LIGHT_DEPTH tag:[GameplayScene TagGenerater]];
-    }*/
+    }
 
 }
 
@@ -293,22 +293,38 @@
     return ccpSub(point, objectsContainer.boundingBox.origin);
 }
 
--(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint{
+-(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint :(CGPoint) origin{
     b2Body* body = physicsWorld -> GetBodyList();
+    origin.x /=2;
+    origin.y /=2;
     while(body != NULL){
-        b2Fixture* fixture = body -> GetFixtureList();
-        while (fixture != NULL){
-            if(fixture -> TestPoint(worldPoint)){
-                return true;
+        if(body -> GetUserData()){
+            
+            PhysicsSprite* sprite = (PhysicsSprite*)body->GetUserData();
+            CGPoint bodyOrigin = sprite.boundingBox.origin;
+            if(ccpDistance(bodyOrigin, origin) <= 1){
+                
+                b2Fixture* fixture = body -> GetFixtureList();
+                NSInteger count = 0;
+                while (fixture != NULL){
+                    count++;
+                    switch (fixture -> GetType()) {
+                        case b2Shape::e_polygon:
+                        {
+                            if(fixture -> TestPoint(worldPoint)){
+                                return true;
+                            }
+                        }
+                    }
+                    fixture = fixture -> GetNext();
+                }
             }
-            fixture = fixture -> GetNext();
         }
+        // NSLog(@"number of fixtures: %i",count);
         body = body -> GetNext();
     }
-    
     return false;
 }
-
 
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

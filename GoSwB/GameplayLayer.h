@@ -43,7 +43,7 @@ typedef enum {
 
 
 -(CGPoint) getSpriteRelativePos: (CCSprite*) object;
--(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint;
+-(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint :(CGPoint) origin;
 
 
 -(void) moveOMStoLeft;
