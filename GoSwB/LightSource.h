@@ -25,5 +25,6 @@
 -(id) initWithProperties: (NSString*)on_name :(NSString*)off_name :(float)on_dur :(float)off_dur :(float)vertical_per;
 -(bool) isOn;
 -(void) execActions;
+-(void) stopExecActions;
 -(bool) lightSourceContains: (CGPoint)point;
 @end
