@@ -298,6 +298,9 @@
     while(body != NULL){
         b2Fixture* fixture = body -> GetFixtureList();
         while (fixture != NULL){
+            if(fixture -> TestPoint(worldPoint)){
+                return true;
+            }
             fixture = fixture -> GetNext();
         }
         body = body -> GetNext();
