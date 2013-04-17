@@ -81,7 +81,7 @@
 
     
     //get the lights
-    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    /*NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
     for(NSDictionary* lightSource in lights){
         //get sprite name
         NSString* name = [lightSource objectForKey:@"on_filename"];
@@ -106,7 +106,7 @@
         [source setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
         [source setPhysicsBody:lightSourceBody];
         [objectsContainer addChild:source z:LIGHT_DEPTH tag:[GameplayScene TagGenerater]];
-    }
+    }*/
 
 }
 

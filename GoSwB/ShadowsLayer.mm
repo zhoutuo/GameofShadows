@@ -18,6 +18,7 @@
 @implementation ShadowsLayer
 
 int count_swipe_down = 0;
+CCRenderTexture* renderTexture = NULL;
 
 -(id) init {
     if (self = [super init]) {
@@ -49,6 +50,10 @@ int count_swipe_down = 0;
 
 -(void) dealloc {
     [objShadowTable release];
+    if(renderTexture != NULL){
+        [renderTexture release];
+        renderTexture = NULL;
+    }
     [super dealloc];
 }
 
@@ -227,15 +232,14 @@ int count_swipe_down = 0;
         }
     }
     for (CCSprite* cur in self.children) {
-        if (cur.zOrder != SHADOW_SPRITE_DEPTH) {
+        if (!(cur.zOrder == SHADOW_SPRITE_DEPTH || cur.zOrder == LIGHT_SPRITE_DEPTH)) {
             continue;
         }
-        
         CGRect boundingBox = cur.boundingBox;
         CGPoint origin = boundingBox.origin;
         
-        for (int i = 0; i < boundingBox.size.height; i+=SHADOW_BLOCK_SIZE) {
-            for (int j = 0; j < boundingBox.size.width; j+=SHADOW_BLOCK_SIZE) {
+        for (int i = 0; i < boundingBox.size.height; i+=SHADOW_BLOCK_SIZE/2) {
+            for (int j = 0; j < boundingBox.size.width; j+=SHADOW_BLOCK_SIZE/2) {
                 int newX = j + (int)origin.x;
                 int newY = i + (int)origin.y;
                 newX = MAX(0, newX);
@@ -250,8 +254,8 @@ int count_swipe_down = 0;
                 b2Vec2 worldPoint = b2Vec2(omsX / PTM_RATIO, omsY / PTM_RATIO);
                 GameplayScene* scene = (GameplayScene*)[self parent];
                 if([scene checkIfPointInFixture:worldPoint :origin]){
-                    for(int newi = i; newi < i+SHADOW_BLOCK_SIZE; newi++){
-                        for(int newj = j; newj < j+SHADOW_BLOCK_SIZE; newj++){
+                    for(int newi = i-SHADOW_BLOCK_SIZE/2; newi < i+SHADOW_BLOCK_SIZE/2; newi++){
+                        for(int newj = j-SHADOW_BLOCK_SIZE/2; newj < j+SHADOW_BLOCK_SIZE/2; newj++){
                             newX = newj + (int)origin.x;
                             newY = newi + (int)origin.y;
                             newX = MAX(0, newX);
@@ -267,6 +271,31 @@ int count_swipe_down = 0;
             }
         }
     }
+    //[self drawShadowMap];//for debugging
+}
+
+-(void) drawShadowMap {
+    NSLog(@"drawing shadow map");
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    
+    renderTexture = [[CCRenderTexture renderTextureWithWidth:size.width height:size.height] retain]; 
+    [self addChild:renderTexture z:10];
+    [renderTexture setPosition:ccp( size.width * 0.5f, size.height * 0.5f )];
+    [renderTexture clear:1.0f g:1.0f b:1.0f a:1.0f];
+    
+    NSLog(@"working...don't panic.");
+    [renderTexture begin];
+    for(int i = 0; i < DEVICE_WIDTH; i++){
+        for(int j = 0; j < DEVICE_HEIGHT; j++){
+            if(shadowMap[j][i] == true){
+                CCSprite* pixelSprite = [CCSprite spriteWithFile:@"testPixel.png"];
+                [pixelSprite setPosition:ccp(i,j)];
+                [pixelSprite visit];
+            }
+        }
+    }
+    
+    [renderTexture end];
 }
 
 -(void) generateShadowMap {
@@ -382,6 +411,10 @@ int count_swipe_down = 0;
     //unschedule the udpate fucntion
     [self unscheduleUpdate];
     [self toggleLightSourceActions:false];
+    if(renderTexture != NULL){
+        [renderTexture release];
+        renderTexture = NULL;
+    }
     CCLOG(@"Leave Action Mode");
 }
 
