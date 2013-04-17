@@ -81,7 +81,7 @@
 
     
     //get the lights
-    /*NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
     for(NSDictionary* lightSource in lights){
         //get sprite name
         NSString* name = [lightSource objectForKey:@"on_filename"];
@@ -106,7 +106,7 @@
         [source setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
         [source setPhysicsBody:lightSourceBody];
         [objectsContainer addChild:source z:LIGHT_DEPTH tag:[GameplayScene TagGenerater]];
-    }*/
+    }
 
 }
 
@@ -161,6 +161,7 @@
 
         }
     }
+
 }
 
 // Helper methods for pixel-meter conversions for Box2D.
@@ -254,6 +255,7 @@
     
     [scene finishObjectsCreation:shadowVisibleChildren withRatios:ratios];
     [scene finishLightsCreation:lightChildren withRatios:lightRatios];
+    [self scheduleUpdate];
 
 
 }
@@ -476,7 +478,7 @@
     [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
     [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
     self.isTouchEnabled = YES;
-    [self scheduleUpdate];
+    //[self scheduleUpdate];
     CCLOG(@"Enter Puzzle Mode");
 }
 
@@ -486,7 +488,7 @@
     [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
     [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
     self.isTouchEnabled = NO;
-    [self unscheduleUpdate];
+    //[self unscheduleUpdate];
     CCLOG(@"Leave Puzzle Mode");
 }
 
