@@ -8,6 +8,7 @@
 
 #import "GameplayLayer.h"
 #import "GameplayScene.h"
+#import "LightSource.h"
 #import "GB2ShapeCache.h"
 #import "CCDrawingPrimitives.h"
 #import "Globals.h"
@@ -18,14 +19,13 @@
 #define NOTAG -1
 #define BACKGROUND_DEPTH 1
 #define OBJECT_DEPTH -1
+#define LIGHT_DEPTH -2
 #define OMS_MOVEMENT_SPEED 0.2
 
 -(id) init {
     if (self = [super init]) {
         touchedObjectTag = NOTAG;              //the tag for the sprite being touched right now
         touchOperation = NONE;
-        touchArray = [CCArray array];  //this is the array used for recording touches
-        [touchArray retain];  //since this is a autorelease object, retain it
                 
         //by making background sprite center on lower left corner will make it
         //easier to contain all the children
@@ -41,14 +41,10 @@
         [omsBackground setPosition:[objectsContainer position]];
         [self addChild:omsBackground z:OBJECT_DEPTH-1];
         
-        //add rotation circle to the layer
-        //make it invisible
-        rotationCircle = [CCSprite spriteWithFile:@"rotate_circle.png"];
-        [rotationCircle retain];
-        
         // Physics section.
         [self initPhysics];
         [self setupObjects];
+        
     }
     
     return self;
@@ -64,7 +60,13 @@
     for (NSArray* objectData in objects)
     {
         PhysicsSprite* objectSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [objectData objectAtIndex:0]]];
-        objectSprite.position = CGPointMake([[objectData objectAtIndex:1] floatValue], [[objectData objectAtIndex:2] floatValue]);
+        objectSprite.position = ccp([[objectData objectAtIndex:1] floatValue],
+                                    [[objectData objectAtIndex:2] floatValue]);
+        //add rotation circle here
+        CCSprite* rotationCircle = [CCSprite spriteWithFile:@"rotate_circle.png"];
+        rotationCircle.visible = NO;
+        [objectSprite addChild:rotationCircle];
+        rotationCircle.position = ccpSub(objectSprite.position, objectSprite.boundingBox.origin);
         b2BodyDef objectBodyDef;
         objectBodyDef.type = b2_dynamicBody;
         objectBodyDef.position.Set(objectSprite.position.x / PTM_RATIO, objectSprite.position.y / PTM_RATIO);
@@ -74,48 +76,38 @@
         [objectSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:[objectData objectAtIndex:0]]];
         [objectSprite setPhysicsBody:objectBody];
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+        
     }
-    /*
-    float height = 384;
-    b2Body* previousConnector = physicsGroundBody;
-    for (int i = 0; i < 5; i++)
-    {
-        PhysicsSprite* ropeSprite = [PhysicsSprite spriteWithFile:@"ThinRope.png"];
-        ropeSprite.position = CGPointMake(320, height);
-        b2BodyDef ropeBodyDef;
-        ropeBodyDef.type = b2_dynamicBody;
-        ropeBodyDef.position.Set(ropeSprite.position.x / PTM_RATIO, ropeSprite.position.y / PTM_RATIO);
-        ropeBodyDef.userData = ropeSprite;
-        b2Body* ropeBody = physicsWorld -> CreateBody(&ropeBodyDef);
-        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:ropeBody forShapeName:@"ThinRope"];
-        [ropeSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"ThinRope"]];
-        [ropeSprite setPhysicsBody:ropeBody];
-        [objectsContainer addChild:ropeSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-        b2RevoluteJointDef jointDef;
-        jointDef.Initialize(previousConnector, ropeBody, [self toMeters:CGPointMake(320, height)]);
-        physicsWorld -> CreateJoint(&jointDef);
-        ropeBody -> SetAngularDamping(0.2f);
-        ropeBody -> SetLinearDamping(1.0f);
-        previousConnector = ropeBody;
-        height -= ropeSprite.boundingBox.size.height;
+
+    
+    //get the lights
+    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    for(NSDictionary* lightSource in lights){
+        //get sprite name
+        NSString* name = [lightSource objectForKey:@"on_filename"];
+        //get the on_filename
+        NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
+        
+        PhysicsSprite* source = [PhysicsSprite spriteWithFile:on_name];
+        //get the initial position
+        [source setPosition:ccp([[lightSource objectForKey:@"origin_x"] floatValue],
+                                [[lightSource objectForKey:@"origin_y"] floatValue])];
+        //add rotation circle here
+        CCSprite* rotationCircle = [CCSprite spriteWithFile:@"rotate_circle.png"];
+        rotationCircle.visible = NO;
+        [source addChild:rotationCircle];
+        rotationCircle.position = ccpSub(source.position, source.boundingBox.origin);
+        b2BodyDef lightSourceBodyDef;
+        lightSourceBodyDef.type = b2_dynamicBody;
+        lightSourceBodyDef.position.Set(source.position.x / PTM_RATIO, source.position.y / PTM_RATIO);
+        lightSourceBodyDef.userData = source;
+        b2Body* lightSourceBody = physicsWorld->CreateBody(&lightSourceBodyDef);
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightSourceBody forShapeName:name];
+        [source setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
+        [source setPhysicsBody:lightSourceBody];
+        [objectsContainer addChild:source z:LIGHT_DEPTH tag:[GameplayScene TagGenerater]];
     }
-    */
-    PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:@"Chandelier.png"];
-    lightSprite.position = CGPointMake(320, 384);
-    b2BodyDef lightBodyDef;
-    lightBodyDef.type = b2_dynamicBody;
-    lightBodyDef.position.Set(lightSprite.position.x / PTM_RATIO, lightSprite.position.y / PTM_RATIO);
-    lightBodyDef.userData = lightSprite;
-    b2Body* lightBody = physicsWorld -> CreateBody(&lightBodyDef);
-    [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightBody forShapeName:@"Chandelier"];
-    [lightSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:@"Chandelier"]];
-    [lightSprite setPhysicsBody:lightBody];
-    [objectsContainer addChild:lightSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
-    b2RevoluteJointDef jointDef;
-    jointDef.Initialize(physicsGroundBody, lightBody, [self toMeters:CGPointMake(320, 384)]);//, lightBody -> GetPosition());
-    b2RevoluteJoint* joint = (b2RevoluteJoint*)physicsWorld -> CreateJoint(&jointDef);
-    lightBody -> SetAngularDamping(0.2f);
-    lightBody -> SetLinearDamping(0.2f);
+
 }
 
 // Physics section
@@ -130,7 +122,6 @@
     
     // Define the ground body.
     b2BodyDef physicsGroundBodyDef;
-    //physicsGroundBodyDef.type = b2_dynamicBody;
     physicsGroundBody = physicsWorld -> CreateBody(&physicsGroundBodyDef);
     
     physicsWorldTop = NULL;
@@ -164,7 +155,7 @@
             [scene finishMovingOneObject:sprite.tag withRatio:[self getSpriteRelativePos:sprite]];
             
             //rotation
-            float angel = CC_RADIANS_TO_DEGREES(body->GetAngle());
+            float angel = -1 * CC_RADIANS_TO_DEGREES(body->GetAngle());
             sprite.rotation = angel;
             [scene finishRotatingOneObject:sprite.tag withAngle:angel];
 
@@ -213,13 +204,11 @@
     // Ground Box Right.
     physicsGroundBox.Set(b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY + physicsGroundBoxHeight), b2Vec2(OMSOriginX + physicsGroundBoxWidth, OMSOriginY));
     physicsWorldRight = physicsGroundBody -> CreateFixture(&physicsGroundBox, density);
+    
 }
 
 
 -(void) dealloc {
-    [touchArray release]; //remove array since we retain it in the init function
-    [rotationCircle release];
-    
     // Physics cleanup section.
     // Remove existing fixtures, if any.
     if (physicsWorldBottom != NULL) physicsGroundBody -> DestroyFixture(physicsWorldBottom);
@@ -232,10 +221,6 @@
     physicsWorldLeft = NULL;
     physicsWorldRight = NULL;
     
-    // Release object arrays.
-    [objectSpriteArray release];
-    [objectBodyArray release];
-    
     [super dealloc];
 }
 
@@ -247,38 +232,40 @@
     GameplayScene* scene = (GameplayScene*)self.parent;
     CCArray* shadowVisibleChildren = [CCArray array];
     CCArray* ratios = [CCArray array];
+    
+    //tell the scene all light sources
+    CCArray* lightChildren = [CCArray array];
+    CCArray* lightRatios = [CCArray array];
+    
     for (CCSprite* sprite in objectsContainer.children) {
-        
+        //filter out all children except object and light source
+        CGPoint ratio = [self getSpriteRelativePos:sprite];
         if (sprite.zOrder == OBJECT_DEPTH) {
             [shadowVisibleChildren addObject:sprite];
-            CGPoint ratio = [self getSpriteRelativePos:sprite];
             [ratios addObject:[NSValue valueWithCGPoint:ratio]];
+        }
+        
+        if (sprite.zOrder == LIGHT_DEPTH) {
+            [lightChildren addObject:sprite];
+            [lightRatios addObject:[NSValue valueWithCGPoint:ratio]];
         }
         
     }
     
     [scene finishObjectsCreation:shadowVisibleChildren withRatios:ratios];
+    [scene finishLightsCreation:lightChildren withRatios:lightRatios];
+
+
 }
 
 
--(void) showRotationCircle: (CGPoint)position {
-    [self toggleRotationCircle: YES];
-    rotationCircle.position = position;
+-(void) toggleRotationCircle: (CCSprite*)parent :(BOOL)value {
+    //CCLOG(@"%@", NSStringFromCGPoint(parent.position));
+    CCArray* children = parent.children;
+    CCSprite* rotationCircle = (CCSprite*)children.lastObject;
+    rotationCircle.visible = value;
 }
 
--(void) toggleRotationCircle: (BOOL)value {
-    if (value == NO) {
-        if (rotationCircle.parent == nil) {
-            return;
-        }
-        [objectsContainer removeChild:rotationCircle cleanup:NO];
-    } else {
-        if (rotationCircle.parent != nil) {
-            return;
-        }
-        [objectsContainer addChild:rotationCircle z:BACKGROUND_DEPTH];
-    }
-}
 
 -(void) fadeOutTouchRect {
     id action = [CCFadeOut actionWithDuration:2];
@@ -306,13 +293,45 @@
     return ccpSub(point, objectsContainer.boundingBox.origin);
 }
 
+-(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint :(CGPoint) origin{
+    b2Body* body = physicsWorld -> GetBodyList();
+    origin.x /=2;
+    origin.y /=2;
+    while(body != NULL){
+        if(body -> GetUserData()){
+            
+            PhysicsSprite* sprite = (PhysicsSprite*)body->GetUserData();
+            CGPoint bodyOrigin = sprite.boundingBox.origin;
+            if(ccpDistance(bodyOrigin, origin) <= 1){
+                
+                b2Fixture* fixture = body -> GetFixtureList();
+                NSInteger count = 0;
+                while (fixture != NULL){
+                    count++;
+                    switch (fixture -> GetType()) {
+                        case b2Shape::e_polygon:
+                        {
+                            if(fixture -> TestPoint(worldPoint)){
+                                return true;
+                            }
+                        }
+                    }
+                    fixture = fixture -> GetNext();
+                }
+            }
+        }
+        // NSLog(@"number of fixtures: %i",count);
+        body = body -> GetNext();
+    }
+    return false;
+}
+
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-        
+    
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
-    [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
         
     if (touchOperation == NONE) {
@@ -325,8 +344,17 @@
                     touchOperation = TAP;
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
-                    body->SetAwake(false);
-                    body->SetActive(false);
+                    
+                    b2Vec2 centerOfMass = body -> GetWorldCenter();
+                    
+                    b2MouseJointDef md;
+                    md.bodyB = body;
+                    md.bodyA = physicsGroundBody;
+                    b2Vec2 locationWorld =  centerOfMass;//[self toMeters:location];
+                    md.target = locationWorld;
+                    md.collideConnected = true;
+                    md.maxForce = body->GetMass() * 100.0f;
+                    mouseJoint = (b2MouseJoint *) physicsWorld->CreateJoint(&md);
                     break;
                 }
             }
@@ -336,14 +364,14 @@
         
         //if the first tap for rotating is not inside the circle
         //cancel the rotating
-        if (!CGRectContainsPoint(rotationCircle.boundingBox, location)) {
-            [self toggleRotationCircle:NO];
-            PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-            b2Body* body = [cur getPhysicsBody];
-            body->SetActive(true);
-            body->SetAwake(true);
+        CCSprite* objectTouched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+        CCSprite* rotationCircle = (CCSprite*)[objectTouched.children lastObject];
+        if (!CGRectContainsPoint([rotationCircle boundingBox], [rotationCircle convertToNodeSpace:location])) {
+            [self toggleRotationCircle:objectTouched :NO];
             touchedObjectTag = NOTAG;
             touchOperation = NONE;
+            physicsWorld -> DestroyJoint(mouseJoint);
+            mouseJoint = NULL;
         }
     }
         
@@ -352,7 +380,6 @@
 -(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
-    [touchArray addObject:[NSValue valueWithCGPoint:location]];
     
     location = [[CCDirector sharedDirector] convertToGL:location];
         
@@ -363,22 +390,21 @@
 
         //try to check whether the touched sprite is the objects container or not
         CCSprite* touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-        CGRect rect = objectsContainer.boundingBox;
+        //CGRect rect = objectsContainer.boundingBox;
 
         //since we did not change the anchor point of the children sprites
         //we do not need to change the position of locaiton
         //but we need to make sure that the location is inside the touch rect
-        location = [self fromLayerCoord2Container:location];
         
-        CGSize spriteBox = [touched boundingBox].size;
-        location.x = MIN(location.x, rect.size.width - spriteBox.width / 2);
-        location.x = MAX(location.x, spriteBox.width / 2);
-        location.y = MIN(location.y, rect.size.height - spriteBox.height / 2);
-        location.y = MAX(location.y, spriteBox.height / 2);
+        location = [self fromLayerCoord2Container:location];
+
+        
         touched.position = location;
         //moving the physical body as well
         b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
-        body->SetTransform([self toMeters:location], body->GetAngle());
+        body -> SetAngularVelocity(0);
+        //body->SetTransform([self toMeters:location], body->GetAngle());
+        mouseJoint -> SetTarget([self toMeters:location]);
         
     } else if(touchOperation == ROTATING) {
         PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
@@ -391,8 +417,7 @@
         if (location.x < rotatePoint.x) {
             angle = -angle;
         }
-        angle = CC_RADIANS_TO_DEGREES(angle);
-        rotated.rotation = angle;
+        angle = -1* CC_RADIANS_TO_DEGREES(angle);
         //rotate the physical body as well
         b2Body* body = [rotated getPhysicsBody];
         body->SetTransform(body->GetPosition(), CC_DEGREES_TO_RADIANS(angle));
@@ -401,30 +426,33 @@
 }
 
 -(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    
     if (touchOperation == TAP or touchOperation == MOVING) {
         //show circle around tapped object, start to rotate
-        [self showRotationCircle:[objectsContainer getChildByTag:touchedObjectTag].position];
+        [self toggleRotationCircle: (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag] :YES];
         touchOperation = ROTATING;
         
     } else if(touchOperation == ROTATING) {
         //here its either rotation finished
-        [self toggleRotationCircle:NO];
+        [self toggleRotationCircle:(CCSprite*)[objectsContainer getChildByTag:touchedObjectTag] :NO];
         //when finished with rotating object
         //wake physical calculation
-        PhysicsSprite* cur = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-        b2Body* body = [cur getPhysicsBody];
-        body->SetActive(true);
-        body->SetAwake(true);
         //clean
         touchOperation = NONE;
         touchedObjectTag = NOTAG;
+        physicsWorld -> DestroyJoint(mouseJoint);
+        mouseJoint = NULL;
         
     }
     
-    //clear the touch array
-    [touchArray removeAllObjects];
 }
 
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event{
+    if(mouseJoint != NULL){
+        physicsWorld -> DestroyJoint(mouseJoint);
+        mouseJoint = NULL;
+    }
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

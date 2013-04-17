@@ -25,9 +25,6 @@ typedef enum {
     CCSprite* objectsContainer;
     CCSprite* omsBackground;
     CGRect* containerBox;
-    
-    CCSprite* rotationCircle;
-    CCArray* touchArray;
     Phase touchOperation;
     
     // Physics section.
@@ -38,6 +35,7 @@ typedef enum {
     b2Fixture* physicsWorldBottom;
     b2Fixture* physicsWorldLeft;
     b2Fixture* physicsWorldRight;
+    b2MouseJoint* mouseJoint;
     
     NSMutableArray* objectSpriteArray;
     NSMutableArray* objectBodyArray;
@@ -45,6 +43,8 @@ typedef enum {
 
 
 -(CGPoint) getSpriteRelativePos: (CCSprite*) object;
+-(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint :(CGPoint) origin;
+
 
 -(void) moveOMStoLeft;
 -(void) moveOMStoRight;

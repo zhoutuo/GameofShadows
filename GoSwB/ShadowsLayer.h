@@ -13,17 +13,19 @@
 #define DEVICE_HEIGHT 768
 #define SHADOW_SPRITE_DEPTH 1
 #define WORMHOLE_DEPTH 2
+#define LIGHT_SPRITE_DEPTH 3
 #define DYNAMIC_LIGHTNING_DEPTH 50
 #define SHADOW_MONESTER_DEPTH 100
+#define SHADOW_BLOCK_SIZE 8
 
 @interface ShadowsLayer : CCLayer {
     NSMutableDictionary* objShadowTable;
     bool shadowMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     CCSprite* shadowMonster;
     CCSprite* wormholeExit;
-    
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
+-(void) castLightFrom:(CCArray*)lights withRatios:(CCArray*)ratios;
 -(void) updateShadowPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint) relativePos;
 -(void) updateShadowRot:(NSInteger)objectSpriteTag withAngle:(float) angle;
 -(void) startActionMode;

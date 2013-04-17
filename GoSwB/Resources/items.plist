@@ -703,7 +703,7 @@
 
 					<dict>
                         <key>density</key> <real>2</real>
-                        <key>friction</key> <real>0</real>
+                        <key>friction</key> <real>0.7</real>
                         <key>restitution</key> <real>0</real>
                         <key>filter_categoryBits</key> <integer>1</integer>
                         <key>filter_groupIndex</key> <integer>0</integer>
@@ -715,10 +715,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -67.000,215.000 }</string>	
-								<string>{ -67.000,108.000 }</string>	
-								<string>{ 64.000,108.000 }</string>	
-								<string>{ 64.000,215.000 }</string>
+								<string>{ -31.000,96.000 }</string>	
+								<string>{ -31.000,48.000 }</string>	
+								<string>{ 30.000,48.000 }</string>	
+								<string>{ 30.000,96.000 }</string>
 							</array>
 						</array>
                     </dict>
@@ -736,16 +736,16 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -8.000,108.000 }</string>	
-								<string>{ -8.000,-181.000 }</string>	
-								<string>{ 8.000,-181.000 }</string>	
-								<string>{ 8.000,108.000 }</string>
+								<string>{ -5.000,48.000 }</string>	
+								<string>{ -5.000,-83.000 }</string>	
+								<string>{ 4.000,-83.000 }</string>	
+								<string>{ 4.000,48.000 }</string>
 							</array>
 						</array>
                     </dict>
 					<dict>
                         <key>density</key> <real>2</real>
-                        <key>friction</key> <real>0</real>
+                        <key>friction</key> <real>0.7</real>
                         <key>restitution</key> <real>0</real>
                         <key>filter_categoryBits</key> <integer>1</integer>
                         <key>filter_groupIndex</key> <integer>0</integer>
@@ -757,10 +757,10 @@
 						<key>polygons</key>
 						<array>
 							<array>	
-								<string>{ -23.000,-181.000 }</string>	
-								<string>{ -23.000,-221.000 }</string>	
-								<string>{ 22.000,-221.000 }</string>	
-								<string>{ 22.000,-181.000 }</string>
+								<string>{ -14.000,-83.000 }</string>	
+								<string>{ -14.000,-97.000 }</string>	
+								<string>{ 11.000,-97.000 }</string>	
+								<string>{ 11.000,-83.000 }</string>
 							</array>
 						</array>
                     </dict>
