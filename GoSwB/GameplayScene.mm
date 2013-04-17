@@ -161,4 +161,8 @@ static NSInteger tagSeed = 10000;
     CCLOG(@"WIN, STILL SUCK");
 }
 
+-(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint :(CGPoint) origin{
+    return [gameplayLayer checkIfPointInFixture: worldPoint :origin];
+}
+
 @end
