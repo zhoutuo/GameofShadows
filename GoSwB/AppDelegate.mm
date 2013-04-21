@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "GameplayScene.h"
 #import "CCBReader.h"
+#import "SimpleAudioEngine.h"
 
 @implementation AppController
 
@@ -80,6 +81,9 @@
 	// Then add the scene to the stack. The director will run it when it automatically when the view is displayed.
 	[director_ pushScene: mainScene];
     
+    
+    //Start background music
+    [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"133100__klankbeeld__horror-ambience-10.wav"];
     //TODO: Add to play
 	// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
 	//[director_ pushScene: [GameplayScene node]];
