@@ -161,6 +161,7 @@
 
         }
     }
+
 }
 
 // Helper methods for pixel-meter conversions for Box2D.
@@ -254,6 +255,7 @@
     
     [scene finishObjectsCreation:shadowVisibleChildren withRatios:ratios];
     [scene finishLightsCreation:lightChildren withRatios:lightRatios];
+    [self scheduleUpdate];
 
 
 }
@@ -361,12 +363,11 @@
         }
     } else if(touchOperation == ROTATING) {
         location = [self fromLayerCoord2Container:location];
-        
         //if the first tap for rotating is not inside the circle
         //cancel the rotating
         CCSprite* objectTouched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
         CCSprite* rotationCircle = (CCSprite*)[objectTouched.children lastObject];
-        if (!CGRectContainsPoint([rotationCircle boundingBox], [rotationCircle convertToNodeSpace:location])) {
+        if (!CGRectContainsPoint([rotationCircle boundingBox], [objectTouched convertToNodeSpace:location])) {
             [self toggleRotationCircle:objectTouched :NO];
             touchedObjectTag = NOTAG;
             touchOperation = NONE;
@@ -403,14 +404,13 @@
         //moving the physical body as well
         b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
         body -> SetAngularVelocity(0);
-        //body->SetTransform([self toMeters:location], body->GetAngle());
         mouseJoint -> SetTarget([self toMeters:location]);
         
     } else if(touchOperation == ROTATING) {
         PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
         CGPoint relativeCenter = [self fromContainerCoord2Layer:rotated.position];
-        CGPoint rotatePoint = ccpAdd(relativeCenter, ccp(0, 100));
-        rotatePoint = ccpSub(rotatePoint, relativeCenter);
+//        CGPoint rotatePoint = ccpAdd(relativeCenter, ccp(0, 100));
+        CGPoint rotatePoint = ccp(0, 100);
         location = ccpSub(location, relativeCenter);
         float angle = ccpAngle(location, rotatePoint);
                 
@@ -476,7 +476,7 @@
     [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
     [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,0)], nil]];
     self.isTouchEnabled = YES;
-    [self scheduleUpdate];
+    //[self scheduleUpdate];
     CCLOG(@"Enter Puzzle Mode");
 }
 
@@ -486,7 +486,7 @@
     [objectsContainer runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
     [omsBackground runAction: [CCSequence actions:[CCMoveTo actionWithDuration:OMS_MOVEMENT_SPEED position:ccp(currentX,-height)], nil]];
     self.isTouchEnabled = NO;
-    [self unscheduleUpdate];
+    //[self unscheduleUpdate];
     CCLOG(@"Leave Puzzle Mode");
 }
 
