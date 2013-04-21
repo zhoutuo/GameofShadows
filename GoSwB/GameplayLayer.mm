@@ -288,11 +288,11 @@
 }
 
 -(CGPoint) fromContainerCoord2Layer: (CGPoint) point {
-    return ccpAdd(point, objectsContainer.boundingBox.origin);
+    return [objectsContainer convertToWorldSpace:point];
 }
 
 -(CGPoint) fromLayerCoord2Container: (CGPoint) point {
-    return ccpSub(point, objectsContainer.boundingBox.origin);
+    return [objectsContainer convertToNodeSpace:point];
 }
 
 -(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint :(CGPoint) origin{
@@ -367,7 +367,9 @@
         //cancel the rotating
         CCSprite* objectTouched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
         CCSprite* rotationCircle = (CCSprite*)[objectTouched.children lastObject];
-        if (!CGRectContainsPoint([rotationCircle boundingBox], [objectTouched convertToNodeSpace:location])) {
+        CCLOG(@"%@", NSStringFromCGRect(objectTouched.boundingBox));
+        CCLOG(@"%@", NSStringFromCGPoint(location));
+        if (!CGRectContainsPoint(objectTouched.boundingBox, location)) {
             [self toggleRotationCircle:objectTouched :NO];
             touchedObjectTag = NOTAG;
             touchOperation = NONE;
