@@ -169,9 +169,9 @@ static NSInteger tagSeed = 10000;
     CCLOG(@"WIN, STILL SUCK");
 }
 
--(void) shadowMonsterTransition {
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionPageTurn transitionWithDuration:1 scene:[GameplayScene node]]];
-    CCLOG(@"TRANSITIONING, ZHOTO SUCKS");
+-(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint :(CGPoint) origin{
+    return [gameplayLayer checkIfPointInFixture: worldPoint :origin];
 }
+
 
 @end

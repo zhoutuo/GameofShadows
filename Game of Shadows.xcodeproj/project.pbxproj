@@ -1854,6 +1854,8 @@
 				1E08F92D1713CE51004A59BF /* Home_Text@2x.png in Resources */,
 				1E08F92E1713CE51004A59BF /* Resume_Text@2x.png in Resources */,
 				1E08F92F1713CE51004A59BF /* Resume_Text.png in Resources */,
+				82A1BCDA171E3CCD0063ADEC /* testPixel.png in Resources */,
+				1E774CD31724A297001BBE01 /* background_music.mp3 in Resources */,
 				280BB2FC1707A5A50043C4CA /* Sun@2x.png in Resources */,
 				280BB2FD1707A5A50043C4CA /* Sun.png in Resources */,
 				946EF649170B957C00AE6DE7 /* Room layout texture extra wide@2x.png in Resources */,
@@ -2040,6 +2042,7 @@
 				1EE102D816EEF81500EDB8FC /* LossScene.mm in Sources */,
 				1EE102DE16EFC77600EDB8FC /* WinScene.mm in Sources */,
 				285DDA11170B888E00DE5CE2 /* LightSource.mm in Sources */,
+				82E731731724995500BBF56C /* GLES-Render.mm in Sources */,
 				94683881171B6825003F56BF /* GameplayMenuLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
