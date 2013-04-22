@@ -120,6 +120,17 @@
     physicsWorld -> SetAllowSleeping(true);
     physicsWorld -> SetContinuousPhysics(true);
     
+    m_debugDraw = new GLESDebugDraw( PTM_RATIO );
+	physicsWorld->SetDebugDraw(m_debugDraw);
+	
+	uint32 flags = 0;
+	flags += b2Draw::e_shapeBit;
+	//		flags += b2Draw::e_jointBit;
+	//		flags += b2Draw::e_aabbBit;
+	//		flags += b2Draw::e_pairBit;
+	//		flags += b2Draw::e_centerOfMassBit;
+	m_debugDraw->SetFlags(flags);
+    
     // Define the ground body.
     b2BodyDef physicsGroundBodyDef;
     physicsGroundBody = physicsWorld -> CreateBody(&physicsGroundBodyDef);
@@ -346,7 +357,7 @@
                     touchOperation = TAP;
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
-                    
+                    body -> SetAwake(true);
                     b2Vec2 centerOfMass = body -> GetWorldCenter();
                     
                     b2MouseJointDef md;
@@ -373,6 +384,7 @@
             touchOperation = NONE;
             physicsWorld -> DestroyJoint(mouseJoint);
             mouseJoint = NULL;
+            
         }
     }
         
@@ -430,6 +442,9 @@
     if (touchOperation == TAP or touchOperation == MOVING) {
         //show circle around tapped object, start to rotate
         [self toggleRotationCircle: (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag] :YES];
+        PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+        b2Body* body = [rotated getPhysicsBody];
+        body -> SetAwake(false);
         touchOperation = ROTATING;
         
     } else if(touchOperation == ROTATING) {
@@ -438,11 +453,14 @@
         //when finished with rotating object
         //wake physical calculation
         //clean
+        PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+        b2Body* body = [rotated getPhysicsBody];
+        body -> SetAwake(true);
         touchOperation = NONE;
         touchedObjectTag = NOTAG;
         physicsWorld -> DestroyJoint(mouseJoint);
         mouseJoint = NULL;
-        
+
     }
     
 }
@@ -454,7 +472,20 @@
     }
 }
 
-
+-(void) draw
+{
+	/*
+    // If you want to see the physics bodies, uncomment this section
+	[super draw];
+	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+	
+	kmGLPushMatrix();
+	
+	physicsWorld->DrawDebugData();
+	
+	kmGLPopMatrix();*/
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //GAMEPLAY LAYER EVENTS
