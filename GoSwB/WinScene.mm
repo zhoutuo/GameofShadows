@@ -13,6 +13,7 @@
 
 #define MAIN_MENU_TAG 10
 #define REPLAY_TAG 1
+#define NEXT_TAG 2
 
 
 @implementation WinScene
@@ -26,7 +27,12 @@
             
         case REPLAY_TAG:
             NSLog(@"Replay button pushed");
-            [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[GameplayScene node]]];
+            [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:1 scene:[GameplayScene node]]];
+            break;
+        case NEXT_TAG:
+            NSLog(@"Next button pushed");
+            currentLevel++;
+            [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:1 scene:[GameplayScene node]]];
             break;
         default:
             break;

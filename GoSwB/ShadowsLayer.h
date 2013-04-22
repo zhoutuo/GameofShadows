@@ -23,6 +23,14 @@
     bool shadowMap[DEVICE_HEIGHT][DEVICE_WIDTH];
     CCSprite* shadowMonster;
     CCSprite* wormholeExit;
+    CCSprite* WormholeTransition;
+    bool touchOFF;
+    bool hasTransition;
+    CGPoint transitionPoint;
+    
+    //test object
+    CCSprite* sun;
+    
 }
 -(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
 -(void) castLightFrom:(CCArray*)lights withRatios:(CCArray*)ratios;

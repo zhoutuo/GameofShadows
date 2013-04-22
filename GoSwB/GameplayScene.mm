@@ -24,6 +24,11 @@ static NSInteger tagSeed = 10000;
         
         gameplayLayer = [GameplayLayer node];
         [self addChild:gameplayLayer z:3];
+        
+        gameplayMenuLayer = [GameplayMenuLayer node];
+        [self addChild:gameplayMenuLayer z:4];
+
+        
         [self initSwipeGestures];
         isPuzzleMode = true; //setting modes.
         [gameplayLayer startPuzzleMode];
@@ -38,6 +43,9 @@ static NSInteger tagSeed = 10000;
 -(void) dealloc {
     [self removeSwipeGestures];
     [super dealloc];
+}
+-(void) shift:(CGPoint) centerPoint{
+    [backgroundLayer shift:centerPoint];
 }
 
 

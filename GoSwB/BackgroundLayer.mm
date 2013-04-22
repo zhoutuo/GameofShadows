@@ -7,7 +7,6 @@
 //
 
 #import "BackgroundLayer.h"
-#import "PauseLayer.h"
 #import "Globals.h"
 
 
@@ -15,38 +14,40 @@
 
 -(id) init {
     if (self = [super init]) {
-        CGSize wins = [[CCDirector sharedDirector] winSize];
-        CCSprite* background = [CCSprite spriteWithFile:@"Room layout texture.png"];
+      //  CGSize wins = [[CCDirector sharedDirector] winSize];
         
-        background.position = ccp(wins.width / 2, wins.height / 2);
-        [self addChild:background];
-                
-        CCMenuItem *pauseMenuItem = [CCMenuItemImage
-                                    itemWithNormalImage:@"Pause.png" selectedImage:@"Pause.png"
-                                    target:self selector:@selector(pauseButtonMenu:)];
-        pauseMenuItem.position = ccp(984, 730);
-        CCMenu *pauseMenu = [CCMenu menuWithItems:pauseMenuItem, nil];
-        pauseMenu.position = CGPointZero;
-        [self addChild:pauseMenu];
+        NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
+        NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
+        
+        NSString* backgroundName = [[levelObjects objectForKey: level] objectForKey:@"Background"];
+        backgroundName = [backgroundName stringByAppendingString:@".png"];
+        background = [CCSprite spriteWithFile:backgroundName];
+        background.anchorPoint= ccp(0,0);
+        
+        background.position = ccp(0,0);
 
-        isGamePause = false;
+        [self addChild:background];
     }
     return self;
 }
 
 
--(void) pauseButtonMenu : (id) sender {
-    if(isGamePause){
-        NSLog(@"Button pushed in isGamePause == true");
-    }
-    else{
-        NSLog(@"Button pushed in isGamePause == false");
-        isGamePause = true;
-        ccColor4B c = ccc4(130,130,130,100);
-        PauseLayer * p = [[[PauseLayer alloc]initWithColor:c]autorelease];
-        [self.parent addChild:p z:10];
-        [[CCDirector sharedDirector] pause];
-    }
+-(void) shift:(CGPoint) centerPoint{
+    // get the layer's CCCamera values
+	float centerX, centerY, centerZ;
+	[self.camera centerX:&centerX centerY:&centerY centerZ:&centerZ];
+    
+    float eyeX, eyeY, eyeZ;
+	[self.camera eyeX:&eyeX eyeY:&eyeY eyeZ:&eyeZ];
+    
+    centerX = centerPoint.x;
+    centerY = centerPoint.y;
+    
+    // update the camera values
+    [self.camera setCenterX:centerX centerY:centerY centerZ:centerZ];
+    [self.camera setEyeX:centerX eyeY:centerY eyeZ:eyeZ];
 }
+
+
 
 @end

@@ -22,21 +22,63 @@ CCRenderTexture* renderTexture = NULL;
 
 -(id) init {
     if (self = [super init]) {
+        
         objShadowTable = [[NSMutableDictionary alloc] init];
+        centerCameraX = 0;
+        centerCameraX = 0;
         
         //load data from plist
         NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
         NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
         NSArray* portals = [[levelObjects objectForKey: level] objectForKey:@"Portals"];
         
+        NSString* tempN = [[levelObjects objectForKey: level] objectForKey:@"HasTransition"];
+        CCLOG(@"tempN %@", tempN);
+
+        if([tempN isEqualToString:(@"yes")]){
+            CCLOG(@"YAY");
+            hasTransition = true;
+        }else{
+            hasTransition = false;
+        }
+        
+        CCLOG(@"Has Transition %d", hasTransition);
+        
+        //add startPortal
         NSArray* startPortalData = [portals objectAtIndex:0];
         CCSprite* wormholeEntrance = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", [startPortalData objectAtIndex:0]]];
         [wormholeEntrance setPosition:CGPointMake([[startPortalData objectAtIndex:1] floatValue], [[startPortalData objectAtIndex:2] floatValue])];
-        NSArray* endPortalData = [portals objectAtIndex:1];
+        [self addChild:wormholeEntrance z:WORMHOLE_DEPTH];
+        
+        //add transition portal and camera location
+        if(hasTransition == YES){
+            NSArray* transitionPortalData = [portals objectAtIndex:1];
+            WormholeTransition = [CCSprite spriteWithFile: [NSString stringWithFormat:@"%@.png", [transitionPortalData objectAtIndex:0]]];
+            [WormholeTransition setPosition:CGPointMake([[transitionPortalData objectAtIndex:1] floatValue], [[transitionPortalData objectAtIndex:2] floatValue])];
+            [self addChild:WormholeTransition z:WORMHOLE_DEPTH];
+            
+            NSArray* cameraLocs = [[levelObjects objectForKey: level] objectForKey:@"CameraLocations"];
+            NSArray* secondCameraLoc = [cameraLocs objectAtIndex:1];
+            transitionPoint = CGPointMake([[secondCameraLoc objectAtIndex:0] floatValue], [[secondCameraLoc objectAtIndex:1] floatValue]);
+                                            
+        }else{
+            
+        }
+        
+        touchOFF = false;
+        
+        int portalLength = [portals count] - 1;
+
+        
+        //add the end portal, the last entry in portals array
+        NSArray* endPortalData = [portals objectAtIndex:portalLength];
         //load position of wormholes, entrance and exit
         wormholeExit = [CCSprite spriteWithFile:
                         [NSString stringWithFormat:@"%@.png",
                          [endPortalData objectAtIndex:0]]];
+        
+       
+        
         [wormholeExit setPosition:CGPointMake([[endPortalData objectAtIndex:1] floatValue], [[endPortalData objectAtIndex:2] floatValue])];
         [self addChild:wormholeExit z:WORMHOLE_DEPTH];
         shadowMonster = [CCSprite spriteWithFile:@"squirtle.png"];
@@ -198,6 +240,43 @@ CCRenderTexture* renderTexture = NULL;
     
 }
 
+-(void) shiftToGoal:(CGPoint)goal :(int)stepSize{
+    float centerX, centerY, centerZ;
+	float eyeX, eyeY, eyeZ;
+	[self.camera centerX:&centerX centerY:&centerY centerZ:&centerZ];
+	[self.camera eyeX:&eyeX eyeY:&eyeY eyeZ:&eyeZ];
+    GameplayScene* temp = (GameplayScene*)self.parent;
+   // [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    
+    float slope = (centerY - goal.y) / (centerX - goal.x);
+    //y = mx + b
+    float b = goal.y - (slope * goal.x);
+    
+    if(fabs(centerX - goal.x) > stepSize){
+        if(centerX < goal.x){
+            centerX += stepSize;
+            centerY = (slope * centerX) + b;
+        }else{
+            centerX -=stepSize;
+            centerY = (slope * centerX) + b;
+        }
+    }else{
+        centerX = goal.x;
+        centerY = goal.y;
+     //   [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+    }
+    
+    CGPoint backgroundPoint;
+    
+    backgroundPoint.x = centerX;
+    backgroundPoint.y = centerY;
+    [temp shift:backgroundPoint];
+    [self.camera setCenterX:centerX centerY:centerY centerZ:centerZ];
+    [self.camera setEyeX:centerX eyeY:centerY eyeZ:eyeZ];
+    
+}
+
 
 -(void) update:(ccTime)delta {
     CCArray* cornors = [self getcornorsOfMonster];
@@ -214,14 +293,35 @@ CCRenderTexture* renderTexture = NULL;
             return;
         }
     }
+    float centerX, centerY, centerZ;
+    [self.camera centerX:&centerX centerY:&centerY centerZ:&centerZ];
+    centerCameraX = centerX;
+    centerCameraY = centerY;
     
+    if(hasTransition == YES && CGRectContainsPoint([WormholeTransition boundingBox], shadowMonster.position)){
+        //do the Transition
+        
+        if(touchOFF == false && centerX !=transitionPoint.x && centerY != transitionPoint.y){
+            [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+            touchOFF = true;
+        }
+        
+        if(centerX == transitionPoint.x && centerY == transitionPoint.y){
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+            CCLOG(@"Touch Points Back On");
+            touchOFF = false;
+
+        }else{
+            [self shiftToGoal:transitionPoint:10];
+        }
+    }
     
-    if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
+   else if(CGRectContainsPoint([wormholeExit boundingBox], shadowMonster.position)) {
         CCLOG(@"CONG");
         //game accomplish event triggered
         [scene shadowMonterRescued];
     }
-    
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -451,6 +551,15 @@ CCRenderTexture* renderTexture = NULL;
     CGPoint location = [touch locationInView:[touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
     
+    //testing
+    
+    float centerX, centerY, centerZ;
+	[self.camera centerX:&centerX centerY:&centerY centerZ:&centerZ];
+    location.x += centerX;
+    location.y += centerY;
+
+    
+    //testing - end
     
     [self pathFinding :location];
     
