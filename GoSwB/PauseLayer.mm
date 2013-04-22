@@ -25,7 +25,7 @@
         CCMenuItem *menuItem2 = [CCMenuItemImage
                                  itemWithNormalImage:@"Home_Text.png" selectedImage:@"Home_Text.png" target:self selector:@selector(goHome:)];
         CCMenuItem *menuItem3 = [CCMenuItemImage
-                                 itemWithNormalImage:@"Home_Text.png" selectedImage:@"Home_Text.png" target:self selector:@selector(muteMusic:)];
+                                 itemWithNormalImage:@"Mute.png" selectedImage:@"Mute.png" target:self selector:@selector(muteMusic:)];
         CCMenu *menu = [CCMenu menuWithItems:menuItem1, menuItem2, menuItem3, nil];
         [menu alignItemsVerticallyWithPadding:10.0f];
         [self addChild:menu];
