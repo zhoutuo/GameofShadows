@@ -15,21 +15,18 @@
 -(id) init {
     if (self = [super init]) {
       //  CGSize wins = [[CCDirector sharedDirector] winSize];
-        background = [CCSprite spriteWithFile:@"Room layout texture.png"];
+        
+        NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
+        NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
+        
+        NSString* backgroundName = [[levelObjects objectForKey: level] objectForKey:@"Background"];
+        backgroundName = [backgroundName stringByAppendingString:@".png"];
+        background = [CCSprite spriteWithFile:backgroundName];
         background.anchorPoint= ccp(0,0);
         
-        
-     //   background.position = ccp(wins.width / 2, wins.height / 2);
         background.position = ccp(0,0);
-        
-        if(currentLevel == 5){
-            background = [CCSprite spriteWithFile:@"hugeBackground.png"];
-            background.anchorPoint= ccp(0,0);
-            background.anchorPoint= ccp(0,0);
-        }
+
         [self addChild:background];
-        //UIView* glView = (UIView*) [[CCDirector sharedDirector] view];
-        
     }
     return self;
 }

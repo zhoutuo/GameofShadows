@@ -18,7 +18,6 @@
     ShadowsLayer* shadowLayer;
     GameplayLayer* gameplayLayer;
     GameplayMenuLayer* gameplayMenuLayer;
-    ShadowDisruptionLayer* shadowDisruptionLayer;
     
     GameStats* gamestats;
 

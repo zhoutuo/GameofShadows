@@ -292,6 +292,8 @@
 		8290A2AE16F0146E00AC6664 /* squirtle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2AC16F0146D00AC6664 /* squirtle.png */; };
 		8290A2AF16F0146E00AC6664 /* squirtle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2AD16F0146E00AC6664 /* squirtle@2x.png */; };
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
+		C07E84C41710F2D700174D5E /* Chandelier.png in Resources */ = {isa = PBXBuildFile; fileRef = C07E84C21710F2D700174D5E /* Chandelier.png */; };
+		C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C07E84C31710F2D700174D5E /* Chandelier@2x.png */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
 		82EAD1FF16DCA460002F736F /* Room layout small window.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FE16DCA460002F736F /* Room layout small window.png */; };
 		946458D61716368300F333B8 /* hugeBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946458D51716368300F333B8 /* hugeBackground@2x.png */; };
@@ -819,6 +821,8 @@
 		8290A2AD16F0146E00AC6664 /* squirtle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "squirtle@2x.png"; path = "Resources/squirtle@2x.png"; sourceTree = "<group>"; };
 		82A0235316DC28BD00886573 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GB2ShapeCache.h; sourceTree = "<group>"; };
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
+		C07E84C21710F2D700174D5E /* Chandelier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Chandelier.png; path = Resources/Chandelier.png; sourceTree = "<group>"; };
+		C07E84C31710F2D700174D5E /* Chandelier@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Chandelier@2x.png"; path = "Resources/Chandelier@2x.png"; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
 		82EAD1FE16DCA460002F736F /* Room layout small window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout small window.png"; sourceTree = "<group>"; };
 		946458D51716368300F333B8 /* hugeBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hugeBackground@2x.png"; sourceTree = "<group>"; };
@@ -1787,6 +1791,50 @@
 				8290A2AB16EFCFB100AC6664 /* WormholeExit@2x.png in Resources */,
 				8290A2AE16F0146E00AC6664 /* squirtle.png in Resources */,
 				8290A2AF16F0146E00AC6664 /* squirtle@2x.png in Resources */,
+				285DDA13170BC27D00DE5CE2 /* lightSource2.png in Resources */,
+				28077018170CF1DC006B3297 /* timMonster.png in Resources */,
+				28077019170CF1DC006B3297 /* Couch.png in Resources */,
+				2807701A170CF1DC006B3297 /* Couch@2x.png in Resources */,
+				2807701B170CF1DC006B3297 /* ArmChair.png in Resources */,
+				2807701C170CF1DC006B3297 /* ArmChair@2x.png in Resources */,
+				2807701D170CF1DC006B3297 /* Door.png in Resources */,
+				2807701E170CF1DC006B3297 /* Door@2x.png in Resources */,
+				2807701F170CF1DC006B3297 /* Dresser.png in Resources */,
+				28077020170CF1DC006B3297 /* Dresser@2x.png in Resources */,
+				28077021170CF1DC006B3297 /* FootRest.png in Resources */,
+				28077022170CF1DC006B3297 /* FootRest@2x.png in Resources */,
+				28077023170CF1DC006B3297 /* Room layout texture@2x.jpg in Resources */,
+				28077024170CF1DC006B3297 /* grahh.png in Resources */,
+				28077025170CF1DC006B3297 /* grahh@2x.png in Resources */,
+				28077026170CF1DC006B3297 /* Table.png in Resources */,
+				28077027170CF1DC006B3297 /* Table@2x.png in Resources */,
+				28077028170CF1DC006B3297 /* Room layout small window.png in Resources */,
+				28077029170CF1DC006B3297 /* Room layout small window@2x.png in Resources */,
+				2807702A170CF1DC006B3297 /* Room layout texture.png in Resources */,
+				2807702B170CF1DC006B3297 /* Room layout texture@2x.png in Resources */,
+				2807702C170CF1DC006B3297 /* Barrel.png in Resources */,
+				2807702D170CF1DC006B3297 /* Barrel@2x.png in Resources */,
+				2807702E170CF1DC006B3297 /* levelObjects.plist in Resources */,
+				2807702F170CF1DC006B3297 /* items.plist in Resources */,
+				28077030170CF1DC006B3297 /* items.pes in Resources */,
+				28358C611710D70C00744869 /* bulb@2x.png in Resources */,
+				28358C621710D70C00744869 /* bulb.png in Resources */,
+				C07E84C41710F2D700174D5E /* Chandelier.png in Resources */,
+				C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */,
+				284504121714A3C600A8888B /* floor_lamp.png in Resources */,
+				284504131714A3C600A8888B /* floor_lamp@2x.png in Resources */,
+				C09488C81714C6A700367A62 /* LongRope.png in Resources */,
+				C09488C91714C6A700367A62 /* LongRope@2x.png in Resources */,
+				C09488CA1714C6A700367A62 /* rope.png in Resources */,
+				C09488CB1714C6A700367A62 /* rope@2x.png in Resources */,
+				C09488CC1714C6A700367A62 /* ThickRope.png in Resources */,
+				C09488CD1714C6A700367A62 /* ThickRope@2x.png in Resources */,
+				C09488CE1714C6A700367A62 /* ThinRope.png in Resources */,
+				C09488CF1714C6A700367A62 /* ThinRope@2x.png in Resources */,
+				1E08F92C1713CE51004A59BF /* Home_Text.png in Resources */,
+				1E08F92D1713CE51004A59BF /* Home_Text@2x.png in Resources */,
+				1E08F92E1713CE51004A59BF /* Resume_Text@2x.png in Resources */,
+				1E08F92F1713CE51004A59BF /* Resume_Text.png in Resources */,
 				280BB2FC1707A5A50043C4CA /* Sun@2x.png in Resources */,
 				280BB2FD1707A5A50043C4CA /* Sun.png in Resources */,
 				946EF649170B957C00AE6DE7 /* Room layout texture extra wide@2x.png in Resources */,
@@ -1972,6 +2020,7 @@
 				2804A3DF16EE695A00C4638D /* GameStats.m in Sources */,
 				1EE102D816EEF81500EDB8FC /* LossScene.mm in Sources */,
 				1EE102DE16EFC77600EDB8FC /* WinScene.mm in Sources */,
+				285DDA11170B888E00DE5CE2 /* LightSource.mm in Sources */,
 				94683881171B6825003F56BF /* GameplayMenuLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

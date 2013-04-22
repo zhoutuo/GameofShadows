@@ -23,7 +23,9 @@
     CCSprite* shadowMonster;
     CCSprite* wormholeExit;
     CCSprite* WormholeTransition;
-    bool goHere;
+    bool touchOFF;
+    bool hasTransition;
+    CGPoint transitionPoint;
     
     //test object
     CCSprite* sun;

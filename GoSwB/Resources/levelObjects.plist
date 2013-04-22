@@ -4,6 +4,10 @@
 <dict>
 	<key>Level 1</key>
 	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
 		<key>Lights</key>
 		<array>
 			<dict>
@@ -47,6 +51,10 @@
 	</dict>
 	<key>Level 2</key>
 	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
 		<key>Objects</key>
 		<array>
 			<array>
@@ -88,6 +96,10 @@
 	</dict>
 	<key>Level 3</key>
 	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
 		<key>Objects</key>
 		<array>
 			<array>
@@ -122,6 +134,10 @@
 	</dict>
 	<key>Level 4</key>
 	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
 		<key>Objects</key>
 		<array>
 			<array>
@@ -158,6 +174,21 @@
 	</dict>
 	<key>Level 5</key>
 	<dict>
+		<key>HasTransition</key>
+		<string>yes</string>
+		<key>Background</key>
+		<string>hugeBackground</string>
+		<key>CameraLocations</key>
+		<array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>900</integer>
+				<integer>101</integer>
+			</array>
+		</array>
 		<key>Objects</key>
 		<array>
 			<array>
@@ -183,6 +214,11 @@
 			<array>
 				<string>WormholeTransition</string>
 				<integer>950</integer>
+				<integer>250</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>1300</integer>
 				<integer>250</integer>
 			</array>
 		</array>
