@@ -47,6 +47,7 @@
 		1E67DBBE16D4758500BEF7CB /* CCBsequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E67DBB616D4758500BEF7CB /* CCBsequence.m */; };
 		1E67DBBF16D4758500BEF7CB /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E67DBB816D4758500BEF7CB /* CCBSequenceProperty.m */; };
 		1E67DBC016D4758500BEF7CB /* CCNode+CCBRelativePositioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E67DBBA16D4758500BEF7CB /* CCNode+CCBRelativePositioning.m */; };
+		1E774CD31724A297001BBE01 /* background_music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1E774CD21724A297001BBE01 /* background_music.mp3 */; };
 		1EE102D116EEF6FB00EDB8FC /* LossScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1EE102CF16EEF6FB00EDB8FC /* LossScene.ccbi */; };
 		1EE102D816EEF81500EDB8FC /* LossScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1EE102D716EEF81500EDB8FC /* LossScene.mm */; };
 		1EE102DE16EFC77600EDB8FC /* WinScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1EE102DD16EFC77600EDB8FC /* WinScene.mm */; };
@@ -359,6 +360,7 @@
 		1E67DBB816D4758500BEF7CB /* CCBSequenceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequenceProperty.m; sourceTree = "<group>"; };
 		1E67DBB916D4758500BEF7CB /* CCNode+CCBRelativePositioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+CCBRelativePositioning.h"; sourceTree = "<group>"; };
 		1E67DBBA16D4758500BEF7CB /* CCNode+CCBRelativePositioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+CCBRelativePositioning.m"; sourceTree = "<group>"; };
+		1E774CD21724A297001BBE01 /* background_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background_music.mp3; sourceTree = "<group>"; };
 		1EE102CF16EEF6FB00EDB8FC /* LossScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = LossScene.ccbi; path = Resources/LossScene.ccbi; sourceTree = "<group>"; };
 		1EE102D616EEF81500EDB8FC /* LossScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LossScene.h; sourceTree = "<group>"; };
 		1EE102D716EEF81500EDB8FC /* LossScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LossScene.mm; sourceTree = "<group>"; };
@@ -856,6 +858,14 @@
 			path = CCBReader;
 			sourceTree = "<group>";
 		};
+		1E774CCF17249E5D001BBE01 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				1E774CD21724A297001BBE01 /* background_music.mp3 */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
 		283A53DF16E857BA00511559 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -918,6 +928,7 @@
 			isa = PBXGroup;
 			children = (
 				82A1BCD9171E3CCD0063ADEC /* testPixel.png */,
+				1E774CCF17249E5D001BBE01 /* Audio */,
 				C09488C01714C6A700367A62 /* LongRope.png */,
 				C09488C11714C6A700367A62 /* LongRope@2x.png */,
 				C09488C21714C6A700367A62 /* rope.png */,
@@ -1769,6 +1780,7 @@
 				1E08F92E1713CE51004A59BF /* Resume_Text@2x.png in Resources */,
 				1E08F92F1713CE51004A59BF /* Resume_Text.png in Resources */,
 				82A1BCDA171E3CCD0063ADEC /* testPixel.png in Resources */,
+				1E774CD31724A297001BBE01 /* background_music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
