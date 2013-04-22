@@ -79,6 +79,53 @@
         
     }
 
+    NSArray* ropes = [[levelObjects objectForKey: level] objectForKey:@"Ropes"];
+    for (NSArray* rope in ropes)
+    {
+        float height = 384;
+        NSString* ropeImage = [rope objectAtIndex:0];
+        int numberOfSegments = [[rope objectAtIndex:1] intValue];
+        int positionOfRopeOnCeiling = [[rope objectAtIndex:2] intValue];
+        NSString* lightImage = [rope objectAtIndex:3];
+        b2Body* previousConnector = physicsGroundBody;
+        for (int i = 0; i < numberOfSegments; i++)
+        {
+            PhysicsSprite* ropeSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", ropeImage]];
+            ropeSprite.position = CGPointMake(positionOfRopeOnCeiling, height);
+            b2BodyDef ropeBodyDef;
+            ropeBodyDef.type = b2_dynamicBody;
+            ropeBodyDef.position.Set(ropeSprite.position.x / PTM_RATIO, ropeSprite.position.y / PTM_RATIO);
+            ropeBodyDef.userData = ropeSprite;
+            b2Body* ropeBody = physicsWorld -> CreateBody(&ropeBodyDef);
+            [[GB2ShapeCache sharedShapeCache] addFixturesToBody:ropeBody forShapeName:ropeImage];
+            [ropeSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:ropeImage]];
+            [ropeSprite setPhysicsBody:ropeBody];
+            [objectsContainer addChild:ropeSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+            b2RevoluteJointDef jointDef;
+            jointDef.Initialize(previousConnector, ropeBody, [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
+            physicsWorld -> CreateJoint(&jointDef);
+            ropeBody -> SetAngularDamping(0.2f);
+            ropeBody -> SetLinearDamping(0.2f);
+            previousConnector = ropeBody;
+            height -= (ropeSprite.boundingBox.size.height);
+        }
+        PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", lightImage]];
+        lightSprite.position = CGPointMake(positionOfRopeOnCeiling, height);
+        b2BodyDef lightBodyDef;
+        lightBodyDef.type = b2_dynamicBody;
+        lightBodyDef.position.Set(lightSprite.position.x / PTM_RATIO, lightSprite.position.y / PTM_RATIO);
+        lightBodyDef.userData = lightSprite;
+        b2Body* lightBody = physicsWorld -> CreateBody(&lightBodyDef);
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightBody forShapeName:lightImage];
+        [lightSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:lightImage]];
+        [lightSprite setPhysicsBody:lightBody];
+        [objectsContainer addChild:lightSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+        b2RevoluteJointDef jointDef;
+        jointDef.Initialize(previousConnector, lightBody, [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
+        physicsWorld -> CreateJoint(&jointDef);
+        lightBody -> SetAngularDamping(0.2f);
+        lightBody -> SetLinearDamping(0.2f);
+    }
     
     //get the lights
     NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];

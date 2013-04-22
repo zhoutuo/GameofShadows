@@ -40,9 +40,6 @@ typedef enum {
     b2Fixture* physicsWorldRight;
     b2MouseJoint* mouseJoint;
     
-    NSMutableArray* objectSpriteArray;
-    NSMutableArray* objectBodyArray;
-    
     GLESDebugDraw *m_debugDraw;
 }
 

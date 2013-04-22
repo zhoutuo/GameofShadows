@@ -44,6 +44,15 @@
 				<integer>250</integer>
 			</array>
 		</array>
+		<key>Ropes</key>
+		<array>
+			<array>
+				<string>Rope</string>
+				<integer>15</integer>
+				<integer>320</integer>
+				<string>bulb</string>
+			</array>
+		</array>
 	</dict>
 	<key>Level 2</key>
 	<dict>
@@ -85,6 +94,8 @@
 				<integer>600</integer>
 			</array>
 		</array>
+		<key>Ropes</key>
+		<array/>
 	</dict>
 	<key>Level 3</key>
 	<dict>
@@ -106,6 +117,8 @@
 				<integer>300</integer>
 			</array>
 		</array>
+		<key>Lights</key>
+		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -119,6 +132,8 @@
 				<integer>100</integer>
 			</array>
 		</array>
+		<key>Ropes</key>
+		<array/>
 	</dict>
 	<key>Level 4</key>
 	<dict>
@@ -155,6 +170,8 @@
 				<integer>100</integer>
 			</array>
 		</array>
+		<key>Ropes</key>
+		<array/>
 	</dict>
 </dict>
 </plist>
