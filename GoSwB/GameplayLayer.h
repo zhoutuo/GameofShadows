@@ -5,10 +5,13 @@
 //  Created by Zhoutuo Yang on 1/30/13.
 //
 //
+#import <GameKit/GameKit.h>
+
 #import "Foundation/Foundation.h"
 #import "cocos2d.h"
 #import "Box2D.h"
 #import "PhysicsSprite.h"
+#import "GLES-Render.h"
 
 // Physics constants.
 #define PTM_RATIO 32
@@ -37,8 +40,7 @@ typedef enum {
     b2Fixture* physicsWorldRight;
     b2MouseJoint* mouseJoint;
     
-    NSMutableArray* objectSpriteArray;
-    NSMutableArray* objectBodyArray;
+    GLESDebugDraw *m_debugDraw;
 }
 
 

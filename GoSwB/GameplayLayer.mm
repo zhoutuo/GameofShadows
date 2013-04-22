@@ -12,7 +12,6 @@
 #import "GB2ShapeCache.h"
 #import "CCDrawingPrimitives.h"
 #import "Globals.h"
-
 @implementation GameplayLayer
 
 
@@ -79,6 +78,53 @@
         
     }
 
+    NSArray* ropes = [[levelObjects objectForKey: level] objectForKey:@"Ropes"];
+    for (NSArray* rope in ropes)
+    {
+        float height = 384;
+        NSString* ropeImage = [rope objectAtIndex:0];
+        int numberOfSegments = [[rope objectAtIndex:1] intValue];
+        int positionOfRopeOnCeiling = [[rope objectAtIndex:2] intValue];
+        NSString* lightImage = [rope objectAtIndex:3];
+        b2Body* previousConnector = physicsGroundBody;
+        for (int i = 0; i < numberOfSegments; i++)
+        {
+            PhysicsSprite* ropeSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", ropeImage]];
+            ropeSprite.position = CGPointMake(positionOfRopeOnCeiling, height);
+            b2BodyDef ropeBodyDef;
+            ropeBodyDef.type = b2_dynamicBody;
+            ropeBodyDef.position.Set(ropeSprite.position.x / PTM_RATIO, ropeSprite.position.y / PTM_RATIO);
+            ropeBodyDef.userData = ropeSprite;
+            b2Body* ropeBody = physicsWorld -> CreateBody(&ropeBodyDef);
+            [[GB2ShapeCache sharedShapeCache] addFixturesToBody:ropeBody forShapeName:ropeImage];
+            [ropeSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:ropeImage]];
+            [ropeSprite setPhysicsBody:ropeBody];
+            [objectsContainer addChild:ropeSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+            b2RevoluteJointDef jointDef;
+            jointDef.Initialize(previousConnector, ropeBody, [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
+            physicsWorld -> CreateJoint(&jointDef);
+            ropeBody -> SetAngularDamping(0.2f);
+            ropeBody -> SetLinearDamping(0.2f);
+            previousConnector = ropeBody;
+            height -= (ropeSprite.boundingBox.size.height);
+        }
+        PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", lightImage]];
+        lightSprite.position = CGPointMake(positionOfRopeOnCeiling, height);
+        b2BodyDef lightBodyDef;
+        lightBodyDef.type = b2_dynamicBody;
+        lightBodyDef.position.Set(lightSprite.position.x / PTM_RATIO, lightSprite.position.y / PTM_RATIO);
+        lightBodyDef.userData = lightSprite;
+        b2Body* lightBody = physicsWorld -> CreateBody(&lightBodyDef);
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightBody forShapeName:lightImage];
+        [lightSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:lightImage]];
+        [lightSprite setPhysicsBody:lightBody];
+        [objectsContainer addChild:lightSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+        b2RevoluteJointDef jointDef;
+        jointDef.Initialize(previousConnector, lightBody, [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
+        physicsWorld -> CreateJoint(&jointDef);
+        lightBody -> SetAngularDamping(0.2f);
+        lightBody -> SetLinearDamping(0.2f);
+    }
     
     //get the lights
     NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
@@ -120,6 +166,17 @@
     physicsWorld -> SetAllowSleeping(true);
     physicsWorld -> SetContinuousPhysics(true);
     
+    m_debugDraw = new GLESDebugDraw( PTM_RATIO );
+	physicsWorld->SetDebugDraw(m_debugDraw);
+	
+	uint32 flags = 0;
+	flags += b2Draw::e_shapeBit;
+	//		flags += b2Draw::e_jointBit;
+	//		flags += b2Draw::e_aabbBit;
+	//		flags += b2Draw::e_pairBit;
+	//		flags += b2Draw::e_centerOfMassBit;
+	m_debugDraw->SetFlags(flags);
+    
     // Define the ground body.
     b2BodyDef physicsGroundBodyDef;
     physicsGroundBody = physicsWorld -> CreateBody(&physicsGroundBodyDef);
@@ -138,7 +195,6 @@
     int32 velocityIterations = 8;
     int32 positionIterations = 1;
     physicsWorld -> Step(delta, velocityIterations, positionIterations);
-    
     
     //update the position of sprites accordingly
     GameplayScene* scene = (GameplayScene*)self.parent;
@@ -163,6 +219,7 @@
     }
 
 }
+
 
 // Helper methods for pixel-meter conversions for Box2D.
 - (b2Vec2)toMeters:(CGPoint)point
@@ -333,6 +390,16 @@
     
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
+    
+    //testing
+    
+    location.x += centerCameraX;
+    location.y += centerCameraY;
+    
+  //  CCLOG(@"x %f  y %f",location.x,location.y);
+    
+    //end testing
+    
     location = [[CCDirector sharedDirector] convertToGL:location];
     
         
@@ -346,7 +413,7 @@
                     touchOperation = TAP;
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
-                    
+                    body -> SetAwake(true);
                     b2Vec2 centerOfMass = body -> GetWorldCenter();
                     
                     b2MouseJointDef md;
@@ -374,6 +441,7 @@
             touchOperation = NONE;
             physicsWorld -> DestroyJoint(mouseJoint);
             mouseJoint = NULL;
+            
         }
     }
         
@@ -384,7 +452,16 @@
     CGPoint location = [touch locationInView:[touch view]];
     
     location = [[CCDirector sharedDirector] convertToGL:location];
-        
+    
+    
+    //testing
+    
+    location.x += centerCameraX;
+    location.y += centerCameraY;
+    
+    //end testing
+    
+    
     //all touch opeartions entering this method can only be tap/moving or rotation
     if (touchOperation == TAP || touchOperation == MOVING) {
         //since our touch is moving
@@ -440,6 +517,9 @@
         
         //show circle around tapped object, start to rotate
         [self toggleRotationCircle: (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag] :YES];
+        PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+        b2Body* body = [rotated getPhysicsBody];
+        body -> SetAwake(false);
         touchOperation = ROTATING;
         
     } else if(touchOperation == ROTATING) {
@@ -448,11 +528,14 @@
         //when finished with rotating object
         //wake physical calculation
         //clean
+        PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+        b2Body* body = [rotated getPhysicsBody];
+        body -> SetAwake(true);
         touchOperation = NONE;
         touchedObjectTag = NOTAG;
         physicsWorld -> DestroyJoint(mouseJoint);
         mouseJoint = NULL;
-        
+
     }
     
 }
@@ -464,7 +547,20 @@
     }
 }
 
-
+-(void) draw
+{
+	/*
+    // If you want to see the physics bodies, uncomment this section
+	[super draw];
+	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+	
+	kmGLPushMatrix();
+	
+	physicsWorld->DrawDebugData();
+	
+	kmGLPopMatrix();*/
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //GAMEPLAY LAYER EVENTS

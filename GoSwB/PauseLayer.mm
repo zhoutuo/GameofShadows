@@ -9,6 +9,7 @@
 #import "PauseLayer.h"
 #import "Globals.h"
 #import "CCBReader.h"
+#import "SimpleAudioEngine.h"
 
 @implementation PauseLayer
 - (id) initWithColor:(ccColor4B)color
@@ -23,9 +24,10 @@
                                  itemWithNormalImage:@"Resume_Text.png" selectedImage:@"Resume_Text.png" target:self selector:@selector(resume:)];
         CCMenuItem *menuItem2 = [CCMenuItemImage
                                  itemWithNormalImage:@"Home_Text.png" selectedImage:@"Home_Text.png" target:self selector:@selector(goHome:)];
-        
-        CCMenu *menu = [CCMenu menuWithItems:menuItem1, menuItem2, nil];
-        [menu alignItemsVertically];
+        CCMenuItem *menuItem3 = [CCMenuItemImage
+                                 itemWithNormalImage:@"Mute.png" selectedImage:@"Mute.png" target:self selector:@selector(muteMusic:)];
+        CCMenu *menu = [CCMenu menuWithItems:menuItem1, menuItem2, menuItem3, nil];
+        [menu alignItemsVerticallyWithPadding:10.0f];
         [self addChild:menu];
         
     }
@@ -52,6 +54,17 @@
     isGamePause = false;
     
     [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[CCBReader sceneWithNodeGraphFromFile:@"MainMenuScene.ccbi"]]];
+}
+
+- (void)muteMusic:(id)sender
+{
+    NSLog(@"muteMusic");
+    if([[SimpleAudioEngine sharedEngine]isBackgroundMusicPlaying])
+    {
+        [[SimpleAudioEngine sharedEngine] pauseBackgroundMusic];
+    } else {
+        [[SimpleAudioEngine sharedEngine] resumeBackgroundMusic];
+    }
 }
 
 - (void) dealloc
