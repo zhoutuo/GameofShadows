@@ -20,6 +20,8 @@
         turn_on_texture = [CCSprite spriteWithFile:off_filename];
         turn_on_texture.visible = NO;
         turn_on_texture.position = ccp(self.boundingBox.size.width / 2, self.boundingBox.size.height * vertical_per);
+        [turn_on_texture setScaleX:0.5];
+        [turn_on_texture setScaleY:0.5];
         [self addChild:turn_on_texture];
     }
     return self;
@@ -44,6 +46,10 @@
     }
 }
 
+-(void) stopExecActions {
+    [self turnOff];
+    [self stopAllActions];
+}
 
 
 -(void) turnOn {

@@ -18,6 +18,7 @@
 @implementation ShadowsLayer
 
 int count_swipe_down = 0;
+CCRenderTexture* renderTexture = NULL;
 
 -(id) init {
     if (self = [super init]) {
@@ -91,6 +92,10 @@ int count_swipe_down = 0;
 
 -(void) dealloc {
     [objShadowTable release];
+    if(renderTexture != NULL){
+        [renderTexture release];
+        renderTexture = NULL;
+    }
     [super dealloc];
 }
 
@@ -276,6 +281,9 @@ int count_swipe_down = 0;
 -(void) update:(ccTime)delta {
     CCArray* cornors = [self getcornorsOfMonster];
     GameplayScene* scene = (GameplayScene*)self.parent;
+    if(self.isTouchEnabled){
+        [self generateShadowMap2];
+    }
     for (NSValue* value in cornors) {
         CGPoint tmp = value.CGPointValue;
         int x = tmp.x;
@@ -319,6 +327,98 @@ int count_swipe_down = 0;
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // SHADOW MAP METHOD
+-(void) generateShadowMap2{
+    
+    CGRect monsterBoundingBox = shadowMonster.boundingBox;
+    CGPoint leftBottom = monsterBoundingBox.origin;
+    CGPoint rightBottom = ccp(leftBottom.x + monsterBoundingBox.size.width, leftBottom.y);
+    CGPoint leftTop = ccp(leftBottom.x, leftBottom.y + monsterBoundingBox.size.height);
+    CGPoint rightTop = ccp(leftBottom.x + monsterBoundingBox.size.width, leftBottom.y+monsterBoundingBox.size.height);
+
+    
+    for (int i = 0; i < monsterBoundingBox.size.width; ++i) {
+        for (int j = 0; j < monsterBoundingBox.size.height; ++j) {
+            int newX = j + (int)leftBottom.x;
+            int newY = i + (int)leftBottom.y;
+            newX = MAX(0, newX);
+            newX = MIN(newX, DEVICE_WIDTH);
+            
+            newY = MAX(0, newY);
+            newY = MIN(newY, DEVICE_HEIGHT);
+            [self setShadowMap:newX :newY :false];
+        }
+    }
+    for(CCSprite* cur in self.children){
+        if (!(cur.zOrder == SHADOW_SPRITE_DEPTH || cur.zOrder == LIGHT_SPRITE_DEPTH)) {
+            continue;
+        }
+        CGRect boundingBox = cur.boundingBox;
+        CGPoint origin = boundingBox.origin;
+        
+        if(CGRectContainsPoint(boundingBox, leftBottom) || CGRectContainsPoint(boundingBox, rightBottom) || CGRectContainsPoint(boundingBox, leftTop)|| CGRectContainsPoint(boundingBox, rightTop)){
+            
+            
+            for (int i = 0; i < shadowMonster.boundingBox.size.height; i+=SHADOW_BLOCK_SIZE/2) {
+                for (int j = 0; j < shadowMonster.boundingBox.size.width; j+=SHADOW_BLOCK_SIZE/2) {
+                    int newX = j + (int)leftBottom.x;
+                    int newY = i + (int)leftBottom.y;
+                    newX = MAX(0, newX);
+                    newX = MIN(newX, DEVICE_WIDTH);
+                    
+                    newY = MAX(0, newY);
+                    newY = MIN(newY, DEVICE_HEIGHT);
+                    
+                    float omsX = newX/2;
+                    float omsY = newY/2;
+                    
+                    b2Vec2 worldPoint = b2Vec2(omsX / PTM_RATIO, omsY / PTM_RATIO);
+                    GameplayScene* scene = (GameplayScene*)[self parent];
+                    if([scene checkIfPointInFixture:worldPoint :origin]){
+                        for(int newi = i-SHADOW_BLOCK_SIZE/2; newi < i+SHADOW_BLOCK_SIZE/2; newi++){
+                            for(int newj = j-SHADOW_BLOCK_SIZE/2; newj < j+SHADOW_BLOCK_SIZE/2; newj++){
+                                newX = newj + (int)leftBottom.x;
+                                newY = newi + (int)leftBottom.y;
+                                newX = MAX(0, newX);
+                                newX = MIN(newX, DEVICE_WIDTH);
+                                
+                                newY = MAX(0, newY);
+                                newY = MIN(newY, DEVICE_HEIGHT);
+                                
+                                [self setShadowMap:newX :newY :true];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //[self drawShadowMap];//for debugging
+}
+
+-(void) drawShadowMap {
+    NSLog(@"drawing shadow map");
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    
+    renderTexture = [[CCRenderTexture renderTextureWithWidth:size.width height:size.height] retain]; 
+    [self addChild:renderTexture z:10];
+    [renderTexture setPosition:ccp( size.width * 0.5f, size.height * 0.5f )];
+    [renderTexture clear:1.0f g:1.0f b:1.0f a:1.0f];
+    
+    NSLog(@"working...don't panic.");
+    [renderTexture begin];
+    for(int i = 0; i < DEVICE_WIDTH; i++){
+        for(int j = 0; j < DEVICE_HEIGHT; j++){
+            if(shadowMap[j][i] == true){
+                CCSprite* pixelSprite = [CCSprite spriteWithFile:@"testPixel.png"];
+                [pixelSprite setPosition:ccp(i,j)];
+                [pixelSprite visit];
+            }
+        }
+    }
+    
+    [renderTexture end];
+}
+
 -(void) generateShadowMap {
     
     //    GameplayScene* curScene = (GameplayScene*)self.parent;
@@ -355,7 +455,6 @@ int count_swipe_down = 0;
             }
         } else {
             //if there is big rotation
-            int count = 0;
             CGPoint origin = boundingBox.origin;
             for (int i = 0; i < boundingBox.size.height; ++i) {
                 for (int j = 0; j < boundingBox.size.width; ++j) {
@@ -368,7 +467,6 @@ int count_swipe_down = 0;
                         
                         newY = MAX(0, newY);
                         newY = MIN(newY, DEVICE_HEIGHT);
-                        ++count;
                         [self setShadowMap:newX :newY :true];
                     }
                 }
@@ -411,7 +509,7 @@ int count_swipe_down = 0;
         if (value) {
             [source execActions];
         } else {
-            [source stopAllActions];
+            [source stopExecActions];
         }
     }
 }
@@ -420,7 +518,7 @@ int count_swipe_down = 0;
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADOW LAYER EVENTS
 -(void) startActionMode {
-    [self generateShadowMap];
+    [self generateShadowMap2];
     self.isTouchEnabled = YES;
     [self scheduleUpdate];
     [self toggleLightSourceActions:true];
@@ -434,6 +532,10 @@ int count_swipe_down = 0;
     //unschedule the udpate fucntion
     [self unscheduleUpdate];
     [self toggleLightSourceActions:false];
+    if(renderTexture != NULL){
+        [renderTexture release];
+        renderTexture = NULL;
+    }
     CCLOG(@"Leave Action Mode");
 }
 

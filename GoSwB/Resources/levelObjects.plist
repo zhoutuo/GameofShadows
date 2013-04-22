@@ -20,7 +20,7 @@
 				<key>origin_y</key>
 				<integer>200</integer>
 				<key>vertical_percentage</key>
-				<real>0.8</real>
+				<real>0.85</real>
 				<key>on_duration</key>
 				<integer>2</integer>
 				<key>off_duration</key>

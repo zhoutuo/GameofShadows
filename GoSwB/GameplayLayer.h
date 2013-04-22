@@ -5,10 +5,13 @@
 //  Created by Zhoutuo Yang on 1/30/13.
 //
 //
+#import <GameKit/GameKit.h>
+
 #import "Foundation/Foundation.h"
 #import "cocos2d.h"
 #import "Box2D.h"
 #import "PhysicsSprite.h"
+#import "GLES-Render.h"
 
 // Physics constants.
 #define PTM_RATIO 32
@@ -25,8 +28,6 @@ typedef enum {
     CCSprite* objectsContainer;
     CCSprite* omsBackground;
     CGRect* containerBox;
-    
-    CCSprite* rotationCircle;
     Phase touchOperation;
     
     // Physics section.
@@ -41,10 +42,14 @@ typedef enum {
     
     NSMutableArray* objectSpriteArray;
     NSMutableArray* objectBodyArray;
+    
+    GLESDebugDraw *m_debugDraw;
 }
 
 
 -(CGPoint) getSpriteRelativePos: (CCSprite*) object;
+-(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint :(CGPoint) origin;
+
 
 -(void) moveOMStoLeft;
 -(void) moveOMStoRight;

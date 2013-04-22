@@ -16,6 +16,7 @@
 #define LIGHT_SPRITE_DEPTH 3
 #define DYNAMIC_LIGHTNING_DEPTH 50
 #define SHADOW_MONESTER_DEPTH 100
+#define SHADOW_BLOCK_SIZE 20
 
 @interface ShadowsLayer : CCLayer {
     NSMutableDictionary* objShadowTable;

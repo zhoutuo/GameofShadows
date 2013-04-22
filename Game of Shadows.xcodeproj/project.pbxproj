@@ -47,6 +47,7 @@
 		1E67DBBE16D4758500BEF7CB /* CCBsequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E67DBB616D4758500BEF7CB /* CCBsequence.m */; };
 		1E67DBBF16D4758500BEF7CB /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E67DBB816D4758500BEF7CB /* CCBSequenceProperty.m */; };
 		1E67DBC016D4758500BEF7CB /* CCNode+CCBRelativePositioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E67DBBA16D4758500BEF7CB /* CCNode+CCBRelativePositioning.m */; };
+		1E774CD31724A297001BBE01 /* background_music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1E774CD21724A297001BBE01 /* background_music.mp3 */; };
 		1EE102D116EEF6FB00EDB8FC /* LossScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1EE102CF16EEF6FB00EDB8FC /* LossScene.ccbi */; };
 		1EE102D816EEF81500EDB8FC /* LossScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1EE102D716EEF81500EDB8FC /* LossScene.mm */; };
 		1EE102DE16EFC77600EDB8FC /* WinScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1EE102DD16EFC77600EDB8FC /* WinScene.mm */; };
@@ -292,6 +293,8 @@
 		8290A2AE16F0146E00AC6664 /* squirtle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2AC16F0146D00AC6664 /* squirtle.png */; };
 		8290A2AF16F0146E00AC6664 /* squirtle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8290A2AD16F0146E00AC6664 /* squirtle@2x.png */; };
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
+		82A1BCDA171E3CCD0063ADEC /* testPixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 82A1BCD9171E3CCD0063ADEC /* testPixel.png */; };
+		82E731731724995500BBF56C /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E731721724995500BBF56C /* GLES-Render.mm */; };
 		C07E84C41710F2D700174D5E /* Chandelier.png in Resources */ = {isa = PBXBuildFile; fileRef = C07E84C21710F2D700174D5E /* Chandelier.png */; };
 		C07E84C51710F2D700174D5E /* Chandelier@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C07E84C31710F2D700174D5E /* Chandelier@2x.png */; };
 		82EAD1FD16DC93FD002F736F /* droid1_physicsBody.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */; };
@@ -382,6 +385,7 @@
 		1E67DBB816D4758500BEF7CB /* CCBSequenceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequenceProperty.m; sourceTree = "<group>"; };
 		1E67DBB916D4758500BEF7CB /* CCNode+CCBRelativePositioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+CCBRelativePositioning.h"; sourceTree = "<group>"; };
 		1E67DBBA16D4758500BEF7CB /* CCNode+CCBRelativePositioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+CCBRelativePositioning.m"; sourceTree = "<group>"; };
+		1E774CD21724A297001BBE01 /* background_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background_music.mp3; sourceTree = "<group>"; };
 		1EE102CF16EEF6FB00EDB8FC /* LossScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = LossScene.ccbi; path = Resources/LossScene.ccbi; sourceTree = "<group>"; };
 		1EE102D616EEF81500EDB8FC /* LossScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LossScene.h; sourceTree = "<group>"; };
 		1EE102D716EEF81500EDB8FC /* LossScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LossScene.mm; sourceTree = "<group>"; };
@@ -821,6 +825,9 @@
 		8290A2AD16F0146E00AC6664 /* squirtle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "squirtle@2x.png"; path = "Resources/squirtle@2x.png"; sourceTree = "<group>"; };
 		82A0235316DC28BD00886573 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GB2ShapeCache.h; sourceTree = "<group>"; };
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
+		82A1BCD9171E3CCD0063ADEC /* testPixel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = testPixel.png; path = Resources/testPixel.png; sourceTree = "<group>"; };
+		82E731711724995500BBF56C /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
+		82E731721724995500BBF56C /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		C07E84C21710F2D700174D5E /* Chandelier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Chandelier.png; path = Resources/Chandelier.png; sourceTree = "<group>"; };
 		C07E84C31710F2D700174D5E /* Chandelier@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Chandelier@2x.png"; path = "Resources/Chandelier@2x.png"; sourceTree = "<group>"; };
 		82EAD1FC16DC93FD002F736F /* droid1_physicsBody.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = droid1_physicsBody.plist; path = Resources/droid1_physicsBody.plist; sourceTree = "<group>"; };
@@ -903,6 +910,14 @@
 			path = CCBReader;
 			sourceTree = "<group>";
 		};
+		1E774CCF17249E5D001BBE01 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				1E774CD21724A297001BBE01 /* background_music.mp3 */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
 		283A53DF16E857BA00511559 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -964,6 +979,8 @@
 		28E4771216CD9BA7007B3A2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				82A1BCD9171E3CCD0063ADEC /* testPixel.png */,
+				1E774CCF17249E5D001BBE01 /* Audio */,
 				C09488C01714C6A700367A62 /* LongRope.png */,
 				C09488C11714C6A700367A62 /* LongRope@2x.png */,
 				C09488C21714C6A700367A62 /* rope.png */,
@@ -1614,6 +1631,8 @@
 		28E481E116E80BEA008EB69B /* Gameplay */ = {
 			isa = PBXGroup;
 			children = (
+				82E731711724995500BBF56C /* GLES-Render.h */,
+				82E731721724995500BBF56C /* GLES-Render.mm */,
 				28E4793616CD9C14007B3A2A /* GameplayLayer.h */,
 				28E4793B16CD9C14007B3A2A /* GameplayLayer.mm */,
 				28E4793816CD9C14007B3A2A /* ShadowsLayer.h */,
