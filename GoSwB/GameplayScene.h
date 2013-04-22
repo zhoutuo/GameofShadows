@@ -11,10 +11,13 @@
 #import "ShadowsLayer.h"
 #import "GameplayLayer.h"
 #import "GameStats.h"
+#import "GameplayMenuLayer.h"
+
 @interface GameplayScene : CCScene {
     BackgroundLayer* backgroundLayer;
     ShadowsLayer* shadowLayer;
     GameplayLayer* gameplayLayer;
+    GameplayMenuLayer* gameplayMenuLayer;
     
     GameStats* gamestats;
 
@@ -37,4 +40,6 @@
 -(void) finishRotatingOneObject: (NSInteger) objectTag withAngle:(float) angle;
 -(void) shadowMonsterDead;
 -(void) shadowMonterRescued;
+-(void) shadowMonsterTransition;
+-(void) shift:(CGPoint) centerPoint;
 @end
