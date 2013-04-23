@@ -429,14 +429,13 @@
             }
         }
     } else if(touchOperation == ROTATING) {
-        location = [self fromLayerCoord2Container:location];
         //if the first tap for rotating is not inside the circle
         //cancel the rotating
         CCSprite* objectTouched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-        CCSprite* rotationCircle = (CCSprite*)[objectTouched.children lastObject];
-        CCLOG(@"%@", NSStringFromCGRect(objectTouched.boundingBox));
-        CCLOG(@"%@", NSStringFromCGPoint(location));
-        if (!CGRectContainsPoint(objectTouched.boundingBox, location)) {
+        CCSprite* rotationCircle = (CCSprite*)[objectTouched.children lastObject];    
+//        CCLOG(@"%@", NSStringFromCGRect(objectTouched.boundingBox));
+//        CCLOG(@"%@", NSStringFromCGPoint(location));
+        if (!CGRectContainsPoint(rotationCircle.boundingBox, [objectTouched convertToNodeSpace:location])) {
             [self toggleRotationCircle:objectTouched :NO];
             touchedObjectTag = NOTAG;
             touchOperation = NONE;
@@ -487,19 +486,27 @@
         
     } else if(touchOperation == ROTATING) {
         PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
-        CGPoint relativeCenter = [self fromContainerCoord2Layer:rotated.position];
-//        CGPoint rotatePoint = ccpAdd(relativeCenter, ccp(0, 100));
-        CGPoint rotatePoint = ccp(0, 100);
+        b2Body* body = [rotated getPhysicsBody];
+//        body->SetAwake(false);
+        body->SetAngularVelocity(0);
+        body->SetLinearVelocity(b2Vec2(0, 0));
+//        id move = [CCMoveBy actionWithDuration:0.5 position:ccp(0, 0)];
+//        [rotated runAction:move];
+//        body->SetAngularVelocity(0);
+//        body->SetLinearVelocity(b2Vec2(0, 0));
+//        body->SetAwake(true);
+        b2Vec2 bodyPos = body->GetPosition();
+        CGPoint relativeCenter = ccp(bodyPos.x * PTM_RATIO, bodyPos.y * PTM_RATIO);
+        CGPoint rotatePoint = ccp(0, 500);
         location = ccpSub(location, relativeCenter);
         float angle = ccpAngle(location, rotatePoint);
                 
-        if (location.x < rotatePoint.x) {
+        if (location.x > rotatePoint.x) {
             angle = -angle;
         }
-        angle = -1* CC_RADIANS_TO_DEGREES(angle);
         //rotate the physical body as well
-        b2Body* body = [rotated getPhysicsBody];
-        body->SetTransform(body->GetPosition(), CC_DEGREES_TO_RADIANS(angle));
+        body->SetTransform(bodyPos, angle);
+        
 
     }
 }
@@ -507,6 +514,7 @@
 -(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
     if (touchOperation == TAP or touchOperation == MOVING) {
+        
         //show circle around tapped object, start to rotate
         [self toggleRotationCircle: (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag] :YES];
         PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
