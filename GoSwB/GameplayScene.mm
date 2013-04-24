@@ -49,8 +49,8 @@ static NSInteger tagSeed = 10000;
 }
 
 
--(void) finishObjectsCreation:(CCArray *)objects withRatios:(CCArray *)ratios {
-    [shadowLayer castShadowFrom:objects withRatios:ratios];
+-(void) finishObjectsCreation:(CCArray *)objects withRatios:(CCArray *)ratios withAPs:(CCArray *)APs {
+    [shadowLayer castShadowFrom:objects withRatios:ratios withAPs:APs];
 }
 
 
@@ -63,8 +63,8 @@ static NSInteger tagSeed = 10000;
 }
 
 
--(void) finishLightsCreation:(CCArray *)lights withRatios:(CCArray *)ratios {
-    [shadowLayer castLightFrom:lights withRatios:ratios];
+-(void) finishLightsCreation:(CCArray *)lights withRatios:(CCArray *)ratios withAPs:(CCArray*)APs {
+    [shadowLayer castLightFrom:lights withRatios:ratios withAPs: APs];
 }
 
 -(void) finishMovingOneLight:(NSInteger)lightTag withRatio:(CGPoint)ratio {

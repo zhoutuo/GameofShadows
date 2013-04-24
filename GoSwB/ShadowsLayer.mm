@@ -114,7 +114,7 @@ CCRenderTexture* renderTexture = NULL;
 }
 
 
--(void) castLightFrom:(CCArray *)lights withRatios:(CCArray *)ratios {
+-(void) castLightFrom:(CCArray *)lights withRatios:(CCArray *)ratios withAPs:(CCArray *)APs {
     NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
     NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
     NSArray* lights_info = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
@@ -126,6 +126,7 @@ CCRenderTexture* renderTexture = NULL;
     for(int i = 0; i < lights_info.count ;++i){
         NSDictionary* lightSource = (NSDictionary*) [lights_info objectAtIndex:i];
         CCSprite* lightObject = (CCSprite*) [lights objectAtIndex:i];
+        lightObject.anchorPoint = [[APs objectAtIndex:i] CGPointValue];
         //get sprite name
         NSString* name = [lightSource objectForKey:@"on_filename"];
         //get the on_filename
@@ -155,16 +156,19 @@ CCRenderTexture* renderTexture = NULL;
 }
 
 
--(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray *)ratios {
+-(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray *)ratios withAPs:(CCArray *)APs {
     
     if (objects.count != ratios.count) {
         return;
     }
+    
     for (int i = 0; i < objects.count; ++i) {
         CCSprite* cur = (CCSprite*)[objects objectAtIndex:i];
         CCTexture2D* texture = cur.texture;
         
         CCSprite* shadow = [CCSprite spriteWithTexture:texture];
+        CGPoint curAP = [[APs objectAtIndex:i] CGPointValue];
+        shadow.anchorPoint = curAP;
         [shadow setColor:ccc3(0, 0, 0)];
         [shadow setScaleY:SHADOW_HEIGHT_FACTOR];
         [shadow setScaleX:SHADOW_WIDTH_FACTOR];

@@ -81,7 +81,7 @@
     NSArray* ropes = [[levelObjects objectForKey: level] objectForKey:@"Ropes"];
     for (NSArray* rope in ropes)
     {
-        float height = 384;
+        float height = [CCDirector sharedDirector].winSize.height / 2;
         NSString* ropeImage = [rope objectAtIndex:0];
         int numberOfSegments = [[rope objectAtIndex:1] intValue];
         int positionOfRopeOnCeiling = [[rope objectAtIndex:2] intValue];
@@ -101,7 +101,8 @@
             [ropeSprite setPhysicsBody:ropeBody];
             [objectsContainer addChild:ropeSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
             b2RevoluteJointDef jointDef;
-            jointDef.Initialize(previousConnector, ropeBody, [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
+            jointDef.Initialize(previousConnector, ropeBody,
+                                [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
             physicsWorld -> CreateJoint(&jointDef);
             ropeBody -> SetAngularDamping(0.2f);
             ropeBody -> SetLinearDamping(0.2f);
@@ -290,10 +291,12 @@
     GameplayScene* scene = (GameplayScene*)self.parent;
     CCArray* shadowVisibleChildren = [CCArray array];
     CCArray* ratios = [CCArray array];
+    CCArray* anchorPoints = [CCArray array];
     
     //tell the scene all light sources
     CCArray* lightChildren = [CCArray array];
     CCArray* lightRatios = [CCArray array];
+    CCArray* lightAPs = [CCArray array];
     
     for (CCSprite* sprite in objectsContainer.children) {
         //filter out all children except object and light source
@@ -301,17 +304,20 @@
         if (sprite.zOrder == OBJECT_DEPTH) {
             [shadowVisibleChildren addObject:sprite];
             [ratios addObject:[NSValue valueWithCGPoint:ratio]];
+            [anchorPoints addObject:[NSValue valueWithCGPoint:sprite.anchorPoint]];
+
         }
         
         if (sprite.zOrder == LIGHT_DEPTH) {
             [lightChildren addObject:sprite];
             [lightRatios addObject:[NSValue valueWithCGPoint:ratio]];
+            [lightAPs addObject:[NSValue valueWithCGPoint:sprite.anchorPoint]];
         }
-        
+
     }
     
-    [scene finishObjectsCreation:shadowVisibleChildren withRatios:ratios];
-    [scene finishLightsCreation:lightChildren withRatios:lightRatios];
+    [scene finishObjectsCreation:shadowVisibleChildren withRatios:ratios withAPs:anchorPoints];
+    [scene finishLightsCreation:lightChildren withRatios:lightRatios withAPs:lightAPs];
     [self scheduleUpdate];
 
 
@@ -549,7 +555,7 @@
 
 -(void) draw
 {
-	/*
+	
     // If you want to see the physics bodies, uncomment this section
 	[super draw];
 	
@@ -559,7 +565,7 @@
 	
 	physicsWorld->DrawDebugData();
 	
-	kmGLPopMatrix();*/
+	kmGLPopMatrix();
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////

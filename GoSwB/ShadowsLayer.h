@@ -32,8 +32,8 @@
     CCSprite* sun;
     
 }
--(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios;
--(void) castLightFrom:(CCArray*)lights withRatios:(CCArray*)ratios;
+-(void) castShadowFrom:(CCArray*)objects withRatios:(CCArray*)ratios withAPs:(CCArray*)APs;
+-(void) castLightFrom:(CCArray*)lights withRatios:(CCArray*)ratios withAPs:(CCArray*)APs;
 -(void) updateShadowPos:(NSInteger)objectSpriteTag withRelativePos:(CGPoint) relativePos;
 -(void) updateShadowRot:(NSInteger)objectSpriteTag withAngle:(float) angle;
 -(void) startActionMode;
