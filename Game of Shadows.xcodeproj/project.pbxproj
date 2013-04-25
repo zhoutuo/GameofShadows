@@ -323,6 +323,8 @@
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82A1BCDA171E3CCD0063ADEC /* testPixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 82A1BCD9171E3CCD0063ADEC /* testPixel.png */; };
 		82E731731724995500BBF56C /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E731721724995500BBF56C /* GLES-Render.mm */; };
+		94016001172996CF009EE3F6 /* fridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 94015FFF172996CF009EE3F6 /* fridge.png */; };
+		94016002172996CF009EE3F6 /* fridge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94016000172996CF009EE3F6 /* fridge@2x.png */; };
 		946458D61716368300F333B8 /* hugeBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946458D51716368300F333B8 /* hugeBackground@2x.png */; };
 		9468387E1717AF8D003F56BF /* hugeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 9468387D1717AF8D003F56BF /* hugeBackground.png */; };
 		94683881171B6825003F56BF /* GameplayMenuLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94683880171B6825003F56BF /* GameplayMenuLayer.mm */; };
@@ -330,6 +332,18 @@
 		946EF64B170B962900AE6DE7 /* Room layout texture extra wide.png in Resources */ = {isa = PBXBuildFile; fileRef = 946EF64A170B962900AE6DE7 /* Room layout texture extra wide.png */; };
 		946EF64E170B9CC500AE6DE7 /* WormholeTransition@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946EF64C170B9CC500AE6DE7 /* WormholeTransition@2x.png */; };
 		946EF64F170B9CC500AE6DE7 /* WormholeTransition.png in Resources */ = {isa = PBXBuildFile; fileRef = 946EF64D170B9CC500AE6DE7 /* WormholeTransition.png */; };
+		949A406117287F6A00A94C96 /* hangingBulb.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A405D17287F6A00A94C96 /* hangingBulb.png */; };
+		949A406217287F6A00A94C96 /* hangingBulb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A405E17287F6A00A94C96 /* hangingBulb@2x.png */; };
+		949A406317287F6A00A94C96 /* nightStand.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A405F17287F6A00A94C96 /* nightStand.png */; };
+		949A406417287F6A00A94C96 /* nightStand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A406017287F6A00A94C96 /* nightStand@2x.png */; };
+		949A406717287F8800A94C96 /* ropeLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A406517287F8800A94C96 /* ropeLarge.png */; };
+		949A406817287F8800A94C96 /* ropeLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A406617287F8800A94C96 /* ropeLarge@2x.png */; };
+		949A406B1728856800A94C96 /* dresserWLegs.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A40691728856800A94C96 /* dresserWLegs.png */; };
+		949A406C1728856800A94C96 /* dresserWLegs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A406A1728856800A94C96 /* dresserWLegs@2x.png */; };
+		949A406F1729928200A94C96 /* stove.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A406D1729928200A94C96 /* stove.png */; };
+		949A40701729928200A94C96 /* stove@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A406E1729928200A94C96 /* stove@2x.png */; };
+		949A4073172994CB00A94C96 /* tableThin.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A4071172994CB00A94C96 /* tableThin.png */; };
+		949A4074172994CB00A94C96 /* tableThin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 949A4072172994CB00A94C96 /* tableThin@2x.png */; };
 		C0286BEF1725D23800499C35 /* Rope.png in Resources */ = {isa = PBXBuildFile; fileRef = C0286BED1725D23800499C35 /* Rope.png */; };
 		C0286BF01725D23800499C35 /* Rope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0286BEE1725D23800499C35 /* Rope@2x.png */; };
 		C0286BF31725DD0A00499C35 /* Zhoutuo.png in Resources */ = {isa = PBXBuildFile; fileRef = C0286BF11725DD0A00499C35 /* Zhoutuo.png */; };
@@ -869,6 +883,8 @@
 		82A1BCD9171E3CCD0063ADEC /* testPixel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = testPixel.png; path = Resources/testPixel.png; sourceTree = "<group>"; };
 		82E731711724995500BBF56C /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		82E731721724995500BBF56C /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
+		94015FFF172996CF009EE3F6 /* fridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fridge.png; path = Resources/fridge.png; sourceTree = "<group>"; };
+		94016000172996CF009EE3F6 /* fridge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fridge@2x.png"; path = "Resources/fridge@2x.png"; sourceTree = "<group>"; };
 		946458D51716368300F333B8 /* hugeBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hugeBackground@2x.png"; sourceTree = "<group>"; };
 		9468387D1717AF8D003F56BF /* hugeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hugeBackground.png; sourceTree = "<group>"; };
 		9468387F171B6825003F56BF /* GameplayMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameplayMenuLayer.h; sourceTree = "<group>"; };
@@ -877,6 +893,18 @@
 		946EF64A170B962900AE6DE7 /* Room layout texture extra wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Room layout texture extra wide.png"; sourceTree = "<group>"; };
 		946EF64C170B9CC500AE6DE7 /* WormholeTransition@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WormholeTransition@2x.png"; sourceTree = "<group>"; };
 		946EF64D170B9CC500AE6DE7 /* WormholeTransition.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WormholeTransition.png; sourceTree = "<group>"; };
+		949A405D17287F6A00A94C96 /* hangingBulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hangingBulb.png; sourceTree = "<group>"; };
+		949A405E17287F6A00A94C96 /* hangingBulb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hangingBulb@2x.png"; sourceTree = "<group>"; };
+		949A405F17287F6A00A94C96 /* nightStand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nightStand.png; sourceTree = "<group>"; };
+		949A406017287F6A00A94C96 /* nightStand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nightStand@2x.png"; sourceTree = "<group>"; };
+		949A406517287F8800A94C96 /* ropeLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ropeLarge.png; sourceTree = "<group>"; };
+		949A406617287F8800A94C96 /* ropeLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ropeLarge@2x.png"; sourceTree = "<group>"; };
+		949A40691728856800A94C96 /* dresserWLegs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dresserWLegs.png; path = Resources/dresserWLegs.png; sourceTree = "<group>"; };
+		949A406A1728856800A94C96 /* dresserWLegs@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dresserWLegs@2x.png"; path = "Resources/dresserWLegs@2x.png"; sourceTree = "<group>"; };
+		949A406D1729928200A94C96 /* stove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stove.png; sourceTree = "<group>"; };
+		949A406E1729928200A94C96 /* stove@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stove@2x.png"; sourceTree = "<group>"; };
+		949A4071172994CB00A94C96 /* tableThin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tableThin.png; path = Resources/tableThin.png; sourceTree = "<group>"; };
+		949A4072172994CB00A94C96 /* tableThin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tableThin@2x.png"; path = "Resources/tableThin@2x.png"; sourceTree = "<group>"; };
 		C0286BED1725D23800499C35 /* Rope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Rope.png; path = Resources/Rope.png; sourceTree = "<group>"; };
 		C0286BEE1725D23800499C35 /* Rope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Rope@2x.png"; path = "Resources/Rope@2x.png"; sourceTree = "<group>"; };
 		C0286BF11725DD0A00499C35 /* Zhoutuo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Zhoutuo.png; path = Resources/Zhoutuo.png; sourceTree = "<group>"; };
@@ -1020,10 +1048,24 @@
 				C09488C51714C6A700367A62 /* ThickRope@2x.png */,
 				C09488C61714C6A700367A62 /* ThinRope.png */,
 				C09488C71714C6A700367A62 /* ThinRope@2x.png */,
+				949A406D1729928200A94C96 /* stove.png */,
+				949A4071172994CB00A94C96 /* tableThin.png */,
+				94015FFF172996CF009EE3F6 /* fridge.png */,
+				94016000172996CF009EE3F6 /* fridge@2x.png */,
+				949A4072172994CB00A94C96 /* tableThin@2x.png */,
+				949A406E1729928200A94C96 /* stove@2x.png */,
 				284504101714A3C600A8888B /* floor_lamp.png */,
 				284504111714A3C600A8888B /* floor_lamp@2x.png */,
 				28358C5F1710D70C00744869 /* bulb@2x.png */,
 				28358C601710D70C00744869 /* bulb.png */,
+				949A405D17287F6A00A94C96 /* hangingBulb.png */,
+				949A405E17287F6A00A94C96 /* hangingBulb@2x.png */,
+				949A405F17287F6A00A94C96 /* nightStand.png */,
+				949A406517287F8800A94C96 /* ropeLarge.png */,
+				949A40691728856800A94C96 /* dresserWLegs.png */,
+				949A406A1728856800A94C96 /* dresserWLegs@2x.png */,
+				949A406617287F8800A94C96 /* ropeLarge@2x.png */,
+				949A406017287F6A00A94C96 /* nightStand@2x.png */,
 				C07E84C21710F2D700174D5E /* Chandelier.png */,
 				1E08F9281713CE51004A59BF /* Home_Text.png */,
 				1E08F9291713CE51004A59BF /* Home_Text@2x.png */,
@@ -1935,6 +1977,20 @@
 				1E935B2F17264542001D50DC /* Level-2-7@2x.png in Resources */,
 				1E935B3017264542001D50DC /* Level-2-8@2x.png in Resources */,
 				1E935B3C17264B85001D50DC /* LevelSelectSceneTwo.ccbi in Resources */,
+				949A406117287F6A00A94C96 /* hangingBulb.png in Resources */,
+				949A406217287F6A00A94C96 /* hangingBulb@2x.png in Resources */,
+				949A406317287F6A00A94C96 /* nightStand.png in Resources */,
+				949A406417287F6A00A94C96 /* nightStand@2x.png in Resources */,
+				949A406717287F8800A94C96 /* ropeLarge.png in Resources */,
+				949A406817287F8800A94C96 /* ropeLarge@2x.png in Resources */,
+				949A406B1728856800A94C96 /* dresserWLegs.png in Resources */,
+				949A406C1728856800A94C96 /* dresserWLegs@2x.png in Resources */,
+				949A406F1729928200A94C96 /* stove.png in Resources */,
+				949A40701729928200A94C96 /* stove@2x.png in Resources */,
+				949A4073172994CB00A94C96 /* tableThin.png in Resources */,
+				949A4074172994CB00A94C96 /* tableThin@2x.png in Resources */,
+				94016001172996CF009EE3F6 /* fridge.png in Resources */,
+				94016002172996CF009EE3F6 /* fridge@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
