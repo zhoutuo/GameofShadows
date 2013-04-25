@@ -33,8 +33,8 @@
 
 +(NSInteger) TagGenerater;
 -(BOOL) checkIfPointInFixture: (b2Vec2) worldPoint :(CGPoint) origin;
--(void) finishObjectsCreation: (CCArray*) objects withRatios:(CCArray*) ratios;
--(void) finishLightsCreation: (CCArray*) lights withRatios:(CCArray*) ratios;
+-(void) finishObjectsCreation: (CCArray*) objects withRatios:(CCArray*) ratios withAPs:(CCArray*) APs;
+-(void) finishLightsCreation: (CCArray*) lights withRatios:(CCArray*) ratios withAPs:(CCArray*) APs;
 -(void) finishMovingOneObject: (NSInteger) objectTag withRatio:(CGPoint) ratio;
 -(void) finishMovingOneLight: (NSInteger) lightTag withRatio:(CGPoint) ratio;
 -(void) finishRotatingOneObject: (NSInteger) objectTag withAngle:(float) angle;
