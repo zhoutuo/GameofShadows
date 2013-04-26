@@ -557,7 +557,7 @@
 {
 	
     // If you want to see the physics bodies, uncomment this section
-	[super draw];
+	/*[super draw];
 	
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	
@@ -565,7 +565,7 @@
 	
 	physicsWorld->DrawDebugData();
 	
-	kmGLPopMatrix();
+	kmGLPopMatrix();*/
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Level 1</key>
+	<key>Level 0</key>
 	<dict>
 		<key>HasTransition</key>
 		<string>no</string>
@@ -54,11 +54,85 @@
 				<string>Rope</string>
 				<integer>15</integer>
 				<integer>320</integer>
-				<string>bulb</string>
+				<string>Zhoutuo</string>
 			</array>
 		</array>
 	</dict>
+	<key>Level 1</key>
+	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>Door</string>
+				<integer>100</integer>
+				<integer>200</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array/>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
+				<integer>220</integer>
+				<integer>150</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>700</integer>
+				<integer>250</integer>
+			</array>
+		</array>
+		<key>Ropes</key>
+		<array/>
+	</dict>
 	<key>Level 2</key>
+	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>Door</string>
+				<integer>100</integer>
+				<integer>200</integer>
+			</array>
+			<array>
+				<string>nightStand</string>
+				<integer>300</integer>
+				<string>200</string>
+			</array>
+			<array>
+				<string>FootRest</string>
+				<integer>450</integer>
+				<integer>200</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array/>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
+				<integer>220</integer>
+				<integer>150</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>820</integer>
+				<integer>310</integer>
+			</array>
+		</array>
+		<key>Ropes</key>
+		<array/>
+	</dict>
+	<key>Level 3</key>
 	<dict>
 		<key>HasTransition</key>
 		<string>no</string>
@@ -105,7 +179,184 @@
 		<key>Ropes</key>
 		<array/>
 	</dict>
-	<key>Level 3</key>
+	<key>Level 4</key>
+	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>Door</string>
+				<integer>100</integer>
+				<integer>200</integer>
+			</array>
+			<array>
+				<string>FootRest</string>
+				<integer>400</integer>
+				<integer>300</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array/>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
+				<integer>230</integer>
+				<integer>100</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>670</integer>
+				<integer>350</integer>
+			</array>
+		</array>
+		<key>Ropes</key>
+		<array/>
+	</dict>
+	<key>Level 5</key>
+	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>fridge</string>
+				<integer>100</integer>
+				<integer>200</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array/>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
+				<integer>500</integer>
+				<integer>100</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>515</integer>
+				<integer>550</integer>
+			</array>
+		</array>
+		<key>Ropes</key>
+		<array>
+			<array>
+				<string>Rope</string>
+				<integer>15</integer>
+				<integer>320</integer>
+				<string>bulb</string>
+			</array>
+		</array>
+	</dict>
+	<key>Level 6</key>
+	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>dresserWLegs</string>
+				<integer>100</integer>
+				<integer>200</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array/>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
+				<integer>220</integer>
+				<integer>150</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>800</integer>
+				<integer>150</integer>
+			</array>
+		</array>
+		<key>Ropes</key>
+		<array/>
+	</dict>
+	<key>Level 7</key>
+	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>stove</string>
+				<integer>100</integer>
+				<integer>200</integer>
+			</array>
+			<array>
+				<string>tableThin</string>
+				<integer>300</integer>
+				<integer>100</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array/>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
+				<integer>220</integer>
+				<integer>150</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>800</integer>
+				<integer>530</integer>
+			</array>
+		</array>
+		<key>Ropes</key>
+		<array/>
+	</dict>
+	<key>Level 8</key>
+	<dict>
+		<key>HasTransition</key>
+		<string>no</string>
+		<key>Background</key>
+		<string>Room layout texture</string>
+		<key>Objects</key>
+		<array>
+			<array>
+				<string>tableThin</string>
+				<integer>100</integer>
+				<integer>200</integer>
+			</array>
+		</array>
+		<key>Lights</key>
+		<array/>
+		<key>Portals</key>
+		<array>
+			<array>
+				<string>WormholeEntrance</string>
+				<integer>220</integer>
+				<integer>150</integer>
+			</array>
+			<array>
+				<string>WormholeExit</string>
+				<integer>700</integer>
+				<integer>250</integer>
+			</array>
+		</array>
+		<key>Ropes</key>
+		<array/>
+	</dict>
+	<key>Level 11</key>
 	<dict>
 		<key>HasTransition</key>
 		<string>no</string>
@@ -147,7 +398,7 @@
 		<key>Ropes</key>
 		<array/>
 	</dict>
-	<key>Level 4</key>
+	<key>Level 12</key>
 	<dict>
 		<key>HasTransition</key>
 		<string>no</string>
@@ -188,57 +439,6 @@
 		</array>
 		<key>Ropes</key>
 		<array/>
-	</dict>
-	<key>Level 5</key>
-	<dict>
-		<key>HasTransition</key>
-		<string>yes</string>
-		<key>Background</key>
-		<string>hugeBackground</string>
-		<key>CameraLocations</key>
-		<array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>900</integer>
-				<integer>101</integer>
-			</array>
-		</array>
-		<key>Objects</key>
-		<array>
-			<array>
-				<string>Dresser</string>
-				<integer>400</integer>
-				<integer>100</integer>
-			</array>
-			<array>
-				<string>Door</string>
-				<integer>256</integer>
-				<integer>300</integer>
-			</array>
-		</array>
-		<key>Lights</key>
-		<array/>
-		<key>Portals</key>
-		<array>
-			<array>
-				<string>WormholeEntrance</string>
-				<integer>220</integer>
-				<integer>150</integer>
-			</array>
-			<array>
-				<string>WormholeTransition</string>
-				<integer>950</integer>
-				<integer>250</integer>
-			</array>
-			<array>
-				<string>WormholeExit</string>
-				<integer>1300</integer>
-				<integer>250</integer>
-			</array>
-		</array>
 	</dict>
 </dict>
 </plist>
