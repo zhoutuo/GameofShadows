@@ -12,6 +12,7 @@
 #import "GameplayScene.h"
 #import "CCBReader.h"
 #import "SimpleAudioEngine.h"
+#import "Globals.h"
 
 @implementation AppController
 
@@ -21,7 +22,6 @@
 {
 	// Create the main window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
 
 	// Create an CCGLView with a RGB565 color buffer, and a depth buffer of 0-bits
 	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
@@ -120,12 +120,14 @@
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
+    //numberOfLevelsUnlocked = [[NSUserDefaults standardUserDefaults] integerForKey:@"numberOfLevelsUnlocked"];
 	if( [navController_ visibleViewController] == director_ )
 		[director_ resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
+    //[[NSUserDefaults standardUserDefaults] setInteger:numberOfLevelsUnlocked forKey:@"numberOfLevelsUnlocked"];
 	if( [navController_ visibleViewController] == director_ )
 		[director_ stopAnimation];
 }

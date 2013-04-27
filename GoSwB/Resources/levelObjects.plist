@@ -51,8 +51,8 @@
 		<key>Ropes</key>
 		<array>
 			<array>
-				<string>Rope</string>
-				<integer>15</integer>
+				<string>ropeLarge</string>
+				<integer>4</integer>
 				<integer>320</integer>
 				<string>Zhoutuo</string>
 			</array>
@@ -248,8 +248,8 @@
 		<key>Ropes</key>
 		<array>
 			<array>
-				<string>Rope</string>
-				<integer>15</integer>
+				<string>ropeLarge</string>
+				<integer>3</integer>
 				<integer>320</integer>
 				<string>bulb</string>
 			</array>

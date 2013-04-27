@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
 @interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate>
