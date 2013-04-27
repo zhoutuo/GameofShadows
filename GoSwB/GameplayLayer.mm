@@ -420,7 +420,7 @@
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
                     body -> SetAwake(true);
-                    b2Vec2 centerOfMass = body -> GetWorldCenter();
+                    b2Vec2 centerOfMass = body->GetPosition();
                     
                     b2MouseJointDef md;
                     md.bodyB = body;
@@ -474,7 +474,7 @@
         touchOperation = MOVING;
 
         //try to check whether the touched sprite is the objects container or not
-        CCSprite* touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
+//        CCSprite* touched = (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag];
         //CGRect rect = objectsContainer.boundingBox;
 
         //since we did not change the anchor point of the children sprites
@@ -484,18 +484,19 @@
         location = [self fromLayerCoord2Container:location];
 
         
-        touched.position = location;
+//        touched.position = location;
         //moving the physical body as well
-        b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
-        body -> SetAngularVelocity(0);
+//        b2Body* body = [(PhysicsSprite*)touched getPhysicsBody];
+//        body -> SetAngularVelocity(0);
+//        body -> SetLinearVelocity(b2Vec2(0, 0));
         mouseJoint -> SetTarget([self toMeters:location]);
         
     } else if(touchOperation == ROTATING) {
         PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];
         b2Body* body = [rotated getPhysicsBody];
 //        body->SetAwake(false);
-        body->SetAngularVelocity(0);
-        body->SetLinearVelocity(b2Vec2(0, 0));
+//        body->SetAngularVelocity(0);
+//        body->SetLinearVelocity(b2Vec2(0, 0));
 //        id move = [CCMoveBy actionWithDuration:0.5 position:ccp(0, 0)];
 //        [rotated runAction:move];
 //        body->SetAngularVelocity(0);
