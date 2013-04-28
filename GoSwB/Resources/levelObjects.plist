@@ -27,6 +27,8 @@
 				<real>2.5</real>
 			</dict>
 		</array>
+		<key>StaticLights</key>
+		<array/>
 		<key>Objects</key>
 		<array>
 			<array>
@@ -79,6 +81,8 @@
 		</array>
 		<key>Lights</key>
 		<array/>
+		<key>StaticLights</key>
+		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -120,6 +124,8 @@
 			</array>
 		</array>
 		<key>Lights</key>
+		<array/>
+		<key>StaticLights</key>
 		<array/>
 		<key>Portals</key>
 		<array>
@@ -168,6 +174,8 @@
 		</array>
 		<key>Lights</key>
 		<array/>
+		<key>StaticLights</key>
+		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -210,6 +218,8 @@
 		</array>
 		<key>Lights</key>
 		<array/>
+		<key>StaticLights</key>
+		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -241,6 +251,8 @@
 			</array>
 		</array>
 		<key>Lights</key>
+		<array/>
+		<key>StaticLights</key>
 		<array/>
 		<key>Portals</key>
 		<array>
@@ -281,6 +293,8 @@
 		</array>
 		<key>Lights</key>
 		<array/>
+		<key>StaticLights</key>
+		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -318,6 +332,8 @@
 		</array>
 		<key>Lights</key>
 		<array/>
+		<key>StaticLights</key>
+		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -350,6 +366,8 @@
 		</array>
 		<key>Lights</key>
 		<array/>
+		<key>StaticLights</key>
+		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -372,6 +390,27 @@
 		<string>no</string>
 		<key>Background</key>
 		<string>Room layout texture</string>
+		<key>Lights</key>
+		<array/>
+		<key>StaticLights</key>
+		<array>
+			<dict>
+				<key>on_filename</key>
+				<string>lightSourceOff</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>500</integer>
+				<key>origin_y</key>
+				<integer>150</integer>
+				<key>vertical_percentage</key>
+				<real>0.5</real>
+				<key>on_duration</key>
+				<real>0.1</real>
+				<key>off_duration</key>
+				<integer>10</integer>
+			</dict>
+		</array>
 		<key>Objects</key>
 		<array>
 			<array>
@@ -390,8 +429,6 @@
 				<integer>300</integer>
 			</array>
 		</array>
-		<key>Lights</key>
-		<array/>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -434,6 +471,25 @@
 		</array>
 		<key>Lights</key>
 		<array/>
+		<key>StaticLights</key>
+		<array>
+			<dict>
+				<key>on_filename</key>
+				<string>lightSourceOff</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>500</integer>
+				<key>origin_y</key>
+				<integer>150</integer>
+				<key>vertical_percentage</key>
+				<real>0.5</real>
+				<key>on_duration</key>
+				<real>0.1</real>
+				<key>off_duration</key>
+				<integer>10</integer>
+			</dict>
+		</array>
 		<key>Portals</key>
 		<array>
 			<array>

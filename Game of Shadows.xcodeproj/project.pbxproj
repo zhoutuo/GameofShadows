@@ -354,6 +354,8 @@
 		829B4D75172A112500E3A46F /* stove@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 829B4CDD172A112500E3A46F /* stove@2x.png */; };
 		829B4D7A172A117C00E3A46F /* WormholeTransition.png in Resources */ = {isa = PBXBuildFile; fileRef = 829B4D78172A117A00E3A46F /* WormholeTransition.png */; };
 		829B4D7B172A117C00E3A46F /* WormholeTransition@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 829B4D79172A117B00E3A46F /* WormholeTransition@2x.png */; };
+		829B4D82172CFA8900E3A46F /* lightSourceOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 829B4D80172CFA8800E3A46F /* lightSourceOff.png */; };
+		829B4D83172CFA8900E3A46F /* lightSourceOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 829B4D81172CFA8800E3A46F /* lightSourceOff@2x.png */; };
 		82A0235516DC28BD00886573 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82A0235416DC28BD00886573 /* GB2ShapeCache.mm */; };
 		82A1BCDA171E3CCD0063ADEC /* testPixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 82A1BCD9171E3CCD0063ADEC /* testPixel.png */; };
 		82E731731724995500BBF56C /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E731721724995500BBF56C /* GLES-Render.mm */; };
@@ -920,6 +922,8 @@
 		829B4CDD172A112500E3A46F /* stove@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stove@2x.png"; sourceTree = "<group>"; };
 		829B4D78172A117A00E3A46F /* WormholeTransition.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WormholeTransition.png; sourceTree = "<group>"; };
 		829B4D79172A117B00E3A46F /* WormholeTransition@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WormholeTransition@2x.png"; sourceTree = "<group>"; };
+		829B4D80172CFA8800E3A46F /* lightSourceOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightSourceOff.png; path = Resources/lightSourceOff.png; sourceTree = "<group>"; };
+		829B4D81172CFA8800E3A46F /* lightSourceOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightSourceOff@2x.png"; path = "Resources/lightSourceOff@2x.png"; sourceTree = "<group>"; };
 		82A0235316DC28BD00886573 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GB2ShapeCache.h; sourceTree = "<group>"; };
 		82A0235416DC28BD00886573 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GB2ShapeCache.mm; sourceTree = "<group>"; };
 		82A1BCD9171E3CCD0063ADEC /* testPixel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = testPixel.png; path = Resources/testPixel.png; sourceTree = "<group>"; };
@@ -1704,15 +1708,15 @@
 		829B4D7E172A133500E3A46F /* Gameplay */ = {
 			isa = PBXGroup;
 			children = (
-				829B4CB1172A112400E3A46F /* play_bg.png */,
-				829B4CB2172A112400E3A46F /* play_bg@2x.png */,
-				829B4D78172A117A00E3A46F /* WormholeTransition.png */,
-				829B4D79172A117B00E3A46F /* WormholeTransition@2x.png */,
 				829B4C7B172A112300E3A46F /* grahh.png */,
 				829B4C7C172A112300E3A46F /* grahh@2x.png */,
 				829B4C98172A112400E3A46F /* lightSource1.png */,
 				829B4C99172A112400E3A46F /* lightSource1@2x.png */,
 				829B4C9A172A112400E3A46F /* lightSource2.png */,
+				829B4D80172CFA8800E3A46F /* lightSourceOff.png */,
+				829B4D81172CFA8800E3A46F /* lightSourceOff@2x.png */,
+				829B4CB1172A112400E3A46F /* play_bg.png */,
+				829B4CB2172A112400E3A46F /* play_bg@2x.png */,
 				829B4CBD172A112400E3A46F /* rotate_circle.png */,
 				829B4CBE172A112400E3A46F /* rotate_circle@2x.png */,
 				829B4CBF172A112400E3A46F /* squirtle.png */,
@@ -1722,7 +1726,9 @@
 				829B4CD1172A112400E3A46F /* WormholeEntrance@2x.png */,
 				829B4CD2172A112400E3A46F /* WormholeExit.png */,
 				829B4CD3172A112400E3A46F /* WormholeExit@2x.png */,
+				829B4D78172A117A00E3A46F /* WormholeTransition.png */,
 				829B4CD4172A112400E3A46F /* WormholeTransition.png */,
+				829B4D79172A117B00E3A46F /* WormholeTransition@2x.png */,
 				829B4CD5172A112400E3A46F /* WormholeTransition@2x.png */,
 			);
 			name = Gameplay;
@@ -2045,6 +2051,8 @@
 				9414AB3E172C9B55005BB908 /* cinderBlock@2x.png in Resources */,
 				9414AB41172CA15D005BB908 /* matress.png in Resources */,
 				9414AB42172CA15D005BB908 /* matress@2x.png in Resources */,
+				829B4D82172CFA8900E3A46F /* lightSourceOff.png in Resources */,
+				829B4D83172CFA8900E3A46F /* lightSourceOff@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

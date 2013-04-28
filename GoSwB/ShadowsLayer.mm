@@ -85,6 +85,33 @@ CCRenderTexture* renderTexture = NULL;
         [shadowMonster setPosition: wormholeEntrance.position];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
+        //get the staticlights
+        NSArray* staticLights = [[levelObjects objectForKey: level] objectForKey:@"StaticLights"];
+        for(NSDictionary* lightSource in staticLights){
+            //get sprite name
+            NSString* name = [lightSource objectForKey:@"on_filename"];
+            //get the on_filename
+            NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
+            NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
+            int origin_x = [[lightSource objectForKey:@"origin_x"] intValue];
+            int origin_y = [[lightSource objectForKey:@"origin_y"] intValue];
+            float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
+            float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
+            float vertical_per = [[lightSource objectForKey:@"vertical_percentage"] floatValue];
+            
+            LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration :vertical_per] autorelease];
+            
+            source.position = ccp(origin_x, origin_y);
+            source.anchorPoint = ccp(0.5f, 0.5f);
+            source.tag = [GameplayScene TagGenerater];
+            //[source setColor:ccc3(0, 0, 0)];
+            [source setScaleY:1.5*SHADOW_HEIGHT_FACTOR];
+            [source setScaleX:1.5*SHADOW_WIDTH_FACTOR];
+            [self addChild:source z:LIGHT_SPRITE_DEPTH];
+            //CGPoint ratio = [[ratios objectAtIndex:i] CGPointValue];
+            //[self updateShadowPos:lightObject.tag withRelativePos: ratio];
+        }
+        
     }
     return self;
 }
