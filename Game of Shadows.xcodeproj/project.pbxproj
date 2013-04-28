@@ -361,8 +361,20 @@
 		82E731731724995500BBF56C /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 82E731721724995500BBF56C /* GLES-Render.mm */; };
 		9414AB3D172C9B55005BB908 /* cinderBlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB3B172C9B55005BB908 /* cinderBlock.png */; };
 		9414AB3E172C9B55005BB908 /* cinderBlock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB3C172C9B55005BB908 /* cinderBlock@2x.png */; };
-		9414AB41172CA15D005BB908 /* matress.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB3F172CA15D005BB908 /* matress.png */; };
-		9414AB42172CA15D005BB908 /* matress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB40172CA15D005BB908 /* matress@2x.png */; };
+		9414AB41172CA15D005BB908 /* mattress.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB3F172CA15D005BB908 /* mattress.png */; };
+		9414AB42172CA15D005BB908 /* mattress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB40172CA15D005BB908 /* mattress@2x.png */; };
+		9414AB45172CEAF7005BB908 /* lamp.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB43172CEAF7005BB908 /* lamp.png */; };
+		9414AB46172CEAF7005BB908 /* lamp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB44172CEAF7005BB908 /* lamp@2x.png */; };
+		9414AB49172CECF0005BB908 /* floorLamp.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB47172CECF0005BB908 /* floorLamp.png */; };
+		9414AB4A172CECF0005BB908 /* floorLamp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB48172CECF0005BB908 /* floorLamp@2x.png */; };
+		9414AB4D172CEEAF005BB908 /* bedroom.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB4B172CEEAF005BB908 /* bedroom.png */; };
+		9414AB4E172CEEAF005BB908 /* bedroom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB4C172CEEAF005BB908 /* bedroom@2x.png */; };
+		9414AB51172CEF70005BB908 /* kitchen.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB4F172CEF70005BB908 /* kitchen.png */; };
+		9414AB52172CEF70005BB908 /* kitchen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB50172CEF70005BB908 /* kitchen@2x.png */; };
+		9414AB55172CF8A7005BB908 /* splashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB53172CF8A7005BB908 /* splashScreen.png */; };
+		9414AB56172CF8A7005BB908 /* splashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB54172CF8A7005BB908 /* splashScreen@2x.png */; };
+		9414AB58172CF8E3005BB908 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB57172CF8E3005BB908 /* Default-Landscape@2x~ipad.png */; };
+		9414AB5A172CF8F1005BB908 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB59172CF8F1005BB908 /* Default-Landscape~ipad.png */; };
 		94683881171B6825003F56BF /* GameplayMenuLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94683880171B6825003F56BF /* GameplayMenuLayer.mm */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
 /* End PBXBuildFile section */
@@ -931,8 +943,20 @@
 		82E731721724995500BBF56C /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		9414AB3B172C9B55005BB908 /* cinderBlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cinderBlock.png; sourceTree = "<group>"; };
 		9414AB3C172C9B55005BB908 /* cinderBlock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cinderBlock@2x.png"; sourceTree = "<group>"; };
-		9414AB3F172CA15D005BB908 /* matress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = matress.png; sourceTree = "<group>"; };
-		9414AB40172CA15D005BB908 /* matress@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "matress@2x.png"; sourceTree = "<group>"; };
+		9414AB3F172CA15D005BB908 /* mattress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mattress.png; sourceTree = "<group>"; };
+		9414AB40172CA15D005BB908 /* mattress@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mattress@2x.png"; sourceTree = "<group>"; };
+		9414AB43172CEAF7005BB908 /* lamp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lamp.png; sourceTree = "<group>"; };
+		9414AB44172CEAF7005BB908 /* lamp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lamp@2x.png"; sourceTree = "<group>"; };
+		9414AB47172CECF0005BB908 /* floorLamp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floorLamp.png; sourceTree = "<group>"; };
+		9414AB48172CECF0005BB908 /* floorLamp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "floorLamp@2x.png"; sourceTree = "<group>"; };
+		9414AB4B172CEEAF005BB908 /* bedroom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bedroom.png; sourceTree = "<group>"; };
+		9414AB4C172CEEAF005BB908 /* bedroom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bedroom@2x.png"; sourceTree = "<group>"; };
+		9414AB4F172CEF70005BB908 /* kitchen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kitchen.png; sourceTree = "<group>"; };
+		9414AB50172CEF70005BB908 /* kitchen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kitchen@2x.png"; sourceTree = "<group>"; };
+		9414AB53172CF8A7005BB908 /* splashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashScreen.png; sourceTree = "<group>"; };
+		9414AB54172CF8A7005BB908 /* splashScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splashScreen@2x.png"; sourceTree = "<group>"; };
+		9414AB57172CF8E3005BB908 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		9414AB59172CF8F1005BB908 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		9468387F171B6825003F56BF /* GameplayMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameplayMenuLayer.h; sourceTree = "<group>"; };
 		94683880171B6825003F56BF /* GameplayMenuLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameplayMenuLayer.mm; sourceTree = "<group>"; };
 		C0654628170B800F00A2C19F /* items.pes */ = {isa = PBXFileReference; lastKnownFileType = file; path = items.pes; sourceTree = "<group>"; };
@@ -1001,6 +1025,8 @@
 		28E476F316CD9BA7007B3A2A = {
 			isa = PBXGroup;
 			children = (
+				9414AB59172CF8F1005BB908 /* Default-Landscape~ipad.png */,
+				9414AB57172CF8E3005BB908 /* Default-Landscape@2x~ipad.png */,
 				28E4771116CD9BA7007B3A2A /* Game of Shadows */,
 				28E476FE16CD9BA7007B3A2A /* Frameworks */,
 				28E476FD16CD9BA7007B3A2A /* Products */,
@@ -1655,9 +1681,13 @@
 				829B4C73172A112300E3A46F /* dresserWLegs@2x.png */,
 				829B4C74172A112300E3A46F /* floor_lamp.png */,
 				829B4C75172A112300E3A46F /* floor_lamp@2x.png */,
+				9414AB47172CECF0005BB908 /* floorLamp.png */,
+				9414AB48172CECF0005BB908 /* floorLamp@2x.png */,
 				829B4C76172A112300E3A46F /* FootRest.png */,
-				9414AB3F172CA15D005BB908 /* matress.png */,
-				9414AB40172CA15D005BB908 /* matress@2x.png */,
+				9414AB43172CEAF7005BB908 /* lamp.png */,
+				9414AB44172CEAF7005BB908 /* lamp@2x.png */,
+				9414AB3F172CA15D005BB908 /* mattress.png */,
+				9414AB40172CA15D005BB908 /* mattress@2x.png */,
 				829B4C77172A112300E3A46F /* FootRest@2x.png */,
 				829B4C78172A112300E3A46F /* fridge.png */,
 				829B4C79172A112300E3A46F /* fridge@2x.png */,
@@ -1696,7 +1726,13 @@
 				829B4C65172A112300E3A46F /* Background-texture@2x.png */,
 				829B4CB6172A112400E3A46F /* Room layout small window.png */,
 				829B4CB7172A112400E3A46F /* Room layout small window@2x.png */,
+				9414AB53172CF8A7005BB908 /* splashScreen.png */,
+				9414AB54172CF8A7005BB908 /* splashScreen@2x.png */,
 				829B4CB8172A112400E3A46F /* Room layout texture.png */,
+				9414AB4F172CEF70005BB908 /* kitchen.png */,
+				9414AB50172CEF70005BB908 /* kitchen@2x.png */,
+				9414AB4B172CEEAF005BB908 /* bedroom.png */,
+				9414AB4C172CEEAF005BB908 /* bedroom@2x.png */,
 				829B4CB9172A112400E3A46F /* Room layout texture@2x.jpg */,
 				829B4CBA172A112400E3A46F /* Room layout texture@2x.png */,
 				829B4CD8172A112500E3A46F /* Room layout texture extra wide.png */,
