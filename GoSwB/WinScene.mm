@@ -32,6 +32,8 @@
         case NEXT_TAG:
             NSLog(@"Next button pushed");
             currentLevel++;
+            if(currentLevel == 9)
+                currentLevel = 11;
             [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:1 scene:[GameplayScene node]]];
             break;
         default:
