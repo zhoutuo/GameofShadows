@@ -18,6 +18,7 @@
 #define NOTAG -1
 #define BACKGROUND_DEPTH 1
 #define OBJECT_DEPTH -1
+#define ROPE_DEPTH -3
 #define LIGHT_DEPTH -2
 #define OMS_MOVEMENT_SPEED 0.2
 
@@ -99,7 +100,7 @@
             [[GB2ShapeCache sharedShapeCache] addFixturesToBody:ropeBody forShapeName:ropeImage];
             [ropeSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:ropeImage]];
             [ropeSprite setPhysicsBody:ropeBody];
-            [objectsContainer addChild:ropeSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+            [objectsContainer addChild:ropeSprite z:ROPE_DEPTH tag:[GameplayScene TagGenerater]];
             b2RevoluteJointDef jointDef;
             jointDef.Initialize(previousConnector, ropeBody,
                                 [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
@@ -119,7 +120,7 @@
         [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightBody forShapeName:lightImage];
         [lightSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:lightImage]];
         [lightSprite setPhysicsBody:lightBody];
-        [objectsContainer addChild:lightSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
+        [objectsContainer addChild:lightSprite z:ROPE_DEPTH tag:[GameplayScene TagGenerater]];
         b2RevoluteJointDef jointDef;
         jointDef.Initialize(previousConnector, lightBody, [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
         physicsWorld -> CreateJoint(&jointDef);
@@ -172,10 +173,6 @@
 	
 	uint32 flags = 0;
 	flags += b2Draw::e_shapeBit;
-	//		flags += b2Draw::e_jointBit;
-	//		flags += b2Draw::e_aabbBit;
-	//		flags += b2Draw::e_pairBit;
-	//		flags += b2Draw::e_centerOfMassBit;
 	m_debugDraw->SetFlags(flags);
     
     // Define the ground body.
@@ -301,7 +298,7 @@
     for (CCSprite* sprite in objectsContainer.children) {
         //filter out all children except object and light source
         CGPoint ratio = [self getSpriteRelativePos:sprite];
-        if (sprite.zOrder == OBJECT_DEPTH) {
+        if (sprite.zOrder == OBJECT_DEPTH or sprite.zOrder == ROPE_DEPTH) {
             [shadowVisibleChildren addObject:sprite];
             [ratios addObject:[NSValue valueWithCGPoint:ratio]];
             [anchorPoints addObject:[NSValue valueWithCGPoint:sprite.anchorPoint]];
@@ -392,6 +389,8 @@
 }
 
 
+
+
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
     UITouch* touch = [touches anyObject];
@@ -413,9 +412,10 @@
         //user a tap will invoker this function
         if (CGRectContainsPoint([objectsContainer boundingBox], location)) {
             //update the location to relative position for children
-            location = [self fromLayerCoord2Container:location];
+//            location = [self convertToNodeSpace:location];
+            CGPoint tmp = [objectsContainer convertToNodeSpace:location];
             for (PhysicsSprite* child in objectsContainer.children) {
-                if (CGRectContainsPoint([child boundingBox], location)) {
+                if (CGRectContainsPoint([child boundingBox], tmp) and CGRectContainsPoint(child.textureRect, [child convertToNodeSpace:location])) {
                     touchOperation = TAP;
                     touchedObjectTag = child.tag;
                     b2Body* body = [child getPhysicsBody];
@@ -500,6 +500,13 @@
     
     if (touchOperation == TAP or touchOperation == MOVING) {
         
+        if ([objectsContainer getChildByTag:touchedObjectTag].zOrder == ROPE_DEPTH) {
+            touchOperation = NONE;
+            touchedObjectTag = NOTAG;
+            physicsWorld -> DestroyJoint(mouseJoint);
+            mouseJoint = NULL;
+            return;
+        }
         //show circle around tapped object, start to rotate
         [self toggleRotationCircle: (CCSprite*)[objectsContainer getChildByTag:touchedObjectTag] :YES];
         PhysicsSprite* rotated = (PhysicsSprite*)[objectsContainer getChildByTag:touchedObjectTag];

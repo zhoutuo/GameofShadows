@@ -531,6 +531,8 @@ CCRenderTexture* renderTexture = NULL;
 
 -(void) finishActionMode {
     self.isTouchEnabled = NO;
+    //stop monster
+    [shadowMonster stopAllActions];
     //reset the count
     count_swipe_down = 0;
     //unschedule the udpate fucntion
