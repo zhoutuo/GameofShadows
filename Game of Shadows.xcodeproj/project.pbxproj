@@ -363,18 +363,6 @@
 		9414AB3E172C9B55005BB908 /* cinderBlock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB3C172C9B55005BB908 /* cinderBlock@2x.png */; };
 		9414AB41172CA15D005BB908 /* mattress.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB3F172CA15D005BB908 /* mattress.png */; };
 		9414AB42172CA15D005BB908 /* mattress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB40172CA15D005BB908 /* mattress@2x.png */; };
-		9414AB45172CEAF7005BB908 /* lamp.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB43172CEAF7005BB908 /* lamp.png */; };
-		9414AB46172CEAF7005BB908 /* lamp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB44172CEAF7005BB908 /* lamp@2x.png */; };
-		9414AB49172CECF0005BB908 /* floorLamp.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB47172CECF0005BB908 /* floorLamp.png */; };
-		9414AB4A172CECF0005BB908 /* floorLamp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB48172CECF0005BB908 /* floorLamp@2x.png */; };
-		9414AB4D172CEEAF005BB908 /* bedroom.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB4B172CEEAF005BB908 /* bedroom.png */; };
-		9414AB4E172CEEAF005BB908 /* bedroom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB4C172CEEAF005BB908 /* bedroom@2x.png */; };
-		9414AB51172CEF70005BB908 /* kitchen.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB4F172CEF70005BB908 /* kitchen.png */; };
-		9414AB52172CEF70005BB908 /* kitchen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB50172CEF70005BB908 /* kitchen@2x.png */; };
-		9414AB55172CF8A7005BB908 /* splashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB53172CF8A7005BB908 /* splashScreen.png */; };
-		9414AB56172CF8A7005BB908 /* splashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB54172CF8A7005BB908 /* splashScreen@2x.png */; };
-		9414AB58172CF8E3005BB908 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB57172CF8E3005BB908 /* Default-Landscape@2x~ipad.png */; };
-		9414AB5A172CF8F1005BB908 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9414AB59172CF8F1005BB908 /* Default-Landscape~ipad.png */; };
 		94683881171B6825003F56BF /* GameplayMenuLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94683880171B6825003F56BF /* GameplayMenuLayer.mm */; };
 		C0C1795F16D079A50060BAD4 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0C1795E16D072580060BAD4 /* PhysicsSprite.mm */; };
 /* End PBXBuildFile section */
@@ -2085,8 +2073,8 @@
 				829B4D7B172A117C00E3A46F /* WormholeTransition@2x.png in Resources */,
 				9414AB3D172C9B55005BB908 /* cinderBlock.png in Resources */,
 				9414AB3E172C9B55005BB908 /* cinderBlock@2x.png in Resources */,
-				9414AB41172CA15D005BB908 /* matress.png in Resources */,
-				9414AB42172CA15D005BB908 /* matress@2x.png in Resources */,
+				9414AB41172CA15D005BB908 /* mattress.png in Resources */,
+				9414AB42172CA15D005BB908 /* mattress@2x.png in Resources */,
 				829B4D82172CFA8900E3A46F /* lightSourceOff.png in Resources */,
 				829B4D83172CFA8900E3A46F /* lightSourceOff@2x.png in Resources */,
 			);

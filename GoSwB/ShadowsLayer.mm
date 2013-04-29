@@ -108,8 +108,15 @@ CCRenderTexture* renderTexture = NULL;
             [source setScaleY:1.5*SHADOW_HEIGHT_FACTOR];
             [source setScaleX:1.5*SHADOW_WIDTH_FACTOR];
             [self addChild:source z:LIGHT_SPRITE_DEPTH];
-            //CGPoint ratio = [[ratios objectAtIndex:i] CGPointValue];
-            //[self updateShadowPos:lightObject.tag withRelativePos: ratio];
+            
+            NSString* lightObjectName = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"lightObject"]];
+            int object_x = [[lightSource objectForKey:@"object_x"] intValue];
+            int object_y = [[lightSource objectForKey:@"object_y"] intValue];
+            CCSprite* lightObjectSprite = [CCSprite spriteWithFile:lightObjectName];
+            [lightObjectSprite setScaleX:2];
+            [lightObjectSprite setScaleY:2];
+            lightObjectSprite.position = ccp(object_x,object_y);
+            [self addChild:lightObjectSprite z:LIGHT_SPRITE_DEPTH-1];
         }
         
     }

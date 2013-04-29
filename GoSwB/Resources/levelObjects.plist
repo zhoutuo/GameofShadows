@@ -409,6 +409,12 @@
 				<real>0.1</real>
 				<key>off_duration</key>
 				<integer>10</integer>
+				<key>lightObject</key>
+				<string>lamp</string>
+				<key>object_x</key>
+				<integer>500</integer>
+				<key>object_y</key>
+				<integer>80</integer>
 			</dict>
 		</array>
 		<key>Objects</key>
@@ -488,6 +494,12 @@
 				<real>0.1</real>
 				<key>off_duration</key>
 				<integer>10</integer>
+				<key>lightObject</key>
+				<string>lamp</string>
+				<key>object_x</key>
+				<integer>500</integer>
+				<key>object_y</key>
+				<integer>80</integer>
 			</dict>
 		</array>
 		<key>Portals</key>
@@ -515,34 +527,46 @@
 		<key>Objects</key>
 		<array>
 			<array>
-				<string>Dresser</string>
+				<string>fridge</string>
 				<integer>100</integer>
 				<integer>100</integer>
 			</array>
 			<array>
-				<string>Dresser</string>
+				<string>Door</string>
 				<integer>400</integer>
 				<integer>100</integer>
-			</array>
-			<array>
-				<string>ArmChair</string>
-				<integer>400</integer>
-				<integer>300</integer>
 			</array>
 		</array>
 		<key>Lights</key>
-		<array/>
+		<array>
+			<dict>
+				<key>on_filename</key>
+				<string>lamp</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>200</integer>
+				<key>origin_y</key>
+				<integer>200</integer>
+				<key>vertical_percentage</key>
+				<real>0.85</real>
+				<key>on_duration</key>
+				<integer>2</integer>
+				<key>off_duration</key>
+				<real>2.5</real>
+			</dict>
+		</array>
 		<key>Portals</key>
 		<array>
 			<array>
 				<string>WormholeEntrance</string>
-				<integer>250</integer>
+				<integer>100</integer>
 				<integer>100</integer>
 			</array>
 			<array>
 				<string>WormholeExit</string>
-				<integer>800</integer>
-				<integer>100</integer>
+				<integer>900</integer>
+				<integer>650</integer>
 			</array>
 		</array>
 		<key>Ropes</key>
@@ -573,18 +597,35 @@
 			</array>
 		</array>
 		<key>Lights</key>
-		<array/>
+		<array>
+			<dict>
+				<key>on_filename</key>
+				<string>lamp</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>200</integer>
+				<key>origin_y</key>
+				<integer>200</integer>
+				<key>vertical_percentage</key>
+				<real>0.85</real>
+				<key>on_duration</key>
+				<integer>2</integer>
+				<key>off_duration</key>
+				<real>2.5</real>
+			</dict>
+		</array>
 		<key>Portals</key>
 		<array>
 			<array>
 				<string>WormholeEntrance</string>
-				<integer>250</integer>
+				<integer>100</integer>
 				<integer>100</integer>
 			</array>
 			<array>
 				<string>WormholeExit</string>
-				<integer>800</integer>
-				<integer>100</integer>
+				<integer>624</integer>
+				<integer>600</integer>
 			</array>
 		</array>
 		<key>Ropes</key>
@@ -599,34 +640,57 @@
 		<key>Objects</key>
 		<array>
 			<array>
-				<string>thinTable</string>
+				<string>nightStand</string>
+				<integer>250</integer>
 				<integer>100</integer>
-				<integer>100</integer>
-			</array>
-			<array>
-				<string>Dresser</string>
-				<integer>400</integer>
-				<integer>100</integer>
-			</array>
-			<array>
-				<string>ArmChair</string>
-				<integer>400</integer>
-				<integer>300</integer>
 			</array>
 		</array>
 		<key>Lights</key>
-		<array/>
+		<array>
+			<dict>
+				<key>on_filename</key>
+				<string>lamp</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>200</integer>
+				<key>origin_y</key>
+				<integer>200</integer>
+				<key>vertical_percentage</key>
+				<real>0.85</real>
+				<key>on_duration</key>
+				<integer>1</integer>
+				<key>off_duration</key>
+				<integer>2</integer>
+			</dict>
+			<dict>
+				<key>on_filename</key>
+				<string>floorLamp</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>400</integer>
+				<key>origin_y</key>
+				<integer>200</integer>
+				<key>vertical_percentage</key>
+				<real>0.9</real>
+				<key>on_duration</key>
+				<integer>2</integer>
+				<key>off_duration</key>
+				<real>2.5</real>
+			</dict>
+		</array>
 		<key>Portals</key>
 		<array>
 			<array>
 				<string>WormholeEntrance</string>
-				<integer>250</integer>
-				<integer>100</integer>
+				<integer>500</integer>
+				<integer>350</integer>
 			</array>
 			<array>
 				<string>WormholeExit</string>
-				<integer>800</integer>
-				<integer>100</integer>
+				<integer>500</integer>
+				<integer>650</integer>
 			</array>
 		</array>
 		<key>Ropes</key>
@@ -641,19 +705,9 @@
 		<key>Objects</key>
 		<array>
 			<array>
-				<string>Dresser</string>
-				<integer>100</integer>
-				<integer>100</integer>
-			</array>
-			<array>
-				<string>Dresser</string>
+				<string>fridge</string>
 				<integer>400</integer>
 				<integer>100</integer>
-			</array>
-			<array>
-				<string>ArmChair</string>
-				<integer>400</integer>
-				<integer>300</integer>
 			</array>
 		</array>
 		<key>Lights</key>
@@ -663,16 +717,23 @@
 			<array>
 				<string>WormholeEntrance</string>
 				<integer>250</integer>
-				<integer>100</integer>
+				<integer>450</integer>
 			</array>
 			<array>
 				<string>WormholeExit</string>
-				<integer>800</integer>
-				<integer>100</integer>
+				<integer>770</integer>
+				<integer>450</integer>
 			</array>
 		</array>
 		<key>Ropes</key>
-		<array/>
+		<array>
+			<array>
+				<string>ropeLarge</string>
+				<integer>4</integer>
+				<integer>350</integer>
+				<string>hangingBulb</string>
+			</array>
+		</array>
 	</dict>
 	<key>Level 17</key>
 	<dict>
@@ -683,23 +744,35 @@
 		<key>Objects</key>
 		<array>
 			<array>
-				<string>Dresser</string>
+				<string>nightStand</string>
 				<integer>100</integer>
 				<integer>100</integer>
 			</array>
 			<array>
-				<string>Dresser</string>
+				<string>cinderBlock</string>
 				<integer>400</integer>
 				<integer>100</integer>
-			</array>
-			<array>
-				<string>ArmChair</string>
-				<integer>400</integer>
-				<integer>300</integer>
 			</array>
 		</array>
 		<key>Lights</key>
-		<array/>
+		<array>
+			<dict>
+				<key>on_filename</key>
+				<string>lamp</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>200</integer>
+				<key>origin_y</key>
+				<integer>200</integer>
+				<key>vertical_percentage</key>
+				<real>0.85</real>
+				<key>on_duration</key>
+				<real>0.7</real>
+				<key>off_duration</key>
+				<integer>2</integer>
+			</dict>
+		</array>
 		<key>Portals</key>
 		<array>
 			<array>
@@ -709,12 +782,19 @@
 			</array>
 			<array>
 				<string>WormholeExit</string>
-				<integer>800</integer>
-				<integer>100</integer>
+				<integer>740</integer>
+				<integer>400</integer>
 			</array>
 		</array>
 		<key>Ropes</key>
-		<array/>
+		<array>
+			<array>
+				<string>ropeLarge</string>
+				<integer>5</integer>
+				<integer>350</integer>
+				<string>hangingBulb</string>
+			</array>
+		</array>
 	</dict>
 	<key>Level 18</key>
 	<dict>
@@ -725,80 +805,100 @@
 		<key>Objects</key>
 		<array>
 			<array>
-				<string>Dresser</string>
+				<string>nightStand</string>
 				<integer>100</integer>
-				<integer>100</integer>
-			</array>
-			<array>
-				<string>Dresser</string>
-				<integer>400</integer>
-				<integer>100</integer>
-			</array>
-			<array>
-				<string>ArmChair</string>
-				<integer>400</integer>
 				<integer>300</integer>
 			</array>
 		</array>
 		<key>Lights</key>
-		<array/>
+		<array>
+			<dict>
+				<key>on_filename</key>
+				<string>floorLamp</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>110</integer>
+				<key>origin_y</key>
+				<integer>100</integer>
+				<key>vertical_percentage</key>
+				<real>0.9</real>
+				<key>on_duration</key>
+				<integer>2</integer>
+				<key>off_duration</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>on_filename</key>
+				<string>floorLamp</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>200</integer>
+				<key>origin_y</key>
+				<integer>100</integer>
+				<key>vertical_percentage</key>
+				<real>0.9</real>
+				<key>on_duration</key>
+				<integer>6</integer>
+				<key>off_duration</key>
+				<integer>3</integer>
+			</dict>
+			<dict>
+				<key>on_filename</key>
+				<string>floorLamp</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>290</integer>
+				<key>origin_y</key>
+				<integer>100</integer>
+				<key>vertical_percentage</key>
+				<real>0.9</real>
+				<key>on_duration</key>
+				<integer>2</integer>
+				<key>off_duration</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>on_filename</key>
+				<string>floorLamp</string>
+				<key>off_filename</key>
+				<string>lightSource1</string>
+				<key>origin_x</key>
+				<integer>380</integer>
+				<key>origin_y</key>
+				<integer>100</integer>
+				<key>vertical_percentage</key>
+				<real>0.9</real>
+				<key>on_duration</key>
+				<integer>6</integer>
+				<key>off_duration</key>
+				<integer>3</integer>
+			</dict>
+		</array>
 		<key>Portals</key>
 		<array>
 			<array>
 				<string>WormholeEntrance</string>
-				<integer>250</integer>
-				<integer>100</integer>
+				<integer>200</integer>
+				<integer>350</integer>
 			</array>
 			<array>
 				<string>WormholeExit</string>
-				<integer>800</integer>
-				<integer>100</integer>
+				<integer>760</integer>
+				<integer>370</integer>
 			</array>
 		</array>
 		<key>Ropes</key>
-		<array/>
-	</dict>
-	<key>Level 19</key>
-	<dict>
-		<key>HasTransition</key>
-		<string>no</string>
-		<key>Background</key>
-		<string>Room layout texture</string>
-		<key>Objects</key>
 		<array>
 			<array>
-				<string>Dresser</string>
-				<integer>100</integer>
-				<integer>100</integer>
-			</array>
-			<array>
-				<string>Dresser</string>
-				<integer>400</integer>
-				<integer>100</integer>
-			</array>
-			<array>
-				<string>ArmChair</string>
-				<integer>400</integer>
-				<integer>300</integer>
+				<string>ropeLarge</string>
+				<integer>6</integer>
+				<integer>350</integer>
+				<string>hangingBulb</string>
 			</array>
 		</array>
-		<key>Lights</key>
-		<array/>
-		<key>Portals</key>
-		<array>
-			<array>
-				<string>WormholeEntrance</string>
-				<integer>250</integer>
-				<integer>100</integer>
-			</array>
-			<array>
-				<string>WormholeExit</string>
-				<integer>800</integer>
-				<integer>100</integer>
-			</array>
-		</array>
-		<key>Ropes</key>
-		<array/>
 	</dict>
 </dict>
 </plist>
