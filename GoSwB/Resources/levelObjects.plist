@@ -284,7 +284,18 @@
 				<string>ropeLarge</string>
 				<integer>6</integer>
 				<integer>320</integer>
-				<string>hangingBulb</string>
+				<dict>
+					<key>on_filename</key>
+					<string>hangingBulb</string>
+					<key>off_filename</key>
+					<string>lightSource1</string>
+					<key>vertical_percentage</key>
+					<real>0.5</real>
+					<key>on_duration</key>
+					<integer>0</integer>
+					<key>off_duration</key>
+					<integer>0</integer>
+				</dict>
 			</array>
 		</array>
 	</dict>
@@ -742,7 +753,18 @@
 				<string>ropeLarge</string>
 				<integer>4</integer>
 				<integer>350</integer>
-				<string>hangingBulb</string>
+				<dict>
+					<key>on_filename</key>
+					<string>hangingBulb</string>
+					<key>off_filename</key>
+					<string>lightSource_larger</string>
+					<key>vertical_percentage</key>
+					<real>0.1</real>
+					<key>on_duration</key>
+					<real>0.1</real>
+					<key>off_duration</key>
+					<integer>3</integer>
+				</dict>
 			</array>
 		</array>
 	</dict>
@@ -803,7 +825,18 @@
 				<string>ropeLarge</string>
 				<integer>5</integer>
 				<integer>350</integer>
-				<string>hangingBulb</string>
+				<dict>
+					<key>on_filename</key>
+					<string>hangingBulb</string>
+					<key>off_filename</key>
+					<string>lightSource_larger</string>
+					<key>vertical_percentage</key>
+					<real>0.1</real>
+					<key>on_duration</key>
+					<real>0.1</real>
+					<key>off_duration</key>
+					<integer>3</integer>
+				</dict>
 			</array>
 		</array>
 	</dict>
@@ -907,7 +940,18 @@
 				<string>ropeLarge</string>
 				<integer>6</integer>
 				<integer>350</integer>
-				<string>hangingBulb</string>
+				<dict>
+					<key>on_filename</key>
+					<string>hangingBulb</string>
+					<key>off_filename</key>
+					<string>lightSource_larger</string>
+					<key>vertical_percentage</key>
+					<real>0.1</real>
+					<key>on_duration</key>
+					<integer>1</integer>
+					<key>off_duration</key>
+					<integer>3</integer>
+				</dict>
 			</array>
 		</array>
 	</dict>
