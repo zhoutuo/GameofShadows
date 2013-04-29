@@ -61,7 +61,18 @@
 				<string>ropeLarge</string>
 				<integer>4</integer>
 				<integer>320</integer>
-				<string>Zhoutuo</string>
+				<dict>
+					<key>on_filename</key>
+					<string>Zhoutuo</string>
+					<key>off_filename</key>
+					<string>lightSource1</string>
+					<key>vertical_percentage</key>
+					<real>0.5</real>
+					<key>on_duration</key>
+					<integer>2</integer>
+					<key>off_duration</key>
+					<real>2.5</real>
+				</dict>
 			</array>
 		</array>
 	</dict>

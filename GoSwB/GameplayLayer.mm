@@ -16,10 +16,10 @@
 
 
 #define NOTAG -1
-#define BACKGROUND_DEPTH 1
-#define OBJECT_DEPTH -1
-#define ROPE_DEPTH -3
-#define LIGHT_DEPTH -2
+#define BACKGROUND_DEPTH 10000
+#define OBJECT_DEPTH 1
+#define ROPE_DEPTH 2
+#define LIGHT_DEPTH 4
 #define OMS_MOVEMENT_SPEED 0.2
 
 -(id) init {
@@ -86,7 +86,7 @@
         NSString* ropeImage = [rope objectAtIndex:0];
         int numberOfSegments = [[rope objectAtIndex:1] intValue];
         int positionOfRopeOnCeiling = [[rope objectAtIndex:2] intValue];
-        NSString* lightImage = [rope objectAtIndex:3];
+        NSDictionary* lightSource = [rope objectAtIndex:3];
         b2Body* previousConnector = physicsGroundBody;
         for (int i = 0; i < numberOfSegments; i++)
         {
@@ -100,7 +100,7 @@
             [[GB2ShapeCache sharedShapeCache] addFixturesToBody:ropeBody forShapeName:ropeImage];
             [ropeSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:ropeImage]];
             [ropeSprite setPhysicsBody:ropeBody];
-            [objectsContainer addChild:ropeSprite z:ROPE_DEPTH tag:[GameplayScene TagGenerater]];
+            [objectsContainer addChild:ropeSprite z:OBJECT_DEPTH + ROPE_DEPTH tag:[GameplayScene TagGenerater]];
             b2RevoluteJointDef jointDef;
             jointDef.Initialize(previousConnector, ropeBody,
                                 [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
@@ -110,17 +110,28 @@
             previousConnector = ropeBody;
             height -= (ropeSprite.boundingBox.size.height);
         }
-        PhysicsSprite* lightSprite = [PhysicsSprite spriteWithFile:[NSString stringWithFormat:@"%@.png", lightImage]];
+        //get sprite name
+        NSString* name = [lightSource objectForKey:@"on_filename"];
+        //get the on_filename
+        NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
+        //get the off_name
+        NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
+        //get the on and off_duration
+        float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
+        float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
+        //get the vertical percentage
+        float vertical_per = [[lightSource objectForKey:@"vertical_percentage"] floatValue];
+        LightSource* lightSprite = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration :vertical_per] autorelease];
         lightSprite.position = CGPointMake(positionOfRopeOnCeiling, height);
         b2BodyDef lightBodyDef;
         lightBodyDef.type = b2_dynamicBody;
         lightBodyDef.position.Set(lightSprite.position.x / PTM_RATIO, lightSprite.position.y / PTM_RATIO);
         lightBodyDef.userData = lightSprite;
         b2Body* lightBody = physicsWorld -> CreateBody(&lightBodyDef);
-        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightBody forShapeName:lightImage];
-        [lightSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:lightImage]];
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightBody forShapeName:name];
+        [lightSprite setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
         [lightSprite setPhysicsBody:lightBody];
-        [objectsContainer addChild:lightSprite z:ROPE_DEPTH tag:[GameplayScene TagGenerater]];
+        [objectsContainer addChild:lightSprite z:LIGHT_DEPTH + ROPE_DEPTH tag:[GameplayScene TagGenerater]];
         b2RevoluteJointDef jointDef;
         jointDef.Initialize(previousConnector, lightBody, [self toMeters:CGPointMake(positionOfRopeOnCeiling, height)]);
         physicsWorld -> CreateJoint(&jointDef);
@@ -135,8 +146,15 @@
         NSString* name = [lightSource objectForKey:@"on_filename"];
         //get the on_filename
         NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
-        
-        PhysicsSprite* source = [PhysicsSprite spriteWithFile:on_name];
+        //get the off_name
+        NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
+        //get the on and off_duration
+        float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
+        float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
+        //get the vertical percentage
+        float vertical_per = [[lightSource objectForKey:@"vertical_percentage"] floatValue];
+        LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration :vertical_per] autorelease];
+
         //get the initial position
         [source setPosition:ccp([[lightSource objectForKey:@"origin_x"] floatValue],
                                 [[lightSource objectForKey:@"origin_y"] floatValue])];
@@ -298,14 +316,15 @@
     for (CCSprite* sprite in objectsContainer.children) {
         //filter out all children except object and light source
         CGPoint ratio = [self getSpriteRelativePos:sprite];
-        if (sprite.zOrder == OBJECT_DEPTH or sprite.zOrder == ROPE_DEPTH) {
+                
+        if (sprite.zOrder & OBJECT_DEPTH) {
             [shadowVisibleChildren addObject:sprite];
             [ratios addObject:[NSValue valueWithCGPoint:ratio]];
             [anchorPoints addObject:[NSValue valueWithCGPoint:sprite.anchorPoint]];
 
         }
         
-        if (sprite.zOrder == LIGHT_DEPTH) {
+        if (sprite.zOrder & LIGHT_DEPTH) {
             [lightChildren addObject:sprite];
             [lightRatios addObject:[NSValue valueWithCGPoint:ratio]];
             [lightAPs addObject:[NSValue valueWithCGPoint:sprite.anchorPoint]];
@@ -500,7 +519,7 @@
     
     if (touchOperation == TAP or touchOperation == MOVING) {
         
-        if ([objectsContainer getChildByTag:touchedObjectTag].zOrder == ROPE_DEPTH) {
+        if ([objectsContainer getChildByTag:touchedObjectTag].zOrder & ROPE_DEPTH) {
             touchOperation = NONE;
             touchedObjectTag = NOTAG;
             physicsWorld -> DestroyJoint(mouseJoint);
