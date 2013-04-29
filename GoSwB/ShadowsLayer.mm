@@ -142,30 +142,17 @@ CCRenderTexture* renderTexture = NULL;
 
 
 -(void) castLightFrom:(CCArray *)lights withRatios:(CCArray *)ratios withAPs:(CCArray *)APs {
-    NSDictionary* levelObjects = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"levelObjects" ofType:@"plist"]];
-    NSString* level = [NSString stringWithFormat: @"Level %d",currentLevel];
-    NSArray* lights_info = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
     
-    if (lights.count != lights_info.count) {
+    if (lights.count != ratios.count) {
         return;
     }
     
-    for(int i = 0; i < lights_info.count ;++i){
-        NSDictionary* lightSource = (NSDictionary*) [lights_info objectAtIndex:i];
-        CCSprite* lightObject = (CCSprite*) [lights objectAtIndex:i];
-        lightObject.anchorPoint = [[APs objectAtIndex:i] CGPointValue];
+    for(int i = 0; i < lights.count ;++i){
+        LightSource* cur = (LightSource*) [lights objectAtIndex:i];
+        
+        LightSource* source = [[LightSource alloc] initWithProperties:cur->on_filename :cur->off_filename :cur->on_duration :cur->off_duration :cur->vertical_percentage];
+        source.anchorPoint = [[APs objectAtIndex:i] CGPointValue];
         //get sprite name
-        NSString* name = [lightSource objectForKey:@"on_filename"];
-        //get the on_filename
-        NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
-        //get the off_name
-        NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
-        //get the on and off_duration
-        float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
-        float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
-        //get the vertical percentage
-        float vertical_per = [[lightSource objectForKey:@"vertical_percentage"] floatValue];
-        LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration :vertical_per] autorelease];
         [source setColor:ccc3(0, 0, 0)];
         [source setScaleY:SHADOW_HEIGHT_FACTOR];
         [source setScaleX:SHADOW_WIDTH_FACTOR];
@@ -173,11 +160,11 @@ CCRenderTexture* renderTexture = NULL;
         source.tag = [GameplayScene TagGenerater];
         [objShadowTable
          setObject:[NSNumber numberWithInteger:source.tag]
-         forKey:[NSNumber numberWithInteger:lightObject.tag]];
+         forKey:[NSNumber numberWithInteger:cur.tag]];
         
         [self addChild:source z:LIGHT_SPRITE_DEPTH];
         CGPoint ratio = [[ratios objectAtIndex:i] CGPointValue];
-        [self updateShadowPos:lightObject.tag withRelativePos: ratio];
+        [self updateShadowPos:cur.tag withRelativePos: ratio];
         
     }
 }

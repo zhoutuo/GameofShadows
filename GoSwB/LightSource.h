@@ -11,7 +11,7 @@
 #import "PhysicsSprite.h"
 
 @interface LightSource : PhysicsSprite {
-    @private
+    @public
     NSString* on_filename;
     NSString* off_filename;
     float on_duration;
