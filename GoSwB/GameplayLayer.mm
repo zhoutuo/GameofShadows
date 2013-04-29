@@ -396,6 +396,9 @@
                                 return true;
                             }
                         }
+                            break;
+                        default:
+                            break;
                     }
                     fixture = fixture -> GetNext();
                 }

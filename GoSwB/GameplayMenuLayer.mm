@@ -19,7 +19,7 @@
     if (self = [super init]) {
         
          pauseMenuItem = [CCMenuItemImage
-                         itemWithNormalImage:@"Pause.png" selectedImage:@"Pause.png"
+                         itemWithNormalImage:@"pause.png" selectedImage:@"pause.png"
                          target:self selector:@selector(pauseButtonMenu:)];
         pauseMenuItem.position = ccp(984, 730);
         CCMenu *pauseMenu = [CCMenu menuWithItems:pauseMenuItem, nil];
