@@ -40,6 +40,6 @@
 -(void) finishRotatingOneObject: (NSInteger) objectTag withAngle:(float) angle;
 -(void) shadowMonsterDead;
 -(void) shadowMonterRescued;
--(void) shadowMonsterTransition;
+//-(void) shadowMonsterTransition;
 -(void) shift:(CGPoint) centerPoint;
 @end
