@@ -81,7 +81,7 @@ CCRenderTexture* renderTexture = NULL;
         
         [wormholeExit setPosition:CGPointMake([[endPortalData objectAtIndex:1] floatValue], [[endPortalData objectAtIndex:2] floatValue])];
         [self addChild:wormholeExit z:WORMHOLE_DEPTH];
-        shadowMonster = [CCSprite spriteWithFile:@"squirtle.png"];
+        shadowMonster = [CCSprite spriteWithFile:@"grahh2.png"];
         [shadowMonster setPosition: wormholeEntrance.position];
         [self addChild:shadowMonster z:SHADOW_MONESTER_DEPTH];
         
