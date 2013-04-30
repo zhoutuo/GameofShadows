@@ -38,10 +38,12 @@
     if (on_duration > 0.0 or off_duration > 0.0) {
         //this is a fake action just used for the duration
         id on_action = [CCMoveBy actionWithDuration:on_duration position:ccp(0, 0)];
-        id on_callback = [CCCallFunc actionWithTarget:self selector:@selector(turnOn)];
+        id on_callback = [CCCallFunc actionWithTarget:self selector:@selector(showLight)];
+        id idle = [CCMoveBy actionWithDuration:0.25];
+        id idle_callback = [CCCallFunc actionWithTarget:self selector:@selector(turnOn)];
         id off_action = [CCMoveBy actionWithDuration:off_duration position:ccp(0, 0)];
         id off_callback = [CCCallFunc actionWithTarget:self selector:@selector(turnOff)];
-        id seq = [CCSequence actions:on_action, on_callback, off_action, off_callback, nil];
+        id seq = [CCSequence actions:on_action, on_callback, idle, idle_callback, off_action, off_callback, nil];
         [self runAction:[CCRepeatForever actionWithAction:seq]];
     }
 }
@@ -52,9 +54,12 @@
 }
 
 
+-(void) showLight {
+    turn_on_texture.visible = YES;
+}
+
 -(void) turnOn {
     isOn = true;
-    turn_on_texture.visible = YES;
 }
 
 -(void) turnOff {
