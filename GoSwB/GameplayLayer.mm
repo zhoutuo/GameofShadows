@@ -78,7 +78,41 @@
         [objectsContainer addChild:objectSprite z:OBJECT_DEPTH tag:[GameplayScene TagGenerater]];
         
     }
-
+    //get the lights
+    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
+    for(NSDictionary* lightSource in lights){
+        //get sprite name
+        NSString* name = [lightSource objectForKey:@"on_filename"];
+        //get the on_filename
+        NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
+        //get the off_name
+        NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
+        //get the on and off_duration
+        float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
+        float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
+        //get the vertical percentage
+        float vertical_per = [[lightSource objectForKey:@"vertical_percentage"] floatValue];
+        LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration :vertical_per] autorelease];
+        
+        //get the initial position
+        [source setPosition:ccp([[lightSource objectForKey:@"origin_x"] floatValue],
+                                [[lightSource objectForKey:@"origin_y"] floatValue])];
+        //add rotation circle here
+        CCSprite* rotationCircle = [CCSprite spriteWithFile:@"rotate_circle.png"];
+        rotationCircle.visible = NO;
+        [source addChild:rotationCircle];
+        rotationCircle.position = ccpSub(source.position, source.boundingBox.origin);
+        b2BodyDef lightSourceBodyDef;
+        lightSourceBodyDef.type = b2_dynamicBody;
+        lightSourceBodyDef.position.Set(source.position.x / PTM_RATIO, source.position.y / PTM_RATIO);
+        lightSourceBodyDef.userData = source;
+        b2Body* lightSourceBody = physicsWorld->CreateBody(&lightSourceBodyDef);
+        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightSourceBody forShapeName:name];
+        [source setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
+        [source setPhysicsBody:lightSourceBody];
+        [objectsContainer addChild:source z:LIGHT_DEPTH tag:[GameplayScene TagGenerater]];
+    }
+    
     NSArray* ropes = [[levelObjects objectForKey: level] objectForKey:@"Ropes"];
     for (NSArray* rope in ropes)
     {
@@ -139,40 +173,7 @@
         lightBody -> SetLinearDamping(0.2f);
     }
     
-    //get the lights
-    NSArray* lights = [[levelObjects objectForKey: level] objectForKey:@"Lights"];
-    for(NSDictionary* lightSource in lights){
-        //get sprite name
-        NSString* name = [lightSource objectForKey:@"on_filename"];
-        //get the on_filename
-        NSString* on_name = [NSString stringWithFormat:@"%@.png", name];
-        //get the off_name
-        NSString* off_name = [NSString stringWithFormat:@"%@.png", [lightSource objectForKey:@"off_filename"]];
-        //get the on and off_duration
-        float on_duration = [[lightSource objectForKey:@"on_duration"] floatValue];
-        float off_duration = [[lightSource objectForKey:@"off_duration"] floatValue];
-        //get the vertical percentage
-        float vertical_per = [[lightSource objectForKey:@"vertical_percentage"] floatValue];
-        LightSource* source = [[[LightSource alloc] initWithProperties:on_name :off_name :on_duration :off_duration :vertical_per] autorelease];
-
-        //get the initial position
-        [source setPosition:ccp([[lightSource objectForKey:@"origin_x"] floatValue],
-                                [[lightSource objectForKey:@"origin_y"] floatValue])];
-        //add rotation circle here
-        CCSprite* rotationCircle = [CCSprite spriteWithFile:@"rotate_circle.png"];
-        rotationCircle.visible = NO;
-        [source addChild:rotationCircle];
-        rotationCircle.position = ccpSub(source.position, source.boundingBox.origin);
-        b2BodyDef lightSourceBodyDef;
-        lightSourceBodyDef.type = b2_dynamicBody;
-        lightSourceBodyDef.position.Set(source.position.x / PTM_RATIO, source.position.y / PTM_RATIO);
-        lightSourceBodyDef.userData = source;
-        b2Body* lightSourceBody = physicsWorld->CreateBody(&lightSourceBodyDef);
-        [[GB2ShapeCache sharedShapeCache] addFixturesToBody:lightSourceBody forShapeName:name];
-        [source setAnchorPoint:[[GB2ShapeCache sharedShapeCache] anchorPointForShape:name]];
-        [source setPhysicsBody:lightSourceBody];
-        [objectsContainer addChild:source z:LIGHT_DEPTH tag:[GameplayScene TagGenerater]];
-    }
+   
 
 }
 
