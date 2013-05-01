@@ -24,9 +24,11 @@
                                  itemWithNormalImage:@"Resume_Text.png" selectedImage:@"Resume_Text.png" target:self selector:@selector(resume:)];
         CCMenuItem *menuItem2 = [CCMenuItemImage
                                  itemWithNormalImage:@"Home_Text.png" selectedImage:@"Home_Text.png" target:self selector:@selector(goHome:)];
-        CCMenuItem *menuItem3 = [CCMenuItemImage
+        CCMenuItem *menuItem4 = [CCMenuItemImage
                                  itemWithNormalImage:@"Mute.png" selectedImage:@"Mute.png" target:self selector:@selector(muteMusic:)];
-        CCMenu *menu = [CCMenu menuWithItems:menuItem1, menuItem2, menuItem3, nil];
+        CCMenuItem *menuItem3 = [CCMenuItemImage
+                                 itemWithNormalImage:@"Main-Options-Levels.png" selectedImage:@"Main-Options-Levels.png" target:self selector:@selector(goLevel:)];
+        CCMenu *menu = [CCMenu menuWithItems:menuItem1, menuItem2, menuItem3, menuItem4, nil];
         [menu alignItemsVerticallyWithPadding:10.0f];
         [self addChild:menu];
         
@@ -65,6 +67,20 @@
     } else {
         [[SimpleAudioEngine sharedEngine] resumeBackgroundMusic];
     }
+}
+
+- (void)goLevel:(id)sender
+{
+    NSLog(@"goHome");
+    [[CCDirector sharedDirector] stopAnimation]; // call this to make sure you don't start a second display link!
+    [[CCDirector sharedDirector] resume];
+    [[CCDirector sharedDirector] startAnimation];
+    isGamePause = false;
+    
+    if(currentLevel < 10)
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[CCBReader sceneWithNodeGraphFromFile:@"LevelSelectScene.ccbi"]]];
+    else if (currentLevel < 20)
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[CCBReader sceneWithNodeGraphFromFile:@"LevelSelectSceneTwo.ccbi"]]];
 }
 
 - (void) dealloc
